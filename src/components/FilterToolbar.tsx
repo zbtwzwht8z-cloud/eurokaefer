@@ -23,7 +23,7 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
     <div className="toolbar-inner">
       {/* From */}
       <div className="toolbar-group">
-        <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>From</span>
+        <span className="filter-label" style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>From</span>
         <select
           value={value.from}
           onChange={e => onChange({ ...value, from: e.target.value as HomeCity | 'mine' | 'any', flexFrom: false })}
@@ -37,7 +37,7 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
 
       {/* To */}
       <div className="toolbar-group">
-        <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>To</span>
+        <span className="filter-label" style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>To</span>
         <select
           value={value.to}
           onChange={e => onChange({ ...value, to: e.target.value as RegionKey, flexTo: false })}
@@ -67,7 +67,7 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
 
       {/* Legs */}
       <div className="toolbar-group">
-        <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>
+        <span className="filter-label" style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>
           Legs
         </span>
         <select
@@ -83,7 +83,7 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
 
       {/* Sort */}
       <div className="toolbar-group">
-        <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>
+        <span className="filter-label" style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>
           Sort
         </span>
         <select

@@ -93,14 +93,13 @@ export default function RefreshButton({ lastGenerated }: { lastGenerated?: strin
   })();
 
   return (
-    <div style={{ display: 'inline-flex', flexDirection: 'column', minWidth: 200, alignItems: 'center', gap: 2 }}>
+    <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
       <button
         className="btn btn-ghost btn-sm"
         onClick={() => (disabled ? null : start())}
         disabled={disabled}
-        style={{ width: '100%' }}
       >
-        {status === 'idle' ? '🔄 Refresh now' : stage}
+        🔄<span className="refresh-label"> {status === 'idle' ? 'Refresh now' : stage}</span>
       </button>
       {status === 'idle' && lastUpdatedLabel && (
         <div className="text-xs" style={{ color: 'var(--ink-3)', textAlign: 'center' }}>

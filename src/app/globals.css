@@ -139,8 +139,10 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   background: var(--surface-2);
   border-radius: var(--r-pill);
   font-size: 13px; font-weight: 500; color: var(--ink-2);
+  max-width: 140px;
 }
-.user-chip-emoji { font-size: 16px; }
+.user-chip-emoji { font-size: 16px; flex-shrink: 0; }
+.user-chip-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* ── Buttons ─────────────────────────────────────────────────────────────── */
 
@@ -286,6 +288,7 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   color: #fff;
   outline: 0;
 }
+.toolbar-group select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .toolbar-spacer { flex: 1; }
 .toolbar-search {
   display: flex; align-items: center;
@@ -333,6 +336,7 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
 .trip-card-route {
   font-size: 16px; font-weight: 600; letter-spacing: -0.012em;
   line-height: 1.3; color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .trip-card-id {
   font-size: 12px; font-weight: 600; color: var(--ink-4);
@@ -449,7 +453,7 @@ dialog#tripDialog {
   overflow: hidden;
 }
 dialog#tripDialog::backdrop {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
 }
 .dialog-head {
@@ -493,6 +497,7 @@ dialog#tripDialog::backdrop {
   font-size: 14px; outline: 0;
 }
 .comment-input input:focus { border-color: var(--accent); }
+.comment-input input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .trip-mention {
   display: inline-block;
   padding: 1px 8px;
@@ -553,4 +558,40 @@ dialog#tripDialog::backdrop {
   .toolbar-inner { gap: 6px; }
   .toolbar-group { font-size: 13px; }
   .toolbar-search { min-width: 140px; flex: 1; }
+}
+
+@media (max-width: 600px) {
+  /* ── Topbar collapses to icons ── */
+  .brand span:last-child { display: none; }       /* hide "Eurokäfer" text, keep 🚐 */
+  .user-chip-name { display: none; }              /* hide name text, keep emoji */
+  .user-chip { max-width: none; padding: 4px 8px; }
+  .refresh-label { display: none; }               /* refresh button icon-only */
+
+  /* ── Filter toolbar ── */
+  .filter-label { display: none; }                /* hide "From" / "To" / "Legs" / "Sort" labels */
+  .toolbar-spacer { display: none; }              /* remove flex spacer */
+  .toolbar-search { flex: 1; min-width: 0; }      /* search stretches to fill */
+  .result-count { order: 99; width: 100%; text-align: center; padding: 4px 0 2px; }
+
+  /* ── Trip cards ── */
+  .trip-card-map { height: 110px; }
+
+  /* ── Dialog → bottom sheet ── */
+  dialog#tripDialog {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    margin: 0;
+    max-width: 100%;
+    max-height: 92dvh;
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.15);
+  }
+  .dialog-head { padding: 16px 20px; }
+  .dialog-body { padding: 16px 20px; max-height: calc(92dvh - 76px); }
+  .dialog-map { height: 200px; }
+  .dialog-btn-label { display: none; }            /* Maps / Share text hidden, emoji only */
+}
+
+@media (max-width: 400px) {
+  .lounge { width: 95vw; }
 }

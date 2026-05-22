@@ -62,10 +62,10 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
             className="btn btn-ghost btn-sm"
             title="Open in Google Maps"
           >
-            🗺 Maps
+            🗺<span className="dialog-btn-label"> Maps</span>
           </a>
           <button className="btn btn-ghost btn-sm" onClick={copyShare} title="Copy share link">
-            🔗 Share
+            🔗<span className="dialog-btn-label"> Share</span>
           </button>
           <button
             className="btn-icon"
