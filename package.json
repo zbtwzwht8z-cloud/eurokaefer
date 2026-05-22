@@ -6,9 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "refresh": "python3 scripts/fetch.py && python3 scripts/search.py && python3 scripts/build.py",
+    "fetch": "python3 scripts/fetch.py",
+    "search": "python3 scripts/search.py",
+    "build:data": "python3 scripts/build.py",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@types/leaflet": "^1.9.21",
+    "leaflet": "^1.9.4",
     "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"
