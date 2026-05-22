@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 
 type Status = 'idle' | 'starting' | 'queued' | 'in_progress' | 'success' | 'failure' | 'unconfigured';
 
-export default function RefreshButton() {
+export default function RefreshButton({ lastGenerated }: { lastGenerated?: string }) {
   const [status, setStatus] = useState<Status>('idle');
   const [elapsed, setElapsed] = useState(0);
   const [runUrl, setRunUrl] = useState<string | null>(null);
@@ -80,8 +80,20 @@ export default function RefreshButton() {
 
   const disabled = status !== 'idle' && status !== 'success' && status !== 'failure' && status !== 'unconfigured';
 
+  const lastUpdatedLabel = (() => {
+    if (!lastGenerated) return null;
+    try {
+      const d = new Date(lastGenerated);
+      const mins = Math.round((Date.now() - d.getTime()) / 60000);
+      if (mins < 2) return 'just now';
+      if (mins < 60) return `${mins}m ago`;
+      const hrs = Math.floor(mins / 60);
+      return `${hrs}h ago`;
+    } catch { return null; }
+  })();
+
   return (
-    <div style={{ display: 'inline-flex', flexDirection: 'column', minWidth: 200 }}>
+    <div style={{ display: 'inline-flex', flexDirection: 'column', minWidth: 200, alignItems: 'center', gap: 2 }}>
       <button
         className="btn btn-ghost btn-sm"
         onClick={() => (disabled ? null : start())}
@@ -90,6 +102,11 @@ export default function RefreshButton() {
       >
         {status === 'idle' ? '🔄 Refresh now' : stage}
       </button>
+      {status === 'idle' && lastUpdatedLabel && (
+        <div className="text-xs" style={{ color: 'var(--ink-3)', textAlign: 'center' }}>
+          last updated {lastUpdatedLabel}
+        </div>
+      )}
       {(status === 'queued' || status === 'in_progress') && (
         <>
           <div className="progress-bar">

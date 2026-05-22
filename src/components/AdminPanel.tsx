@@ -1,14 +1,18 @@
 'use client';
 import { useState } from 'react';
 import type { User } from '@/lib/turso';
-import { HOME_CITIES } from '@/lib/constants';
+
+type EditState = { name: string; key: string; is_admin: boolean };
 
 export default function AdminPanel({ initialUsers, myUserId }: { initialUsers: User[]; myUserId: number }) {
-  const [users, setUsers] = useState(initialUsers);
-  const [form, setForm] = useState({ name: '', key: '', home_city: 'Bochum', emoji: '🚐', is_admin: false });
-  const [err, setErr] = useState('');
+  const [users, setUsers]   = useState(initialUsers);
+  const [form, setForm]     = useState({ name: '', key: '' });
+  const [editing, setEditing] = useState<number | null>(null);
+  const [editState, setEditState] = useState<EditState>({ name: '', key: '', is_admin: false });
+  const [err, setErr]       = useState('');
+  const [addErr, setAddErr] = useState('');
 
-  async function refresh() {
+  async function reload() {
     const res = await fetch('/api/users');
     const data = await res.json();
     setUsers(data.users || []);
@@ -16,83 +20,121 @@ export default function AdminPanel({ initialUsers, myUserId }: { initialUsers: U
 
   async function add(e: React.FormEvent) {
     e.preventDefault();
-    setErr('');
+    setAddErr('');
     const res = await fetch('/api/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
+      body: JSON.stringify({ name: form.name, key: form.key, home_city: 'Any', emoji: '🧑', is_admin: false }),
     });
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setErr(data.detail || data.error || 'failed');
+      setAddErr(data.error || 'Failed to add user.');
       return;
     }
-    setForm({ name: '', key: '', home_city: 'Bochum', emoji: '🚐', is_admin: false });
-    await refresh();
+    setForm({ name: '', key: '' });
+    await reload();
+  }
+
+  function startEdit(u: User) {
+    setEditing(u.id);
+    setEditState({ name: u.name, key: u.key, is_admin: u.is_admin });
+    setErr('');
+  }
+
+  async function saveEdit(id: number) {
+    setErr('');
+    const res = await fetch(`/api/users/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(editState),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setErr(data.error || 'Failed to save.');
+      return;
+    }
+    setEditing(null);
+    await reload();
   }
 
   async function remove(id: number) {
-    if (id === myUserId) return alert('Can\'t delete yourself.');
-    if (!confirm('Delete this user?')) return;
+    if (id === myUserId) { alert("Can't remove yourself."); return; }
+    if (!confirm('Remove this member?')) return;
     await fetch(`/api/users/${id}`, { method: 'DELETE' });
-    await refresh();
+    await reload();
   }
 
   return (
-    <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 32 }}>
-      {/* User list */}
+    <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 32, maxWidth: 580 }}>
+
+      {/* Member list */}
       <section>
-        <h2 className="h-3" style={{ marginBottom: 12 }}>Members ({users.length})</h2>
+        <h2 className="h-3" style={{ marginBottom: 16 }}>Members ({users.length})</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {users.map(u => (
             <div key={u.id} style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              padding: '14px 18px', background: 'var(--surface)',
-              border: '1px solid var(--line)', borderRadius: 'var(--r-sm)',
+              background: 'var(--surface)', border: '1px solid var(--line)',
+              borderRadius: 'var(--r-sm)', overflow: 'hidden',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <span style={{ fontSize: 22 }}>{u.emoji || '🚐'}</span>
-                <div>
-                  <div style={{ fontWeight: 600 }}>
-                    {u.name} {u.is_admin && <span className="badge badge-accent" style={{ marginLeft: 6 }}>admin</span>}
+              {editing === u.id ? (
+                /* ── Edit mode ── */
+                <div style={{ padding: '14px 18px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                    <input className="gate-input" placeholder="Name" value={editState.name}
+                      onChange={e => setEditState({ ...editState, name: e.target.value })} />
+                    <input className="gate-input" placeholder="Access key" value={editState.key}
+                      onChange={e => setEditState({ ...editState, key: e.target.value })} />
                   </div>
-                  <div className="text-xs">
-                    {u.home_city} · key: <code>{u.key}</code>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
+                    <input type="checkbox" checked={editState.is_admin}
+                      onChange={e => setEditState({ ...editState, is_admin: e.target.checked })} />
+                    Admin access
+                  </label>
+                  {err && <div className="gate-err">{err}</div>}
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button className="btn btn-accent btn-sm" onClick={() => saveEdit(u.id)}>Save</button>
+                    <button className="btn btn-ghost btn-sm" onClick={() => setEditing(null)}>Cancel</button>
                   </div>
                 </div>
-              </div>
-              <button
-                className="btn btn-ghost btn-sm"
-                onClick={() => remove(u.id)}
-                disabled={u.id === myUserId}
-              >Remove</button>
+              ) : (
+                /* ── View mode ── */
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 18px' }}>
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: 15 }}>
+                      {u.emoji || '🧑'} {u.name}
+                      {u.is_admin && <span className="badge badge-accent" style={{ marginLeft: 8 }}>admin</span>}
+                    </div>
+                    <div style={{ fontSize: 12, color: 'var(--ink-3)', marginTop: 2 }}>
+                      key: <code style={{ userSelect: 'all' }}>{u.key}</code>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button className="btn btn-ghost btn-sm" onClick={() => startEdit(u)}>Edit</button>
+                    <button className="btn btn-ghost btn-sm" onClick={() => remove(u.id)}
+                      disabled={u.id === myUserId} style={{ color: u.id === myUserId ? 'var(--ink-3)' : '#c0392b' }}>
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
       </section>
 
-      {/* Add form */}
+      {/* Add member */}
       <section style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--r-md)', padding: 24 }}>
-        <h2 className="h-3" style={{ marginBottom: 16 }}>Add a member</h2>
-        <form onSubmit={add} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12 }}>
-          <input className="gate-input" placeholder="Name" value={form.name}
-                 onChange={e => setForm({ ...form, name: e.target.value })} required />
-          <input className="gate-input" placeholder="Access key (e.g. tom-bochum)" value={form.key}
-                 onChange={e => setForm({ ...form, key: e.target.value })} required />
-          <select className="gate-input" value={form.home_city}
-                  onChange={e => setForm({ ...form, home_city: e.target.value })}>
-            {HOME_CITIES.map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
-          <input className="gate-input" placeholder="Emoji" maxLength={2} value={form.emoji}
-                 onChange={e => setForm({ ...form, emoji: e.target.value })} />
-          <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14 }}>
-            <input type="checkbox" checked={form.is_admin}
-                   onChange={e => setForm({ ...form, is_admin: e.target.checked })} />
-            Admin
-          </label>
-          <button type="submit" className="btn btn-accent">Add</button>
+        <h2 className="h-3" style={{ marginBottom: 16 }}>Add member</h2>
+        <form onSubmit={add} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <input className="gate-input" placeholder="Name (e.g. Owda)" value={form.name}
+              onChange={e => setForm({ ...form, name: e.target.value })} required />
+            <input className="gate-input" placeholder="Key (e.g. owda-2026)" value={form.key}
+              onChange={e => setForm({ ...form, key: e.target.value.toLowerCase() })} required />
+          </div>
+          {addErr && <div className="gate-err">{addErr}</div>}
+          <button type="submit" className="btn btn-accent" style={{ alignSelf: 'flex-start' }}>Add member</button>
         </form>
-        {err && <div className="gate-err">{err}</div>}
       </section>
     </div>
   );

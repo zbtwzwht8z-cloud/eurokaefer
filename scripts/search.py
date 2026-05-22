@@ -422,9 +422,19 @@ def main() -> None:
                 added += 1
         print(f'  {home_city}: loops={len(loops)} ice={len(ice)} south={len(south)} (+{added} new)')
 
+    # Deduplicate by route string — keep highest-scored chain per unique route.
+    # Without this, 7 identical Nantes→Madrid offers produce 7 identical chains.
+    seen_routes: dict[str, Option] = {}
+    for opt in sorted(all_options, key=lambda o: o.score, reverse=True):
+        route_key = ' -> '.join(
+            [opt.path[0]['origin_name']] + [p['destination_name'] for p in opt.path]
+        )
+        if route_key not in seen_routes:
+            seen_routes[route_key] = opt
+    all_options = list(seen_routes.values())
     all_options.sort(key=lambda o: o.score, reverse=True)
     emit_csv(all_options)
-    print(f'✓ {len(all_options)} chains written to {OUT_PATH}')
+    print(f'✓ {len(all_options)} unique-route chains written to {OUT_PATH}')
 
 
 if __name__ == '__main__':

@@ -99,7 +99,7 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
             <span>Eurokäfer</span>
           </div>
           <div className="top-actions">
-            <RefreshButton />
+            <RefreshButton lastGenerated={data.meta.generated} />
             <button className="btn btn-ghost btn-sm" onClick={() => setLoungeOpen(true)}>
               💬 Lounge
             </button>

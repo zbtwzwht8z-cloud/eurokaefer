@@ -7,7 +7,7 @@ const TURSO_TOKEN = process.env.TURSO_TOKEN!;
 type TursoValue = { type: string; value: string };
 type TursoRow = TursoValue[];
 
-async function query(sql: string, args: TursoValue[] = []) {
+export async function query(sql: string, args: TursoValue[] = []) {
   const res = await fetch(`${TURSO_URL}/v2/pipeline`, {
     method: 'POST',
     headers: {

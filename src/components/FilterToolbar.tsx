@@ -29,7 +29,6 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
             value={value.from}
             onChange={e => onChange({ ...value, from: e.target.value as HomeCity | 'mine' | 'any', flexFrom: false })}
           >
-            <option value="mine">Mine</option>
             <option value="any">Anywhere</option>
             {HOME_CITIES.filter(c => c !== 'Other').map(c => (
               <option key={c} value={c}>{c}</option>
