@@ -22,50 +22,62 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
   return (
     <div className="toolbar-inner">
       {/* From */}
-      <div className="toolbar-group" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 4 }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>From</span>
-          <select
-            value={value.from}
-            onChange={e => onChange({ ...value, from: e.target.value as HomeCity | 'mine' | 'any', flexFrom: false })}
-          >
-            <option value="any">Anywhere</option>
-            {HOME_CITIES.filter(c => c !== 'Other').map(c => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        </div>
+      <div className="toolbar-group">
+        <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>From</span>
+        <select
+          value={value.from}
+          onChange={e => onChange({ ...value, from: e.target.value as HomeCity | 'mine' | 'any', flexFrom: false })}
+        >
+          <option value="any">Anywhere</option>
+          {HOME_CITIES.filter(c => c !== 'Other').map(c => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
         {value.from !== 'any' && (
-          <label title="Also show trips where your home city appears mid-route or as destination (not just origin)"
-            style={{ display: 'flex', alignItems: 'center', gap: 5, paddingLeft: 12, fontSize: 11.5, color: value.flexFrom ? 'var(--accent)' : 'var(--ink-3)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+          <label
+            title="Also show trips where your home city appears mid-route or as destination"
+            style={{
+              display: 'flex', alignItems: 'center', gap: 5, marginLeft: 6,
+              padding: '3px 9px', borderRadius: 999, cursor: 'pointer',
+              fontSize: 12, fontWeight: 500, whiteSpace: 'nowrap',
+              background: value.flexFrom ? 'var(--accent)' : 'var(--line)',
+              color: value.flexFrom ? '#fff' : 'var(--ink-3)',
+              transition: 'background .15s, color .15s',
+            }}>
             <input type="checkbox" checked={value.flexFrom}
               onChange={e => onChange({ ...value, flexFrom: e.target.checked })}
-              style={{ accentColor: 'var(--accent)', cursor: 'pointer' }} />
-            Flexible — anywhere in route
+              style={{ display: 'none' }} />
+            flex
           </label>
         )}
       </div>
 
       {/* To */}
-      <div className="toolbar-group" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 4 }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>To</span>
-          <select
-            value={value.to}
-            onChange={e => onChange({ ...value, to: e.target.value as RegionKey, flexTo: false })}
-          >
-            {Object.entries(REGIONS).map(([k, v]) => (
-              <option key={k} value={k}>{v.label}</option>
-            ))}
-          </select>
-        </div>
+      <div className="toolbar-group">
+        <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>To</span>
+        <select
+          value={value.to}
+          onChange={e => onChange({ ...value, to: e.target.value as RegionKey, flexTo: false })}
+        >
+          {Object.entries(REGIONS).map(([k, v]) => (
+            <option key={k} value={k}>{v.label}</option>
+          ))}
+        </select>
         {value.to !== 'all' && (
-          <label title="Also show trips where this region appears as a mid-stop, not just the final destination"
-            style={{ display: 'flex', alignItems: 'center', gap: 5, paddingLeft: 12, fontSize: 11.5, color: value.flexTo ? 'var(--accent)' : 'var(--ink-3)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+          <label
+            title="Also show trips where this region appears as a mid-stop, not just the final destination"
+            style={{
+              display: 'flex', alignItems: 'center', gap: 5, marginLeft: 6,
+              padding: '3px 9px', borderRadius: 999, cursor: 'pointer',
+              fontSize: 12, fontWeight: 500, whiteSpace: 'nowrap',
+              background: value.flexTo ? 'var(--accent)' : 'var(--line)',
+              color: value.flexTo ? '#fff' : 'var(--ink-3)',
+              transition: 'background .15s, color .15s',
+            }}>
             <input type="checkbox" checked={value.flexTo}
               onChange={e => onChange({ ...value, flexTo: e.target.checked })}
-              style={{ accentColor: 'var(--accent)', cursor: 'pointer' }} />
-            Flexible — anywhere in route
+              style={{ display: 'none' }} />
+            flex
           </label>
         )}
       </div>
