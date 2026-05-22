@@ -21,7 +21,8 @@ export default function MapViewImpl({ route, mini }: Props) {
         .filter((p): p is [number, number] => Array.isArray(p));
 
       if (pts.length < 2) {
-        ref.current.style.background = 'var(--surface-2)';
+        ref.current.style.cssText = 'background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-size:13px;';
+        ref.current.textContent = 'Map unavailable';
         return;
       }
 

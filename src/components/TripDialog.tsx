@@ -40,6 +40,11 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
     navigator.clipboard?.writeText(url);
   }
 
+  function googleMapsUrl() {
+    // https://www.google.com/maps/dir/City1/City2/City3/
+    return 'https://www.google.com/maps/dir/' + chain.route.map(c => encodeURIComponent(c)).join('/') + '/';
+  }
+
   return (
     <dialog id="tripDialog" ref={dialogRef} onClick={e => {
       if (e.target === dialogRef.current) onClose();
@@ -50,6 +55,15 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
           <h2 className="h-2" style={{ marginTop: 4 }}>{chain.route.join(' → ')}</h2>
         </div>
         <div style={{ display: 'flex', gap: 6 }}>
+          <a
+            href={googleMapsUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost btn-sm"
+            title="Open in Google Maps"
+          >
+            🗺 Maps
+          </a>
           <button className="btn btn-ghost btn-sm" onClick={copyShare} title="Copy share link">
             🔗 Share
           </button>

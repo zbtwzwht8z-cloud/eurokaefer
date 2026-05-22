@@ -162,18 +162,24 @@ export const CITY_COORDS: Record<string, [number, number]> = {
   Augsburg: [48.3705, 10.8978], 'Berglern / Munich Airport': [48.3537, 11.7866],
   Heidelberg: [49.3988, 8.6724], Hannover: [52.3759, 9.732], Bremen: [53.0793, 8.8017],
   Würzburg: [49.7913, 9.9534], Wangen: [47.6886, 9.8351],
+  // Germany (extra)
+  Aach: [47.845, 8.851], Bamberg: [49.899, 10.903], Bayreuth: [49.946, 11.572],
+  Berglern: [48.354, 11.787], Gersthofen: [48.425, 10.884],
+  Korntal-Münchingen: [48.835, 9.112], Rosenheim: [47.856, 12.128],
   // France
   Paris: [48.8566, 2.3522], Nantes: [47.2184, -1.5536], Champlan: [48.7197, 2.27],
   Mérignac: [44.8333, -0.6444], Lille: [50.6292, 3.0573],
   Strasbourg: [48.5734, 7.7521], Cabriès: [43.4444, 5.3691],
   'Saint-Jean-de-Gonville': [46.2575, 5.9722], Goussainville: [49.0286, 2.4628],
+  Grigny: [48.659, 2.388], 'Saint-Mesmes': [48.954, 2.874],
   Dagneux: [45.8328, 5.07], Marseille: [43.2965, 5.3698], Nice: [43.7102, 7.262],
   Lyon: [45.764, 4.8357], Bordeaux: [44.8378, -0.5792], Toulouse: [43.6047, 1.4442],
   // Italy
-  Milan: [45.4642, 9.19], 'Milan / Castellanza': [45.6086, 8.8978],
+  Milan: [45.4642, 9.19], 'Milan / Castellanza': [45.6086, 8.8978], Castellanza: [45.6086, 8.8978],
   Bergamo: [45.6983, 9.6773], Bologna: [44.4949, 11.3426], Florence: [43.7696, 11.2558],
   Roma: [41.9028, 12.4964], Turin: [45.0703, 7.6869], Venezia: [45.4408, 12.3155],
   Napoli: [40.8518, 14.2681], Genova: [44.4056, 8.9463], Palermo: [38.1157, 13.3613],
+  Cagliari: [39.224, 9.122], Olbia: [40.923, 9.503], Bastia: [42.701, 9.450],
   // Spain
   Barcelona: [41.3851, 2.1734], Viladecans: [41.3158, 2.0184], Madrid: [40.4168, -3.7038],
   Sevilla: [37.3886, -5.9823], Bilbao: [43.263, -2.935],
@@ -184,9 +190,12 @@ export const CITY_COORDS: Record<string, [number, number]> = {
   // Sweden
   'Göteborgs Stad': [57.7089, 11.9746], 'Staffanstorps kommun': [55.6422, 13.21],
   Stockholm: [59.3293, 18.0686],
+  // Poland
+  Warszawa: [52.230, 21.012],
   // Other
-  'Sint-Pieters-Leeuw / Brussels': [50.7833, 4.25], Antwerp: [51.2194, 4.4025],
-  'Amsterdam / Amstelveen': [52.3676, 4.9041], Rotterdam: [51.9244, 4.4777],
+  'Sint-Pieters-Leeuw / Brussels': [50.7833, 4.25], 'Sint-Pieters-Leeuw': [50.7833, 4.25],
+  Antwerp: [51.2194, 4.4025],
+  'Amsterdam / Amstelveen': [52.3676, 4.9041], Amstelveen: [52.308, 4.861], Rotterdam: [51.9244, 4.4777],
   Porto: [41.1579, -8.6291], Lisbon: [38.7223, -9.1393],
   Zürich: [47.3769, 8.5417], Basel: [47.5596, 7.5886], Geneva: [46.2044, 6.1432], Bern: [46.948, 7.4474],
   Split: [43.5081, 16.4402], Dubrovnik: [42.6507, 18.0944], London: [51.5074, -0.1278],
