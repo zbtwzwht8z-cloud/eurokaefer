@@ -19,38 +19,67 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
     setTimeout(() => onChange({ ...value, search: s }), 0);
   }
 
+  const showFlexFrom = value.from !== 'any';
+  const showFlexTo   = value.to !== 'all';
+
   return (
     <div className="toolbar-inner">
       {/* From */}
-      <div className="toolbar-group">
-        <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>
-          From
-        </span>
-        <select
-          value={value.from}
-          onChange={e => onChange({ ...value, from: e.target.value as HomeCity | 'mine' | 'any' })}
-        >
-          <option value="mine">Mine</option>
-          <option value="any">Anywhere</option>
-          {HOME_CITIES.filter(c => c !== 'Other').map(c => (
-            <option key={c} value={c}>{c}</option>
-          ))}
-        </select>
+      <div className="toolbar-group" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 4 }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>
+            From
+          </span>
+          <select
+            value={value.from}
+            onChange={e => onChange({ ...value, from: e.target.value as HomeCity | 'mine' | 'any', flexFrom: false })}
+          >
+            <option value="mine">Mine</option>
+            <option value="any">Anywhere</option>
+            {HOME_CITIES.filter(c => c !== 'Other').map(c => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </div>
+        {showFlexFrom && (
+          <label style={{ display: 'flex', alignItems: 'center', gap: 6, paddingLeft: 12, fontSize: 12, color: 'var(--ink-2)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            <input
+              type="checkbox"
+              checked={value.flexFrom}
+              onChange={e => onChange({ ...value, flexFrom: e.target.checked })}
+              style={{ accentColor: 'var(--accent)', cursor: 'pointer' }}
+            />
+            Flexible departure
+          </label>
+        )}
       </div>
 
       {/* To */}
-      <div className="toolbar-group">
-        <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>
-          To
-        </span>
-        <select
-          value={value.to}
-          onChange={e => onChange({ ...value, to: e.target.value as RegionKey })}
-        >
-          {Object.entries(REGIONS).map(([k, v]) => (
-            <option key={k} value={k}>{v.label}</option>
-          ))}
-        </select>
+      <div className="toolbar-group" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: 4 }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>
+            To
+          </span>
+          <select
+            value={value.to}
+            onChange={e => onChange({ ...value, to: e.target.value as RegionKey, flexTo: false })}
+          >
+            {Object.entries(REGIONS).map(([k, v]) => (
+              <option key={k} value={k}>{v.label}</option>
+            ))}
+          </select>
+        </div>
+        {showFlexTo && (
+          <label style={{ display: 'flex', alignItems: 'center', gap: 6, paddingLeft: 12, fontSize: 12, color: 'var(--ink-2)', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            <input
+              type="checkbox"
+              checked={value.flexTo}
+              onChange={e => onChange({ ...value, flexTo: e.target.checked })}
+              style={{ accentColor: 'var(--accent)', cursor: 'pointer' }}
+            />
+            Flexible destination
+          </label>
+        )}
       </div>
 
       {/* Legs */}

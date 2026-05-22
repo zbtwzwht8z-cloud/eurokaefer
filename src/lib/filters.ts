@@ -8,7 +8,9 @@ export type SortKey = 'best' | 'fuel' | 'shortest' | 'soonest' | 'legs-asc' | 'l
 
 export type FilterState = {
   from: HomeCity | 'mine' | 'any';
+  flexFrom: boolean;           // if true, also match nearby cities in same home region
   to: RegionKey;
+  flexTo: boolean;             // if true, also match any city in the broader region group
   maxLegs: number;             // 1 | 2 | 3 | 6 (=no limit)
   dateFrom?: string;           // ISO date (yyyy-mm-dd)
   dateTo?: string;             // ISO date (yyyy-mm-dd)
@@ -21,7 +23,9 @@ export type FilterState = {
 
 export const DEFAULT_FILTER: FilterState = {
   from: 'mine',
+  flexFrom: false,
   to: 'all',
+  flexTo: false,
   maxLegs: 2,
   search: '',
   sort: 'best',
@@ -31,6 +35,11 @@ function resolveFromSet(state: FilterState, myHome: HomeCity): Set<string> | nul
   if (state.from === 'any') return null;
   const key = state.from === 'mine' ? myHome : state.from;
   return HOME_CITY_SET[key] ?? null;
+}
+
+function resolveToSet(state: FilterState): Set<string> | null {
+  if (state.to === 'all') return null;
+  return REGIONS[state.to]?.cities ?? null;
 }
 
 function matchesDateWindow(c: Chain, dateFrom?: string, dateTo?: string): boolean {
@@ -54,18 +63,38 @@ export function applyFilters(
   myHome: HomeCity,
 ): Chain[] {
   const fromSet = resolveFromSet(state, myHome);
-  const toRegion = REGIONS[state.to];
+  const toSet = resolveToSet(state);
   const q = state.search.trim().toLowerCase();
 
   let pool = all.filter(c => {
     if (state.loopsOnly && c.type !== 'loop') return false;
     if (state.onewaysOnly && c.type === 'loop') return false;
     if (state.maxLegs && c.legs.length > state.maxLegs) return false;
-    if (fromSet && !fromSet.has(c.route[0])) return false;
-    if (toRegion && state.to !== 'all') {
-      const dest = c.route[c.route.length - 1];
-      if (!toRegion.cities.has(dest)) return false;
+
+    // FROM filter
+    if (fromSet) {
+      if (state.flexFrom) {
+        // Flexible: accept if the home area appears ANYWHERE in the route
+        // (e.g. a chain ending in Dormagen/NRW counts for Bochum flexible)
+        if (!c.route.some(city => fromSet.has(city))) return false;
+      } else {
+        // Strict: chain must START from the home area
+        if (!fromSet.has(c.route[0])) return false;
+      }
     }
+
+    // TO filter
+    if (toSet && state.to !== 'all') {
+      if (state.flexTo) {
+        // Flexible: destination region appears ANYWHERE in the route (mid-stop or end)
+        if (!c.route.some(city => toSet.has(city))) return false;
+      } else {
+        // Strict: chain must END at the destination region
+        const dest = c.route[c.route.length - 1];
+        if (!toSet.has(dest)) return false;
+      }
+    }
+
     if (state.iceOnly && !endsInIceCity(c).ok) return false;
     if (!matchesDateWindow(c, state.dateFrom, state.dateTo)) return false;
     if (q) {
