@@ -45,15 +45,31 @@ def http_get(url: str, retries: int = 3) -> Any:
     raise RuntimeError(f'GET {url} failed after {retries} tries: {last_err}')
 
 
-def fetch_all_offers() -> list[dict]:
-    """Fetch all offers for the window. Returns raw API response."""
-    url = (
+MAX_PAGES = 20   # safety ceiling — Movacar has ~9 pages today
+
+
+def fetch_all_offers() -> dict:
+    """Fetch ALL pages and return a merged pseudo-response dict."""
+    all_data: list[dict] = []
+    merged_included: list[dict] = []
+    base = (
         f'{API_BASE}/v1/offers'
         f'?pickupDateFrom={WINDOW_START.isoformat()}'
         f'&pickupDateTo={WINDOW_END.isoformat()}'
     )
-    print(f'  GET {url}')
-    return http_get(url)
+    for page in range(1, MAX_PAGES + 1):
+        url = f'{base}&page={page}'
+        print(f'  GET {url}')
+        raw = http_get(url)
+        batch = raw.get('data', [])
+        if not batch:
+            break
+        all_data.extend(batch)
+        merged_included.extend(raw.get('included', []))
+        print(f'    page {page}: {len(batch)} offers (total so far: {len(all_data)})')
+        if len(batch) < 100:
+            break  # last page
+    return {'data': all_data, 'included': merged_included}
 
 
 def parse_response(raw: dict) -> list[dict]:
@@ -61,7 +77,7 @@ def parse_response(raw: dict) -> list[dict]:
     data = raw.get('data', [])
     included = raw.get('included', [])
 
-    # Build lookup maps
+    # Build lookup maps — later entries overwrite earlier ones (same IDs repeat across pages)
     stations: dict[str, dict] = {}
     prices: dict[str, int] = {}  # id → amount_minor_units (cents)
 
@@ -72,7 +88,6 @@ def parse_response(raw: dict) -> list[dict]:
         if t == 'station':
             stations[iid] = attrs
         elif t == 'monetary_amount':
-            stations  # already handled above
             prices[iid] = attrs.get('amount_minor_units', 999999)
 
     rows: list[dict] = []
@@ -137,20 +152,41 @@ FIELDS = [
 ]
 
 
+def dedup_by_route_day(rows: list[dict]) -> list[dict]:
+    """Keep one representative offer per (origin, destination, pickup_day).
+
+    Multiple vehicles on the same route+day produce identical chains in search.py
+    (same timing, same cities). We keep the offer with the most free_km (best deal),
+    but we always preserve ALL distinct (route, day) combinations so the chain-builder
+    can see the full date spread across the 90-day window.
+    """
+    best: dict[tuple, dict] = {}
+    for row in rows:
+        pickup_day = row['start_date_utc'][:10]  # 'YYYY-MM-DD'
+        key = (row['origin_name'], row['destination_name'], pickup_day)
+        existing = best.get(key)
+        if existing is None or float(row['free_km'] or 0) > float(existing['free_km'] or 0):
+            best[key] = row
+    return list(best.values())
+
+
 def main() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     print(f'→ Fetching offers from {WINDOW_START} to {WINDOW_END}…')
 
     raw = fetch_all_offers()
     rows = parse_response(raw)
-    print(f'  {len(raw.get("data", []))} total offers, {len(rows)} are €1')
+    before = len(rows)
+    rows = dedup_by_route_day(rows)
+    print(f'  {len(raw.get("data", []))} total offers across all pages')
+    print(f'  {before} are €1 → {len(rows)} after dedup by (route, day)')
 
     with OFFERS_CSV.open('w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=FIELDS)
         writer.writeheader()
-        for r in rows:
+        for r in sorted(rows, key=lambda r: r['start_date_utc']):
             writer.writerow(r)
-    print(f'✓ {len(rows)} €1 offers written to {OFFERS_CSV}')
+    print(f'✓ {len(rows)} deduplicated €1 offers written to {OFFERS_CSV}')
 
 
 if __name__ == '__main__':

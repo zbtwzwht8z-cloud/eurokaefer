@@ -79,9 +79,8 @@ export function applyFilters(
         // Flexible: accept if the home area appears ANYWHERE in the route
         if (!c.route.some(city => fromCitySet.has(city))) return false;
       } else {
-        // Strict: chain starts in home area OR is explicitly tagged as homeCity
-        // (inbound chains like "Pisa → Essen" are relevant for someone based in Bochum)
-        if (!fromCitySet.has(c.route[0]) && c.homeCity !== fromKey) return false;
+        // Strict: chain must DEPART from the home area (route[0])
+        if (!fromCitySet.has(c.route[0])) return false;
       }
     }
 
