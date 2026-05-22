@@ -1,14 +1,15 @@
 'use client';
 import { useState } from 'react';
 import type { User } from '@/lib/turso';
+import { HOME_CITIES } from '@/lib/constants';
 
-type EditState = { name: string; key: string; is_admin: boolean };
+type EditState = { name: string; key: string; home_city: string; emoji: string; is_admin: boolean };
 
 export default function AdminPanel({ initialUsers, myUserId }: { initialUsers: User[]; myUserId: number }) {
   const [users, setUsers]   = useState(initialUsers);
-  const [form, setForm]     = useState({ name: '', key: '' });
+  const [form, setForm]     = useState({ name: '', key: '', home_city: 'Bochum', emoji: '🧑' });
   const [editing, setEditing] = useState<number | null>(null);
-  const [editState, setEditState] = useState<EditState>({ name: '', key: '', is_admin: false });
+  const [editState, setEditState] = useState<EditState>({ name: '', key: '', home_city: 'Bochum', emoji: '🧑', is_admin: false });
   const [err, setErr]       = useState('');
   const [addErr, setAddErr] = useState('');
 
@@ -24,20 +25,20 @@ export default function AdminPanel({ initialUsers, myUserId }: { initialUsers: U
     const res = await fetch('/api/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: form.name, key: form.key, home_city: 'Any', emoji: '🧑', is_admin: false }),
+      body: JSON.stringify({ name: form.name, key: form.key, home_city: form.home_city, emoji: form.emoji, is_admin: false }),
     });
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
       setAddErr(data.error || 'Failed to add user.');
       return;
     }
-    setForm({ name: '', key: '' });
+    setForm({ name: '', key: '', home_city: 'Bochum', emoji: '🧑' });
     await reload();
   }
 
   function startEdit(u: User) {
     setEditing(u.id);
-    setEditState({ name: u.name, key: u.key, is_admin: u.is_admin });
+    setEditState({ name: u.name, key: u.key, home_city: u.home_city || 'Bochum', emoji: u.emoji || '🧑', is_admin: u.is_admin });
     setErr('');
   }
 
@@ -85,6 +86,14 @@ export default function AdminPanel({ initialUsers, myUserId }: { initialUsers: U
                     <input className="gate-input" placeholder="Access key" value={editState.key}
                       onChange={e => setEditState({ ...editState, key: e.target.value })} />
                   </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                    <select className="gate-input" value={editState.home_city}
+                      onChange={e => setEditState({ ...editState, home_city: e.target.value })}>
+                      {HOME_CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                    <input className="gate-input" placeholder="Emoji (e.g. 🧑)" value={editState.emoji}
+                      onChange={e => setEditState({ ...editState, emoji: e.target.value })} />
+                  </div>
                   <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
                     <input type="checkbox" checked={editState.is_admin}
                       onChange={e => setEditState({ ...editState, is_admin: e.target.checked })} />
@@ -131,6 +140,14 @@ export default function AdminPanel({ initialUsers, myUserId }: { initialUsers: U
               onChange={e => setForm({ ...form, name: e.target.value })} required />
             <input className="gate-input" placeholder="Key (e.g. owda-2026)" value={form.key}
               onChange={e => setForm({ ...form, key: e.target.value.toLowerCase() })} required />
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <select className="gate-input" value={form.home_city}
+              onChange={e => setForm({ ...form, home_city: e.target.value })}>
+              {HOME_CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+            <input className="gate-input" placeholder="Emoji (e.g. 🎸)" value={form.emoji}
+              onChange={e => setForm({ ...form, emoji: e.target.value })} />
           </div>
           {addErr && <div className="gate-err">{addErr}</div>}
           <button type="submit" className="btn btn-accent" style={{ alignSelf: 'flex-start' }}>Add member</button>
