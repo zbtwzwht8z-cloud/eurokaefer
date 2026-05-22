@@ -33,23 +33,6 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
             <option key={c} value={c}>{c}</option>
           ))}
         </select>
-        {value.from !== 'any' && (
-          <label
-            title="Also show trips where your home city appears mid-route or as destination"
-            style={{
-              display: 'flex', alignItems: 'center', gap: 5, marginLeft: 6,
-              padding: '3px 9px', borderRadius: 999, cursor: 'pointer',
-              fontSize: 12, fontWeight: 500, whiteSpace: 'nowrap',
-              background: value.flexFrom ? 'var(--accent)' : 'var(--line)',
-              color: value.flexFrom ? '#fff' : 'var(--ink-3)',
-              transition: 'background .15s, color .15s',
-            }}>
-            <input type="checkbox" checked={value.flexFrom}
-              onChange={e => onChange({ ...value, flexFrom: e.target.checked })}
-              style={{ display: 'none' }} />
-            flex
-          </label>
-        )}
       </div>
 
       {/* To */}
