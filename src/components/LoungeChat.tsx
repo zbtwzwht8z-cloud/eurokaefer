@@ -63,6 +63,13 @@ export default function LoungeChat({ open, onClose, user, usersById }: Props) {
   }
 
   return (
+    <>
+      {open && (
+        <div onClick={onClose} style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.18)',
+          zIndex: 1099, backdropFilter: 'blur(2px)',
+        }} />
+      )}
     <aside className={open ? 'lounge open' : 'lounge'}>
       <div className="lounge-head">
         <div>
@@ -109,6 +116,7 @@ export default function LoungeChat({ open, onClose, user, usersById }: Props) {
         </button>
       </form>
     </aside>
+    </>
   );
 }
 

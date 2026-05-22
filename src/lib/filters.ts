@@ -22,11 +22,11 @@ export type FilterState = {
 };
 
 export const DEFAULT_FILTER: FilterState = {
-  from: 'mine',
+  from: 'any',
   flexFrom: false,
   to: 'all',
   flexTo: false,
-  maxLegs: 2,
+  maxLegs: 6,
   search: '',
   sort: 'best',
 };
