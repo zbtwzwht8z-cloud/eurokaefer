@@ -103,11 +103,6 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
             <button className="btn btn-ghost btn-sm" onClick={() => setLoungeOpen(true)}>
               💬 Lounge
             </button>
-            {user.is_admin && (
-              <a href="/admin" className="btn btn-ghost btn-sm" title="Admin panel">
-                ⚙️ Admin
-              </a>
-            )}
             <span className="user-chip">
               <span className="user-chip-emoji">{user.emoji || '🚐'}</span>
               {user.name}
