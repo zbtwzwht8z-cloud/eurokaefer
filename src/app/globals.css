@@ -176,12 +176,40 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
 /* ── Hero ────────────────────────────────────────────────────────────────── */
 
 .hero {
-  text-align: center;
-  padding: clamp(80px, 12vw, 160px) 0 clamp(40px, 6vw, 80px);
+  position: relative;
+  overflow: hidden;
+  background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1800&q=80&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center 45%;
 }
-.hero h1 { margin-bottom: 16px; }
+
+/* Dark gradient overlay so text stays legible */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(6, 18, 12, 0.62) 0%,
+    rgba(6, 18, 12, 0.52) 50%,
+    rgba(6, 18, 12, 0.70) 100%
+  );
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: clamp(100px, 14vw, 180px) 0 clamp(60px, 7vw, 100px);
+}
+
+.hero h1 {
+  margin-bottom: 16px;
+  color: #ffffff;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.25);
+}
 .hero p {
-  color: var(--ink-3);
+  color: rgba(255, 255, 255, 0.82);
   font-size: clamp(17px, 1.5vw, 21px);
   max-width: 620px;
   margin: 0 auto;
@@ -190,10 +218,12 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   display: inline-flex; align-items: center; gap: 8px;
   margin-top: 28px;
   padding: 6px 14px;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: var(--r-pill);
-  font-size: 13px; color: var(--ink-3);
+  font-size: 13px; color: rgba(255, 255, 255, 0.80);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .hero-meta-dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; }
 
@@ -518,7 +548,7 @@ dialog#tripDialog::backdrop {
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 720px) {
-  .hero { padding: 56px 0 32px; }
+  .hero-inner { padding: 72px 0 48px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .toolbar-inner { gap: 6px; }
   .toolbar-group { font-size: 13px; }

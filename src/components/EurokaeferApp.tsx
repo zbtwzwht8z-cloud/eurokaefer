@@ -122,16 +122,18 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
       </header>
 
       {/* ── Hero ────────────────────────────────────────────── */}
-      <section className="hero container">
-        <h1 className="h-display">€1 road trips, planned.</h1>
-        <p>
-          Live Movacar relocations chained into round-trips and one-ways from{' '}
-          Bochum, Hannover, and Munich. Refreshed every six hours.
-        </p>
-        <div className="hero-meta">
-          <span className="hero-meta-dot" />
-          {data.meta.recommendedCount} chains · {data.meta.offerCount} offers
-          {data.meta.generated && ' · ' + relativeTime(data.meta.generated)}
+      <section className="hero">
+        <div className="container hero-inner">
+          <h1 className="h-display">€1 road trips, planned.</h1>
+          <p>
+            Live Movacar relocations chained into round-trips and one-ways from{' '}
+            Bochum, Hannover, and Munich. Refreshed every six hours.
+          </p>
+          <div className="hero-meta">
+            <span className="hero-meta-dot" />
+            {data.meta.recommendedCount} chains · {data.meta.offerCount} offers
+            {data.meta.generated && ' · ' + relativeTime(data.meta.generated)}
+          </div>
         </div>
       </section>
 
