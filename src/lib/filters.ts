@@ -31,10 +31,11 @@ export const DEFAULT_FILTER: FilterState = {
   sort: 'best',
 };
 
-function resolveFromSet(state: FilterState, myHome: HomeCity): Set<string> | null {
+function resolveFromSet(state: FilterState, myHome: HomeCity): { set: Set<string>; key: string } | null {
   if (state.from === 'any') return null;
   const key = state.from === 'mine' ? myHome : state.from;
-  return HOME_CITY_SET[key] ?? null;
+  const set = HOME_CITY_SET[key] ?? new Set<string>();
+  return { set, key };
 }
 
 function resolveToSet(state: FilterState): Set<string> | null {
@@ -73,13 +74,14 @@ export function applyFilters(
 
     // FROM filter
     if (fromSet) {
+      const { set: fromCitySet, key: fromKey } = fromSet;
       if (state.flexFrom) {
         // Flexible: accept if the home area appears ANYWHERE in the route
-        // (e.g. a chain ending in Dormagen/NRW counts for Bochum flexible)
-        if (!c.route.some(city => fromSet.has(city))) return false;
+        if (!c.route.some(city => fromCitySet.has(city))) return false;
       } else {
-        // Strict: chain must START from the home area
-        if (!fromSet.has(c.route[0])) return false;
+        // Strict: chain starts in home area OR is explicitly tagged as homeCity
+        // (inbound chains like "Pisa → Essen" are relevant for someone based in Bochum)
+        if (!fromCitySet.has(c.route[0]) && c.homeCity !== fromKey) return false;
       }
     }
 
