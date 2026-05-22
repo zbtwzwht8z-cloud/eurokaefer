@@ -165,7 +165,7 @@ export const CITY_COORDS: Record<string, [number, number]> = {
   // Germany (extra)
   Aach: [47.845, 8.851], Bamberg: [49.899, 10.903], Bayreuth: [49.946, 11.572],
   Berglern: [48.354, 11.787], Gersthofen: [48.425, 10.884],
-  Korntal-Münchingen: [48.835, 9.112], Rosenheim: [47.856, 12.128],
+  'Korntal-Münchingen': [48.835, 9.112], Rosenheim: [47.856, 12.128],
   // France
   Paris: [48.8566, 2.3522], Nantes: [47.2184, -1.5536], Champlan: [48.7197, 2.27],
   Mérignac: [44.8333, -0.6444], Lille: [50.6292, 3.0573],
