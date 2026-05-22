@@ -1,11 +1,21 @@
 #!/usr/bin/env python3
 """Fetch Movacar €1 relocation offers.
 
-Movacar v1 API (2026):
-  GET /v1/offers?pickupDateFrom=YYYY-MM-DD&pickupDateTo=YYYY-MM-DD
-  Returns JSONAPI: { data: [...offers], included: [...stations, ...monetary_amounts] }
+Strategy (two collectors):
 
-Writes data/movacar_offers.csv with one row per €1 offer.
+  A) Broad paginated fetch — catches current offers and chaining hubs.
+     Stops early once it stops seeing new offer IDs (stale pages).
+
+  B) Origin-scoped fetch — for each home-cluster station, query
+     ?origin=<station_id>. This is what the Movacar website UI uses.
+     The unfiltered paginated endpoint misses future home-city offers
+     (e.g. Bochum → Paris CDG in June) that only appear when querying
+     by origin station ID.
+
+Both collectors contribute to the same pool; dedup by (origin_id,
+dest_id, start_date) keeps one representative per route-day.
+
+Writes data/movacar_offers.csv with one row per unique route-day.
 """
 from __future__ import annotations
 import csv
@@ -23,10 +33,35 @@ OFFERS_CSV = DATA_DIR / 'movacar_offers.csv'
 
 API_BASE = 'https://crowd-api-production-615013621295.europe-west1.run.app'
 
-# 90-day forward window from today
+# 35-day rolling window (Movacar publishes 2-4 weeks ahead)
 TODAY = datetime.now(timezone.utc).date()
 WINDOW_START = TODAY
-WINDOW_END = TODAY + timedelta(days=90)
+WINDOW_END = TODAY + timedelta(days=35)
+
+# Home-cluster station references (ULIDs) for origin-scoped API queries.
+# The Movacar API uses `reference` (ULID) for the `origin=` param, NOT the numeric id.
+# Discovery: fetch broad pages, collect included[] stations, read attrs['reference'].
+HOME_STATION_REFS: dict[str, list[str]] = {
+    'Bochum': [
+        '01JCREFS6VXZ2CBYDZEQK3PCGJ',  # Bochum
+        '01JCREGNCR5C18RRB5K2M02504',  # Essen
+    ],
+    'Hannover': [
+        '01JCRE4P0P60PTDNXJJQGTVMZC',  # Weyhe (nearest active station to Hannover)
+    ],
+    'München': [
+        '01JCR876D5E2V83RANH2V4ATJT',  # Berglern (Munich Airport area)
+        '01JCR8EM5PTM7C3XEK4S6ATFWR',  # Gersthofen (Augsburg/Munich)
+    ],
+}
+
+ALL_HOME_STATION_REFS: list[str] = [
+    ref for refs in HOME_STATION_REFS.values() for ref in refs
+]
+
+# Broad fetch: stop after this many consecutive pages with no new offer IDs
+STALE_PAGE_STOP = 5
+MAX_BROAD_PAGES = 30
 
 
 def http_get(url: str, retries: int = 3) -> Any:
@@ -45,72 +80,100 @@ def http_get(url: str, retries: int = 3) -> Any:
     raise RuntimeError(f'GET {url} failed after {retries} tries: {last_err}')
 
 
-MAX_PAGES = 20   # safety ceiling — Movacar has ~9 pages today
+# ── Shared state: stations + prices collected across all fetches ──────────────
+
+_stations: dict[str, dict] = {}   # station_id → attrs
+_prices: dict[str, int] = {}      # price_id → amount_minor_units
 
 
-def fetch_all_offers() -> dict:
-    """Fetch ALL pages and return a merged pseudo-response dict."""
-    all_data: list[dict] = []
-    merged_included: list[dict] = []
-    base = (
-        f'{API_BASE}/v1/offers'
-        f'?pickupDateFrom={WINDOW_START.isoformat()}'
-        f'&pickupDateTo={WINDOW_END.isoformat()}'
-    )
-    for page in range(1, MAX_PAGES + 1):
-        url = f'{base}&page={page}'
-        print(f'  GET {url}')
-        raw = http_get(url)
-        batch = raw.get('data', [])
-        if not batch:
-            break
-        all_data.extend(batch)
-        merged_included.extend(raw.get('included', []))
-        print(f'    page {page}: {len(batch)} offers (total so far: {len(all_data)})')
-        if len(batch) < 100:
-            break  # last page
-    return {'data': all_data, 'included': merged_included}
-
-
-def parse_response(raw: dict) -> list[dict]:
-    """Convert JSONAPI response to flat CSV rows. Only keeps €1 offers."""
-    data = raw.get('data', [])
-    included = raw.get('included', [])
-
-    # Build lookup maps — later entries overwrite earlier ones (same IDs repeat across pages)
-    stations: dict[str, dict] = {}
-    prices: dict[str, int] = {}  # id → amount_minor_units (cents)
-
+def _ingest_included(included: list[dict]) -> None:
     for item in included:
         t = item.get('type')
         iid = item.get('id', '')
         attrs = item.get('attributes', {})
         if t == 'station':
-            stations[iid] = attrs
+            _stations[iid] = attrs
         elif t == 'monetary_amount':
-            prices[iid] = attrs.get('amount_minor_units', 999999)
+            _prices[iid] = attrs.get('amount_minor_units', 999999)
 
+
+# ── Collector A: broad paginated fetch ───────────────────────────────────────
+
+def collector_broad() -> list[dict]:
+    """Unfiltered paginated fetch. Stops on stale pages."""
+    all_offers: list[dict] = []
+    seen_ids: set[str] = set()
+    stale = 0
+    base = (
+        f'{API_BASE}/v1/offers'
+        f'?pickupDateFrom={WINDOW_START.isoformat()}'
+        f'&pickupDateTo={WINDOW_END.isoformat()}'
+    )
+    for page in range(1, MAX_BROAD_PAGES + 1):
+        raw = http_get(f'{base}&page={page}')
+        batch = raw.get('data', [])
+        if not batch:
+            break
+        _ingest_included(raw.get('included', []))
+        new = [o for o in batch if o.get('id') not in seen_ids]
+        seen_ids.update(o.get('id', '') for o in batch)
+        all_offers.extend(new)
+        stale = 0 if new else stale + 1
+        print(f'  broad p{page}: {len(batch)} raw, {len(new)} new (total {len(all_offers)})')
+        if stale >= STALE_PAGE_STOP or len(batch) < 100:
+            break
+    return all_offers
+
+
+# ── Collector B: origin-scoped fetch for home clusters ───────────────────────
+
+def collector_home_origins() -> list[dict]:
+    """Query each home-cluster station by origin= param."""
+    all_offers: list[dict] = []
+    seen_ids: set[str] = set()
+    base = (
+        f'{API_BASE}/v1/offers'
+        f'?pickupDateFrom={WINDOW_START.isoformat()}'
+        f'&pickupDateTo={WINDOW_END.isoformat()}'
+    )
+    for station_id in ALL_HOME_STATION_REFS:
+        # Resolve display name: find station whose reference matches this ULID
+        city = next(
+            (a.get('city', station_id) for a in _stations.values() if a.get('reference') == station_id),
+            station_id
+        )
+        url = f'{base}&origin={station_id}'
+        raw = http_get(url)
+        batch = raw.get('data', [])
+        _ingest_included(raw.get('included', []))
+        new = [o for o in batch if o.get('id') not in seen_ids]
+        seen_ids.update(o.get('id', '') for o in batch)
+        all_offers.extend(new)
+        print(f'  origin {station_id} ({city}): {len(batch)} offers, {len(new)} new')
+    return all_offers
+
+
+# ── Parse raw offer objects → CSV rows ───────────────────────────────────────
+
+def parse_offers(raw_offers: list[dict]) -> list[dict]:
     rows: list[dict] = []
-    for offer in data:
+    for offer in raw_offers:
         attrs = offer.get('attributes', {})
         rels = offer.get('relationships', {})
 
         price_id = (rels.get('base_price') or {}).get('data', {}).get('id', '')
-        price_cents = prices.get(price_id, 999999)
-        if price_cents > 100:  # not €0 or €1
+        price_cents = _prices.get(price_id, 999999)
+        if price_cents > 100:
             continue
 
         origin_id = (rels.get('origin') or {}).get('data', {}).get('id', '')
         dest_id = (rels.get('destination') or {}).get('data', {}).get('id', '')
-        origin_st = stations.get(origin_id, {})
-        dest_st = stations.get(dest_id, {})
+        origin_st = _stations.get(origin_id, {})
+        dest_st = _stations.get(dest_id, {})
 
-        # Use city for matching (search.py compares against name sets)
-        # alternative_city has parenthetical info like "Berglern (bei München Flughafen)"
         origin_name = origin_st.get('city') or origin_id
         dest_name = dest_st.get('city') or dest_id
 
-        # Distance is in metres in v1
         distance_m = float(attrs.get('distance') or 0)
         distance_km = distance_m / 1000.0
 
@@ -137,8 +200,25 @@ def parse_response(raw: dict) -> list[dict]:
             'price_eur': f'{price_cents / 100:.2f}',
             'is_eur_1': 'yes' if price_cents <= 100 else 'no',
         })
-
     return rows
+
+
+# ── Dedup: one representative per (origin, destination, pickup_day) ───────────
+
+def dedup_by_route_day(rows: list[dict]) -> list[dict]:
+    """Keep best offer per (origin_id, dest_id, pickup_day).
+
+    'Best' = most free_km. Preserves all date diversity for chain-building
+    while eliminating duplicate vehicles on the same route+day.
+    """
+    best: dict[tuple, dict] = {}
+    for row in rows:
+        pickup_day = row['start_date_utc'][:10]
+        key = (row['origin_location_id'], row['destination_location_id'], pickup_day)
+        existing = best.get(key)
+        if existing is None or float(row['free_km'] or 0) > float(existing['free_km'] or 0):
+            best[key] = row
+    return list(best.values())
 
 
 FIELDS = [
@@ -152,33 +232,22 @@ FIELDS = [
 ]
 
 
-def dedup_by_route_day(rows: list[dict]) -> list[dict]:
-    """Keep one representative offer per (origin, destination, pickup_day).
-
-    Multiple vehicles on the same route+day produce identical chains in search.py
-    (same timing, same cities). We keep the offer with the most free_km (best deal),
-    but we always preserve ALL distinct (route, day) combinations so the chain-builder
-    can see the full date spread across the 90-day window.
-    """
-    best: dict[tuple, dict] = {}
-    for row in rows:
-        pickup_day = row['start_date_utc'][:10]  # 'YYYY-MM-DD'
-        key = (row['origin_name'], row['destination_name'], pickup_day)
-        existing = best.get(key)
-        if existing is None or float(row['free_km'] or 0) > float(existing['free_km'] or 0):
-            best[key] = row
-    return list(best.values())
-
-
 def main() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    print(f'→ Fetching offers from {WINDOW_START} to {WINDOW_END}…')
+    print(f'→ Fetching offers {WINDOW_START} → {WINDOW_END}')
 
-    raw = fetch_all_offers()
-    rows = parse_response(raw)
+    print('  [A] Broad paginated fetch…')
+    broad_raw = collector_broad()
+
+    print('  [B] Home-origin scoped fetch…')
+    home_raw = collector_home_origins()
+
+    all_raw = broad_raw + home_raw
+    print(f'  Combined: {len(all_raw)} unique raw offers')
+
+    rows = parse_offers(all_raw)
     before = len(rows)
     rows = dedup_by_route_day(rows)
-    print(f'  {len(raw.get("data", []))} total offers across all pages')
     print(f'  {before} are €1 → {len(rows)} after dedup by (route, day)')
 
     with OFFERS_CSV.open('w', newline='', encoding='utf-8') as f:
@@ -186,7 +255,7 @@ def main() -> None:
         writer.writeheader()
         for r in sorted(rows, key=lambda r: r['start_date_utc']):
             writer.writerow(r)
-    print(f'✓ {len(rows)} deduplicated €1 offers written to {OFFERS_CSV}')
+    print(f'✓ {len(rows)} offers written to {OFFERS_CSV}')
 
 
 if __name__ == '__main__':
