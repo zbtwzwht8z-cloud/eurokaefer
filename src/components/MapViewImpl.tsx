@@ -61,5 +61,5 @@ export default function MapViewImpl({ route, mini }: Props) {
     return () => { cancelled = true; map?.remove(); };
   }, [route, mini]);
 
-  return <div ref={ref} style={{ width: '100%', height: '100%' }} />;
+  return <div ref={ref} style={{ width: '100%', height: '100%', isolation: 'isolate' }} />;
 }
