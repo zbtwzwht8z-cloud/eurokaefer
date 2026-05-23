@@ -45,3 +45,8 @@ jobs:
             git pull --rebase origin main
             git push
           fi
+
+      - name: Trigger Vercel deploy
+        run: curl -s -X POST "$VERCEL_DEPLOY_HOOK"
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
