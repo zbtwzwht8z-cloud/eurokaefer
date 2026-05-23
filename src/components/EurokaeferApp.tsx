@@ -120,9 +120,22 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
       <section className="hero">
         <div className="container hero-inner">
           <h1 className="h-display">€1 road trips, planned.</h1>
-          <p style={{ fontFamily: 'Georgia, "Times New Roman", serif', fontSize: 'clamp(18px, 2vw, 26px)', letterSpacing: 0, direction: 'rtl' }}>
-            وَامْشُوا فِي مَنَاكِبِهَا وَكُلُوا مِن رِّزْقِهِ
-          </p>
+          <div style={{ maxWidth: 680, margin: '0 auto' }}>
+            <p style={{
+              fontFamily: 'Georgia, "Times New Roman", serif',
+              fontSize: 'clamp(20px, 2.2vw, 30px)',
+              letterSpacing: 0, direction: 'rtl', lineHeight: 1.8,
+              color: '#ffffff',
+            }}>
+              هُوَ الَّذِي جَعَلَ لَكُمُ الْأَرْضَ ذَلُولًا فَامْشُوا فِي مَنَاكِبِهَا وَكُلُوا مِن رِّزْقِهِ ۖ وَإِلَيْهِ النُّشُورُ
+            </p>
+            <p style={{
+              fontSize: 13, color: 'rgba(255,255,255,0.55)',
+              marginTop: 14, lineHeight: 1.6, fontStyle: 'italic',
+            }}>
+              Surah Al-Mulk 67:15 — Ibn Kathīr: "Allah made the earth submissive and subservient, so travel its regions, walk its paths, and eat of what He has provided. The earth has been tamed for you as a riding animal is tamed."
+            </p>
+          </div>
           <div className="hero-meta">
             <span className="hero-meta-dot" />
             {data.meta.recommendedCount} chains · {data.meta.offerCount} offers
