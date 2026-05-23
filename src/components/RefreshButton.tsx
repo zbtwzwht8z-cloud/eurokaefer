@@ -49,7 +49,8 @@ export default function RefreshButton({ lastGenerated }: { lastGenerated?: strin
         setStatus(data.conclusion === 'success' ? 'success' : 'failure');
         cleanup();
         if (data.conclusion === 'success') {
-          setTimeout(() => window.location.reload(), 8000);
+          // Give Vercel ~3 min to build + deploy after GHA pushes
+          setTimeout(() => window.location.reload(), 3 * 60 * 1000);
         }
       }
     } catch {/* keep polling */}
@@ -64,8 +65,8 @@ export default function RefreshButton({ lastGenerated }: { lastGenerated?: strin
 
   useEffect(() => cleanup, []);
 
-  // Estimated total: 90 seconds.
-  const pct = Math.min(100, (elapsed / 90) * 100);
+  // Estimated total: ~4 min (90s GHA + ~150s Vercel deploy)
+  const pct = Math.min(99, (elapsed / 240) * 100);
   const stage =
     status === 'starting' ? 'Asking GitHub…' :
     status === 'queued' ? '🕒 Waiting for runner…' :
@@ -73,7 +74,7 @@ export default function RefreshButton({ lastGenerated }: { lastGenerated?: strin
       ? (elapsed < 30 ? 'Fetching offers…'
         : elapsed < 70 ? 'Computing chains…'
         : 'Deploying…')
-    : status === 'success' ? '✅ Done — reloading…'
+    : status === 'success' ? '✅ Deploying… (reloads in ~3 min)'
     : status === 'failure' ? '❌ Failed'
     : status === 'unconfigured' ? '⚠️ Not configured'
     : '';
