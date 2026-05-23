@@ -55,6 +55,11 @@ HOME_STATION_REFS: dict[str, list[str]] = {
         '01JCR8EM5PTM7C3XEK4S6ATFWR',  # Gersthofen (Augsburg/Munich)
         '01JCR8QJ9K2K68BYKVSC0EE42Q',  # München proper
     ],
+    'Marburg': [
+        '01JCREA8S3YSVJ9A69X9XJDVR4',  # Marburg
+        '01JCRF4562XWQ4XHWGSAEM7TZC',  # Frankfurt am Main
+        '01JCRF40J4X1TZKGNRZ6EXPPGH',  # Mainz
+    ],
 }
 
 ALL_HOME_STATION_REFS: list[str] = [

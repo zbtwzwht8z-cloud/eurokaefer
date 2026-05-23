@@ -1,9 +1,9 @@
 // Centralized constants: home cities, target regions, country flag map, ICE
 // return times. These power the filter dropdowns and the card badges.
 
-export type HomeCity = 'Bochum' | 'Hannover' | 'München' | 'Other';
+export type HomeCity = 'Bochum' | 'Hannover' | 'München' | 'Marburg' | 'Other';
 
-export const HOME_CITIES: HomeCity[] = ['Bochum', 'Hannover', 'München', 'Other'];
+export const HOME_CITIES: HomeCity[] = ['Bochum', 'Hannover', 'München', 'Marburg', 'Other'];
 
 // Cities that count as each home zone (used by Python pipeline + frontend filters)
 // NOTE: include BOTH bare names ("Berglern") AND compound display names
@@ -19,13 +19,14 @@ export const HOME_CITY_SET: Record<HomeCity, Set<string>> = {
     'München', 'Munich', 'Berglern', 'Berglern / Munich Airport',
     'Augsburg', 'Gersthofen', 'Rosenheim',
   ]),
+  Marburg: new Set(['Marburg', 'Kassel', 'Frankfurt am Main', 'Mainz']),
   Other: new Set(),
 };
 
 // Destination regions for the "To" dropdown
 export type RegionKey =
   | 'all' | 'italy' | 'spain' | 'portugal' | 'austria' | 'switzerland'
-  | 'alps' | 'south_france' | 'southern_germany' | 'northern_germany'
+  | 'alps' | 'south_france' | 'nrw' | 'southern_germany' | 'northern_germany'
   | 'eastern_germany' | 'scandinavia';
 
 export const REGIONS: Record<RegionKey, { label: string; cities: Set<string> }> = {
@@ -64,6 +65,13 @@ export const REGIONS: Record<RegionKey, { label: string; cities: Set<string> }> 
       'Cabriès', 'Gattières', 'Saint-Laurent-du-Var', 'Saint-Jean-de-Gonville',
       'Dagneux', 'Marseille', 'Nice', 'Montpellier', 'Nîmes', 'Avignon',
       'Aix-en-Provence', 'Toulouse', 'Mérignac',
+    ]),
+  },
+  nrw: {
+    label: '🏭 NRW (Rhine-Ruhr)',
+    cities: new Set([
+      'Bochum', 'Essen', 'Dormagen', 'Bielefeld', 'Bonn', 'Duisburg',
+      'Dortmund', 'Düsseldorf', 'Köln', 'Cologne', 'Münster', 'Aachen',
     ]),
   },
   southern_germany: {

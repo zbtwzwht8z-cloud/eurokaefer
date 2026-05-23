@@ -59,7 +59,8 @@ for hc, names in {
     'Bochum': {'Bochum', 'Essen', 'Dormagen', 'Bielefeld', 'Bonn', 'Duisburg',
                'Dortmund', 'Düsseldorf', 'Köln', 'Cologne', 'Münster', 'Aachen'},
     'Hannover': {'Hannover', 'Laatzen', 'Weyhe'},
-    'München': {'München', 'Munich', 'Berglern', 'Augsburg', 'Gersthofen'},
+    'München': {'München', 'Munich', 'Berglern', 'Augsburg', 'Gersthofen', 'Rosenheim'},
+    'Marburg': {'Marburg', 'Kassel', 'Frankfurt am Main', 'Mainz'},
 }.items():
     for n in names:
         HOME_CITY_OF[n] = hc
