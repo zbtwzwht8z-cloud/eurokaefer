@@ -120,9 +120,8 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
       <section className="hero">
         <div className="container hero-inner">
           <h1 className="h-display">€1 road trips, planned.</h1>
-          <p>
-            Live Movacar relocations chained into round-trips and one-ways from{' '}
-            Bochum, Hannover, and Munich. Refreshed every six hours.
+          <p style={{ fontFamily: 'Georgia, "Times New Roman", serif', fontSize: 'clamp(18px, 2vw, 26px)', letterSpacing: 0, direction: 'rtl' }}>
+            وَامْشُوا فِي مَنَاكِبِهَا وَكُلُوا مِن رِّزْقِهِ
           </p>
           <div className="hero-meta">
             <span className="hero-meta-dot" />
