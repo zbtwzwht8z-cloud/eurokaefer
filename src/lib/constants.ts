@@ -6,13 +6,19 @@ export type HomeCity = 'Bochum' | 'Hannover' | 'München' | 'Other';
 export const HOME_CITIES: HomeCity[] = ['Bochum', 'Hannover', 'München', 'Other'];
 
 // Cities that count as each home zone (used by Python pipeline + frontend filters)
+// NOTE: include BOTH bare names ("Berglern") AND compound display names
+// ("Berglern / Munich Airport"). The Movacar API + Python pipeline uses bare names;
+// the UI sometimes displays compound names. Cover both to keep filters correct.
 export const HOME_CITY_SET: Record<HomeCity, Set<string>> = {
   Bochum: new Set([
     'Bochum', 'Essen', 'Dormagen', 'Bielefeld', 'Bonn', 'Duisburg',
     'Dortmund', 'Düsseldorf', 'Köln', 'Cologne', 'Münster', 'Aachen',
   ]),
   Hannover: new Set(['Hannover', 'Laatzen', 'Weyhe']),
-  München: new Set(['München', 'Munich', 'Berglern / Munich Airport', 'Augsburg', 'Gersthofen']),
+  München: new Set([
+    'München', 'Munich', 'Berglern', 'Berglern / Munich Airport',
+    'Augsburg', 'Gersthofen', 'Rosenheim',
+  ]),
   Other: new Set(),
 };
 
@@ -27,8 +33,9 @@ export const REGIONS: Record<RegionKey, { label: string; cities: Set<string> }> 
   italy: {
     label: '🇮🇹 Italy',
     cities: new Set([
-      'Milan', 'Milan / Castellanza', 'Bergamo', 'Bologna', 'Florence', 'Roma',
-      'Turin', 'Venezia', 'Napoli', 'Genova', 'Palermo',
+      'Milan', 'Milan / Castellanza', 'Castellanza', 'Bergamo', 'Bologna',
+      'Florence', 'Roma', 'Turin', 'Venezia', 'Napoli', 'Genova', 'Palermo',
+      'Cagliari', 'Olbia', 'Bastia',
     ]),
   },
   spain: {
@@ -62,10 +69,11 @@ export const REGIONS: Record<RegionKey, { label: string; cities: Set<string> }> 
   southern_germany: {
     label: 'Southern Germany',
     cities: new Set([
-      'München', 'Munich', 'Berglern / Munich Airport', 'Stuttgart', 'Nürnberg',
-      'Augsburg', 'Gersthofen', 'Wangen', 'Aach', 'Ihringen',
+      'München', 'Munich', 'Berglern', 'Berglern / Munich Airport', 'Stuttgart',
+      'Nürnberg', 'Augsburg', 'Gersthofen', 'Wangen', 'Aach', 'Ihringen',
       'Korntal-Münchingen', 'Ettlingenweier', 'Neu-Ulm', 'Würzburg', 'Regensburg',
       'Heidelberg', 'Karlsruhe', 'Sinsheim', 'Freiburg', 'Konstanz', 'Friedrichshafen',
+      'Bamberg', 'Bayreuth', 'Rosenheim',
     ]),
   },
   northern_germany: {

@@ -201,15 +201,52 @@ def schedule_path(path: list[dict[str, str]]) -> tuple[list[tuple[datetime, date
 
 
 def score_path(path: list[dict[str, str]], intervals: list[tuple[datetime, datetime]], _appointment: str) -> float:
-    """Higher is better. Rewards: more legs, southern/spicy destinations, decent length."""
+    """Higher is better. Rewards good road-trips, penalises painful pace.
+
+    Components:
+    - base 100
+    - legs: +8 per leg (cap +30) — more legs = more adventure, but diminishing returns
+    - distance: +km/200 (cap +40)
+    - south bonus: +20 if any destination is in SOUTH_NAMES
+    - loop bonus: +10 if start == end home zone (loops are rarer / more useful)
+    - 1-leg baseline: +15 so clean one-ways compete with longer chains
+    - days target: -2 * |days - 5| (deviation from 5-day sweet-spot)
+    - pace penalty: -5 * max(0, km/day - 350) (350 km/day is sustainable; 600+ km/day is brutal)
+    """
     score = 100.0
-    score += min(len(path) * 8, 40)
+
+    # Leg count
+    if len(path) == 1:
+        score += 15  # clean one-way baseline so they don't get buried
+    else:
+        score += min(len(path) * 8, 30)
+
+    # Distance
     distance_km = sum(float(p.get('distance_km') or 0) for p in path)
     score += min(distance_km / 200, 40)
+
+    # South / Mediterranean draw
     if any(p['destination_name'] in SOUTH_NAMES for p in path):
         score += 20
+
+    # Loops are more useful than one-ways (return you home)
+    origin = path[0]['origin_name']
+    dest = path[-1]['destination_name']
+    for names in HOME_SETS_NAMES.values():
+        if origin in names and dest in names:
+            score += 10
+            break
+
+    # Trip duration: target 5 days
     days = (intervals[-1][1] - intervals[0][0]).total_seconds() / 86400
+    days = max(days, 0.5)
     score -= abs(days - 5.0) * 2
+
+    # Pace: penalise brutal km/day. 350 = fine, 600+ = painful.
+    km_per_day = distance_km / days
+    if km_per_day > 350:
+        score -= 5 * (km_per_day - 350) / 50  # 400 = -1, 500 = -3, 600 = -5 etc.
+
     return score
 
 
@@ -433,6 +470,23 @@ def main() -> None:
             seen_routes[route_key] = opt
     all_options = list(seen_routes.values())
     all_options.sort(key=lambda o: o.score, reverse=True)
+
+    # Diversity cap: keep at most 5 chains per (home_city, destination_country_hint)
+    # so the top of the list isn't dominated by 8 variants of the same Munich→Italy trip.
+    # We approximate "destination country" by the destination station name; chains
+    # ending at the same city are limited by route-dedup already.
+    from_dest_count: dict[tuple[str, str], int] = {}
+    diverse: list[Option] = []
+    for opt in all_options:
+        ct, hc = classify(opt.path)
+        dest = opt.path[-1]['destination_name']
+        bucket = (hc or '_general', dest)
+        if from_dest_count.get(bucket, 0) >= 5:
+            continue
+        from_dest_count[bucket] = from_dest_count.get(bucket, 0) + 1
+        diverse.append(opt)
+    all_options = diverse
+
     emit_csv(all_options)
     print(f'✓ {len(all_options)} unique-route chains written to {OUT_PATH}')
 

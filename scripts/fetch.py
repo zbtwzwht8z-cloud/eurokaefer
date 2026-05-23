@@ -45,6 +45,7 @@ HOME_STATION_REFS: dict[str, list[str]] = {
     'Bochum': [
         '01JCREFS6VXZ2CBYDZEQK3PCGJ',  # Bochum
         '01JCREGNCR5C18RRB5K2M02504',  # Essen
+        '01JCRENM1KCW43HAGA4ZHKHDM9',  # Dormagen
     ],
     'Hannover': [
         '01JCRE4P0P60PTDNXJJQGTVMZC',  # Weyhe (nearest active station to Hannover)
@@ -52,6 +53,7 @@ HOME_STATION_REFS: dict[str, list[str]] = {
     'München': [
         '01JCR876D5E2V83RANH2V4ATJT',  # Berglern (Munich Airport area)
         '01JCR8EM5PTM7C3XEK4S6ATFWR',  # Gersthofen (Augsburg/Munich)
+        '01JCR8QJ9K2K68BYKVSC0EE42Q',  # München proper
     ],
 }
 
@@ -62,6 +64,8 @@ ALL_HOME_STATION_REFS: list[str] = [
 # Broad fetch: stop after this many consecutive pages with no new offer IDs
 STALE_PAGE_STOP = 5
 MAX_BROAD_PAGES = 30
+# Origin-scoped fetch: cap pages per station so we don't loop forever
+MAX_ORIGIN_PAGES = 10
 
 
 def http_get(url: str, retries: int = 3) -> Any:
@@ -128,7 +132,7 @@ def collector_broad() -> list[dict]:
 # ── Collector B: origin-scoped fetch for home clusters ───────────────────────
 
 def collector_home_origins() -> list[dict]:
-    """Query each home-cluster station by origin= param."""
+    """Query each home-cluster station by origin= param. Now paginates per origin."""
     all_offers: list[dict] = []
     seen_ids: set[str] = set()
     base = (
@@ -140,17 +144,47 @@ def collector_home_origins() -> list[dict]:
         # Resolve display name: find station whose reference matches this ULID
         city = next(
             (a.get('city', station_id) for a in _stations.values() if a.get('reference') == station_id),
-            station_id
+            station_id,
         )
-        url = f'{base}&origin={station_id}'
-        raw = http_get(url)
-        batch = raw.get('data', [])
-        _ingest_included(raw.get('included', []))
-        new = [o for o in batch if o.get('id') not in seen_ids]
-        seen_ids.update(o.get('id', '') for o in batch)
-        all_offers.extend(new)
-        print(f'  origin {station_id} ({city}): {len(batch)} offers, {len(new)} new')
+        station_total = 0
+        station_new = 0
+        for page in range(1, MAX_ORIGIN_PAGES + 1):
+            url = f'{base}&origin={station_id}&page={page}'
+            raw = http_get(url)
+            batch = raw.get('data', [])
+            if not batch:
+                break
+            _ingest_included(raw.get('included', []))
+            new = [o for o in batch if o.get('id') not in seen_ids]
+            seen_ids.update(o.get('id', '') for o in batch)
+            all_offers.extend(new)
+            station_total += len(batch)
+            station_new += len(new)
+            # If page returned < 100 we're at the end
+            if len(batch) < 100:
+                break
+        print(f'  origin {station_id} ({city}): {station_total} offers across pages, {station_new} new')
     return all_offers
+
+
+# ── Discovery log: enumerate all stations we've seen ─────────────────────────
+
+def log_station_discovery() -> None:
+    """Print every station found in the broad fetch — helps spot new stations
+    that should be added to HOME_STATION_REFS."""
+    if not _stations:
+        print('  (no stations discovered)')
+        return
+    home_refs = set(ALL_HOME_STATION_REFS)
+    print(f'  Discovered {len(_stations)} stations (★ = already in HOME_STATION_REFS):')
+    rows = sorted(
+        _stations.values(),
+        key=lambda a: (a.get('country') or '?', a.get('city') or '?'),
+    )
+    for a in rows:
+        ref = a.get('reference', '?')
+        mark = '★' if ref in home_refs else ' '
+        print(f"    {mark} {a.get('country') or '?':3} {a.get('city') or '?':28} ref={ref}")
 
 
 # ── Parse raw offer objects → CSV rows ───────────────────────────────────────
@@ -239,16 +273,22 @@ def main() -> None:
     print('  [A] Broad paginated fetch…')
     broad_raw = collector_broad()
 
-    print('  [B] Home-origin scoped fetch…')
+    print('  [B] Home-origin scoped fetch (paginated)…')
     home_raw = collector_home_origins()
 
     all_raw = broad_raw + home_raw
     print(f'  Combined: {len(all_raw)} unique raw offers')
 
+    print('  [C] Station discovery…')
+    log_station_discovery()
+
     rows = parse_offers(all_raw)
-    before = len(rows)
+    kept = len(rows)
+    rejected = len(all_raw) - kept
+    print(f'  {kept} are €1 (price ≤ €1.00), {rejected} rejected as non-€1')
+    before_dedup = len(rows)
     rows = dedup_by_route_day(rows)
-    print(f'  {before} are €1 → {len(rows)} after dedup by (route, day)')
+    print(f'  {before_dedup} → {len(rows)} after dedup by (origin, dest, day) [kept best free_km]')
 
     with OFFERS_CSV.open('w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=FIELDS)

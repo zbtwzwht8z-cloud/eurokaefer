@@ -25,6 +25,11 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
   const [filter, setFilter] = useState<FilterState>(DEFAULT_FILTER);
   const filtered = useMemo(() => applyFilters(allChains, filter, myHome), [allChains, filter, myHome]);
 
+  // Pagination: 24 visible per "page". Reset whenever filters change.
+  const PAGE_SIZE = 24;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  useEffect(() => { setVisibleCount(PAGE_SIZE); }, [filter]);
+
   const [openTrip, setOpenTrip] = useState<Chain | null>(null);
   const [highlights, setHighlights] = useState<Highlight[]>(initialHighlights);
   const [loungeOpen, setLoungeOpen] = useState(false);
@@ -156,22 +161,59 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
           <div className="empty">
             <span className="empty-emoji">🤷</span>
             <strong>No trips match.</strong>
-            <p style={{ marginTop: 8 }}>Loosen the filters or try a different region.</p>
+            <p style={{ marginTop: 8 }}>
+              Try ticking <em>flex</em> on the To filter, picking a wider region,
+              or clear the filters above.
+            </p>
+            <button
+              className="btn btn-ghost btn-sm"
+              style={{ marginTop: 16 }}
+              onClick={() => setFilter(DEFAULT_FILTER)}
+            >
+              Clear all filters
+            </button>
           </div>
         ) : (
-          <div className="trip-grid">
-            {filtered.slice(0, 60).map(c => (
-              <TripCard
-                key={tripKey(c)}
-                chain={c}
-                highlights={highlightsByTrip.get(tripKey(c)) || []}
-                usersById={usersById}
-                myUserId={user.id}
-                onOpen={() => setOpenTrip(c)}
-                onToggleHighlight={() => toggleHighlight(c)}
-              />
-            ))}
-          </div>
+          <>
+            <div className="trip-grid">
+              {filtered.slice(0, visibleCount).map(c => (
+                <TripCard
+                  key={tripKey(c)}
+                  chain={c}
+                  highlights={highlightsByTrip.get(tripKey(c)) || []}
+                  usersById={usersById}
+                  myUserId={user.id}
+                  onOpen={() => setOpenTrip(c)}
+                  onToggleHighlight={() => toggleHighlight(c)}
+                />
+              ))}
+            </div>
+            {visibleCount < filtered.length && (
+              <div style={{ textAlign: 'center', marginTop: 32 }}>
+                <button
+                  className="btn btn-ghost"
+                  onClick={() => setVisibleCount(v => v + PAGE_SIZE)}
+                >
+                  Show {Math.min(PAGE_SIZE, filtered.length - visibleCount)} more
+                  <span style={{ color: 'var(--ink-3)', marginLeft: 8, fontSize: 13 }}>
+                    ({filtered.length - visibleCount} remaining)
+                  </span>
+                </button>
+              </div>
+            )}
+            {visibleCount >= filtered.length && filtered.length > PAGE_SIZE && (
+              <div style={{ textAlign: 'center', marginTop: 24, color: 'var(--ink-3)', fontSize: 13 }}>
+                Showing all {filtered.length} trips ·{' '}
+                <button
+                  className="btn-link"
+                  onClick={() => setVisibleCount(PAGE_SIZE)}
+                  style={{ background: 'none', border: 0, color: 'var(--accent)', cursor: 'pointer', padding: 0 }}
+                >
+                  collapse
+                </button>
+              </div>
+            )}
+          </>
         )}
       </main>
 
