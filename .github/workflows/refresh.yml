@@ -42,8 +42,15 @@ jobs:
             echo "No changes to commit."
           else
             git commit -m "refresh: $(date -u +%FT%TZ)"
-            git pull --rebase origin main
-            git push
+            # Resolve any concurrent-run conflict by keeping our freshly-generated data.
+            # In a rebase, -X theirs means "prefer the commit being replayed" (our data).
+            if ! git pull --rebase -X theirs origin main; then
+              # Fallback: abort rebase and force-push our generated data
+              git rebase --abort
+              git push --force-with-lease
+            else
+              git push
+            fi
           fi
 
       - name: Trigger Vercel deploy
