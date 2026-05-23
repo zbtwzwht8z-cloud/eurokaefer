@@ -94,32 +94,32 @@ export default function RefreshButton({ lastGenerated }: { lastGenerated?: strin
   })();
 
   return (
-    <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+    <div style={{ position: 'relative', display: 'inline-flex', flexDirection: 'column', alignItems: 'center' }}>
       <button
         className="btn btn-ghost btn-sm"
         onClick={() => (disabled ? null : start())}
         disabled={disabled}
+        title={status === 'idle' && lastUpdatedLabel ? `Last updated ${lastUpdatedLabel}` : undefined}
       >
-        🔄<span className="refresh-label"> {status === 'idle' ? 'Refresh now' : stage}</span>
+        🔄<span className="refresh-label"> {status === 'idle' ? 'Refresh' : stage}</span>
       </button>
-      {status === 'idle' && lastUpdatedLabel && (
-        <div className="text-xs" style={{ color: 'var(--ink-3)', textAlign: 'center' }}>
-          last updated {lastUpdatedLabel}
+      {/* Progress bar sits below the topbar as a thin stripe — doesn't expand topbar height */}
+      {(status === 'queued' || status === 'in_progress' || status === 'success') && (
+        <div style={{
+          position: 'fixed', top: 56, left: 0, right: 0, height: 3, zIndex: 1001,
+          background: 'var(--surface-2)',
+        }}>
+          <div style={{
+            height: '100%', background: 'var(--accent)',
+            width: status === 'success' ? '100%' : `${pct}%`,
+            transition: 'width 0.5s ease',
+          }} />
         </div>
       )}
-      {(status === 'queued' || status === 'in_progress') && (
-        <>
-          <div className="progress-bar">
-            <div className="progress-fill" style={{ width: `${pct}%` }} />
-          </div>
-          <div className="text-xs" style={{ textAlign: 'center' }}>
-            {elapsed}s elapsed
-          </div>
-        </>
-      )}
       {status === 'failure' && runUrl && (
-        <a href={runUrl} target="_blank" rel="noreferrer" className="text-xs" style={{ marginTop: 6, textAlign: 'center' }}>
-          View run on GitHub →
+        <a href={runUrl} target="_blank" rel="noreferrer" className="text-xs"
+          style={{ position: 'absolute', top: '100%', right: 0, marginTop: 4, whiteSpace: 'nowrap', color: 'var(--ink-3)' }}>
+          View run →
         </a>
       )}
     </div>
