@@ -15,9 +15,25 @@ export type Leg = {
   offerId: string;
 };
 
+export type Variant = {
+  startUtc: string;
+  endUtc: string;
+  pickups: string[];
+  dropoffs: string[];
+  offerIds: string[];
+  days: number;
+  score?: number;  // present when emitted by search v2; not strictly used in UI
+};
+
+export type LoopTier = 'perfect' | 'imperfect';
+
 export type Chain = {
   tripId?: number;       // assigned client-side after dedup
-  homeCity?: string;     // 'Bochum' | 'Hannover' | 'München' — tagged by pipeline
+  homeCity?: string;     // legacy field, mirrors homeOrigin
+  homeOrigin?: string | null;  // cluster name if route[0] is in a home cluster
+  isLoop?: boolean;      // start area == end area, >= 2 legs
+  loopTier?: LoopTier | null;  // 'perfect' (≤15km), 'imperfect' (≤100km), or null
+  startEndKm?: number | null;  // great-circle distance start↔end
   score: number;
   route: string[];       // city names, length = legs.length + 1
   legs: Leg[];
@@ -32,6 +48,7 @@ export type Chain = {
   countries?: string[];
   appointment?: string;
   endType?: string;
+  variants?: Variant[];  // all (pickup, dropoff) combinations for this route
 };
 
 export type TripData = {
@@ -74,9 +91,11 @@ export function chainDriveHours(c: Chain): number {
 }
 
 // ── Trip key (stable identifier for highlights / messages) ────────────────────
+// Route-only so highlights/comments survive across refreshes when Movacar's
+// underlying offer IDs churn but the same route reappears.
 
 export function tripKey(c: Chain): string {
-  return c.route.join(' → ') + '|' + c.legs.map(l => l.offerId).join(',');
+  return c.route.join(' → ');
 }
 
 // ── ICE return city ───────────────────────────────────────────────────────────

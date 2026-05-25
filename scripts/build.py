@@ -139,13 +139,45 @@ def build_chain_obj(c: dict, offers_by_id: dict[str, dict]) -> dict | None:
         if co not in countries:
             countries.append(co)
 
+    # Parse variants_json (new in v2 of search.py). Falls back to single-
+    # variant derived from canonical fields if older CSV is being read.
+    variants_raw = c.get('variants_json') or ''
+    variants: list[dict] = []
+    if variants_raw:
+        try:
+            variants = json.loads(variants_raw)
+        except json.JSONDecodeError:
+            variants = []
+    if not variants:
+        # Synthesize a single variant from the canonical fields
+        variants = [{
+            'startUtc': c.get('start') or '',
+            'endUtc': c.get('end') or '',
+            'pickups': pickups,
+            'dropoffs': dropoffs,
+            'offerIds': offer_ids,
+            'days': float(c.get('days') or 0),
+        }]
+
+    is_loop = (c.get('is_loop') or '').lower() == 'yes' or (c.get('chain_type') or '') == 'loop'
+    home_city = c.get('home_city') or ''
+    loop_tier = (c.get('loop_tier') or '').strip() or None  # 'perfect' | 'imperfect' | None
+    try:
+        start_end_km = float(c.get('start_end_km') or 0) if c.get('start_end_km') else None
+    except ValueError:
+        start_end_km = None
+
     route_km = float(c.get('route_km') or 0)
     return {
         'score': float(c.get('score') or 0),
         'route': cities,
         'legs': legs,
         'type': c.get('chain_type') or 'oneway',
-        **({'homeCity': hc} if (hc := c.get('home_city') or '') else {}),
+        'isLoop': is_loop,
+        'loopTier': loop_tier,
+        'startEndKm': start_end_km,
+        'homeOrigin': home_city or None,
+        **({'homeCity': home_city} if home_city else {}),
         'startUtc': c.get('start') or '',
         'endUtc': c.get('end') or '',
         'days': float(c.get('days') or 0),
@@ -155,6 +187,7 @@ def build_chain_obj(c: dict, offers_by_id: dict[str, dict]) -> dict | None:
         'driveHours': route_km / 85,
         'countries': countries,
         'appointment': c.get('appointment') or '',
+        'variants': variants,
     }
 
 

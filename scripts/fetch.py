@@ -33,10 +33,12 @@ OFFERS_CSV = DATA_DIR / 'movacar_offers.csv'
 
 API_BASE = 'https://crowd-api-production-615013621295.europe-west1.run.app'
 
-# 35-day rolling window (Movacar publishes 2-4 weeks ahead)
+# Rolling window. Movacar typically publishes ~2-4 weeks ahead, but extending
+# the window costs nothing on their side — the API just returns less data per
+# request. We probe up to 90 days so we catch anything they publish further out.
 TODAY = datetime.now(timezone.utc).date()
 WINDOW_START = TODAY
-WINDOW_END = TODAY + timedelta(days=35)
+WINDOW_END = TODAY + timedelta(days=90)
 
 # Home-cluster station references (ULIDs) for origin-scoped API queries.
 # The Movacar API uses `reference` (ULID) for the `origin=` param, NOT the numeric id.
@@ -68,9 +70,9 @@ ALL_HOME_STATION_REFS: list[str] = [
 
 # Broad fetch: stop after this many consecutive pages with no new offer IDs
 STALE_PAGE_STOP = 5
-MAX_BROAD_PAGES = 30
+MAX_BROAD_PAGES = 60
 # Origin-scoped fetch: cap pages per station so we don't loop forever
-MAX_ORIGIN_PAGES = 10
+MAX_ORIGIN_PAGES = 20
 
 
 def http_get(url: str, retries: int = 3) -> Any:
@@ -294,6 +296,22 @@ def main() -> None:
     before_dedup = len(rows)
     rows = dedup_by_route_day(rows)
     print(f'  {before_dedup} → {len(rows)} after dedup by (origin, dest, day) [kept best free_km]')
+
+    # Histogram: how many offers per week-ahead? Reveals Movacar's true horizon.
+    from collections import Counter
+    weeks = Counter()
+    for r in rows:
+        pickup_day = r['start_date_utc'][:10]
+        try:
+            d = datetime.fromisoformat(pickup_day).date()
+            week_ahead = (d - TODAY).days // 7
+            weeks[week_ahead] += 1
+        except ValueError:
+            pass
+    print('  Offers per week ahead of today:')
+    for w in sorted(weeks):
+        bar = '█' * min(weeks[w], 40)
+        print(f'    w+{w:2d}: {weeks[w]:3d}  {bar}')
 
     with OFFERS_CSV.open('w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=FIELDS)

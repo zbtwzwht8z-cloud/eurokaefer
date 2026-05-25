@@ -81,6 +81,56 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
         </select>
       </div>
 
+      {/* Date range */}
+      <div className="toolbar-group">
+        <span className="filter-label" style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>
+          When
+        </span>
+        <input
+          type="date"
+          value={value.dateFrom || ''}
+          onChange={e => onChange({ ...value, dateFrom: e.target.value || undefined })}
+          title="Earliest pickup"
+          style={{ padding: '6px 8px', fontSize: 13 }}
+        />
+        <span style={{ padding: '0 4px', color: 'var(--ink-4)' }}>→</span>
+        <input
+          type="date"
+          value={value.dateTo || ''}
+          onChange={e => onChange({ ...value, dateTo: e.target.value || undefined })}
+          title="Latest dropoff"
+          style={{ padding: '6px 8px', fontSize: 13 }}
+        />
+        {(value.dateFrom || value.dateTo) && (
+          <button
+            type="button"
+            className="btn-icon"
+            onClick={() => onChange({ ...value, dateFrom: undefined, dateTo: undefined })}
+            title="Clear dates"
+            style={{ fontSize: 12 }}
+          >✕</button>
+        )}
+      </div>
+
+      {/* Loops toggle */}
+      <div className="toolbar-group">
+        <label
+          title="Show only round trips (start area == end area)"
+          style={{
+            display: 'flex', alignItems: 'center', gap: 5,
+            padding: '6px 12px', borderRadius: 999, cursor: 'pointer',
+            fontSize: 13, fontWeight: 500, whiteSpace: 'nowrap',
+            background: value.loopsOnly ? 'var(--accent)' : 'var(--line)',
+            color: value.loopsOnly ? '#fff' : 'var(--ink-3)',
+            transition: 'background .15s, color .15s',
+          }}>
+          <input type="checkbox" checked={!!value.loopsOnly}
+            onChange={e => onChange({ ...value, loopsOnly: e.target.checked, onewaysOnly: e.target.checked ? false : value.onewaysOnly })}
+            style={{ display: 'none' }} />
+          🔄 Loops only
+        </label>
+      </div>
+
       {/* Sort */}
       <div className="toolbar-group">
         <span className="filter-label" style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>

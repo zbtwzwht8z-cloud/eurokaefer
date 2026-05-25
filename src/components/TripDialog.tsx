@@ -51,7 +51,7 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
     }}>
       <div className="dialog-head">
         <div>
-          <div className="eyebrow">Trip #{chain.tripId} · {chain.type === 'loop' ? 'Round trip' : 'One-way'}</div>
+          <div className="eyebrow">Trip #{chain.tripId} · {(chain.isLoop ?? (chain.type === 'loop')) ? 'Round trip' : 'One-way'}</div>
           <h2 className="h-2" style={{ marginTop: 4 }}>{chain.route.join(' → ')}</h2>
         </div>
         <div style={{ display: 'flex', gap: 6 }}>
@@ -141,6 +141,44 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
             </div>
           ))}
         </div>
+
+        {/* Date variants */}
+        {chain.variants && chain.variants.length > 1 && (
+          <div style={{ marginTop: 28 }}>
+            <h3 className="h-3" style={{ marginBottom: 12 }}>
+              Available pickup dates · {chain.variants.length}
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {chain.variants.map((v, i) => {
+                const sd = new Date(v.startUtc);
+                const ed = new Date(v.endUtc);
+                const isCanonical = v.startUtc === chain.startUtc && v.endUtc === chain.endUtc;
+                return (
+                  <div key={i} style={{
+                    background: isCanonical ? 'var(--surface-3, var(--surface-2))' : 'var(--surface-2)',
+                    borderRadius: 'var(--r-sm)',
+                    padding: '10px 14px',
+                    fontSize: 13,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    gap: 12,
+                    border: isCanonical ? '1px solid var(--accent)' : '1px solid transparent',
+                  }}>
+                    <span style={{ color: 'var(--ink)' }}>
+                      {sd.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
+                      {' → '}
+                      {ed.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
+                    </span>
+                    <span style={{ color: 'var(--ink-3)', fontSize: 12 }}>
+                      {v.days.toFixed(1)}d · {v.pickups.length} {v.pickups.length === 1 ? 'leg' : 'legs'}
+                      {isCanonical && ' · best'}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Highlights */}
         {highlights.length > 0 && (
