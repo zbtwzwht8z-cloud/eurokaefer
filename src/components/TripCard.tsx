@@ -20,8 +20,9 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
   const driveH = chainDriveHours(chain);
   const ice = endsInIceCity(chain);
   const countries = useMemo(() => countriesOfChain(chain), [chain]);
-  const isLoop = chain.type === 'loop';
+  const isLoop = chain.isLoop ?? (chain.type === 'loop');
   const dest = chain.route[chain.route.length - 1];
+  const variantCount = chain.variants?.length ?? 1;
 
   const startDate = chain.startUtc ? new Date(chain.startUtc) : null;
   const endDate = chain.endUtc ? new Date(chain.endUtc) : null;
@@ -54,10 +55,25 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
       </div>
 
       <div className="trip-card-meta">
-        {isLoop && <span className="badge badge-accent">Round trip</span>}
-        {!isLoop && <span className="badge">Ends {dest}</span>}
+        {chain.loopTier === 'perfect' && (
+          <span className="badge badge-accent" title={`Start ↔ end ${Math.round(chain.startEndKm ?? 0)}km`}>
+            ⭐ Perfect loop
+          </span>
+        )}
+        {chain.loopTier === 'imperfect' && (
+          <span className="badge" title={`Start ↔ end ${Math.round(chain.startEndKm ?? 0)}km`}>
+            🔄 Loop ~{Math.round(chain.startEndKm ?? 0)}km
+          </span>
+        )}
+        {!chain.loopTier && isLoop && <span className="badge badge-accent">Round trip</span>}
+        {!chain.loopTier && !isLoop && <span className="badge">Ends {dest}</span>}
         <span className="badge">{chain.legs.length} {chain.legs.length === 1 ? 'leg' : 'legs'}</span>
         <span className="badge">{(chain.days || 0).toFixed(1)} d</span>
+        {variantCount > 1 && (
+          <span className="badge" title={`${variantCount} pickup-date variants available`}>
+            📅 {variantCount} dates
+          </span>
+        )}
         {ice.ok && <span className="badge badge-ice">🚄 {ice.label}</span>}
       </div>
 

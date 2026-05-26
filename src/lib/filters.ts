@@ -31,6 +31,15 @@ export const DEFAULT_FILTER: FilterState = {
   sort: 'best',
 };
 
+function priority(c: Chain): number {
+  let p = 0;
+  if (c.homeOrigin) p += 4;
+  if (c.loopTier === 'perfect') p += 3;
+  else if (c.loopTier === 'imperfect') p += 2;
+  else if (c.isLoop ?? (c.type === 'loop')) p += 1;
+  return p;
+}
+
 function resolveFromSet(state: FilterState, myHome: HomeCity): { set: Set<string>; key: string } | null {
   if (state.from === 'any') return null;
   const key = state.from === 'mine' ? myHome : state.from;
@@ -45,17 +54,18 @@ function resolveToSet(state: FilterState): Set<string> | null {
 
 function matchesDateWindow(c: Chain, dateFrom?: string, dateTo?: string): boolean {
   if (!dateFrom && !dateTo) return true;
-  const start = new Date(c.startUtc).getTime();
-  const end = new Date(c.endUtc).getTime();
-  if (dateFrom) {
-    const from = new Date(dateFrom).getTime();
-    if (end < from) return false;
-  }
-  if (dateTo) {
-    const to = new Date(dateTo + 'T23:59:59Z').getTime();
-    if (start > to) return false;
-  }
-  return true;
+  // Match if ANY variant falls in the window. Falls back to canonical
+  // start/end if variants aren't populated (legacy data).
+  const candidates = (c.variants && c.variants.length)
+    ? c.variants.map(v => ({ start: v.startUtc, end: v.endUtc }))
+    : [{ start: c.startUtc, end: c.endUtc }];
+  const fromMs = dateFrom ? new Date(dateFrom).getTime() : -Infinity;
+  const toMs = dateTo ? new Date(dateTo + 'T23:59:59Z').getTime() : Infinity;
+  return candidates.some(({ start, end }) => {
+    const s = new Date(start).getTime();
+    const e = new Date(end).getTime();
+    return e >= fromMs && s <= toMs;
+  });
 }
 
 export function applyFilters(
@@ -68,8 +78,9 @@ export function applyFilters(
   const q = state.search.trim().toLowerCase();
 
   let pool = all.filter(c => {
-    if (state.loopsOnly && c.type !== 'loop') return false;
-    if (state.onewaysOnly && c.type === 'loop') return false;
+    const isLoop = c.isLoop ?? (c.type === 'loop');
+    if (state.loopsOnly && !isLoop) return false;
+    if (state.onewaysOnly && isLoop) return false;
     if (state.maxLegs && c.legs.length > state.maxLegs) return false;
 
     // FROM filter
@@ -123,7 +134,19 @@ export function applyFilters(
       pool = [...pool].sort((a, b) => b.legs.length - a.legs.length || b.score - a.score);
       break;
     default:
-      pool = [...pool].sort((a, b) => b.score - a.score);
+      // Priority weights:
+      //   home_origin: +4 (single biggest factor — these are MY trips)
+      //   perfect loop: +3
+      //   imperfect loop: +2
+      //   any loop fallback (no tier): +1
+      // So home+perfect > home+imperfect > home alone > perfect alone > etc.
+      // Score breaks ties.
+      pool = [...pool].sort((a, b) => {
+        const aPri = priority(a);
+        const bPri = priority(b);
+        if (aPri !== bPri) return bPri - aPri;
+        return b.score - a.score;
+      });
   }
 
   return pool;
