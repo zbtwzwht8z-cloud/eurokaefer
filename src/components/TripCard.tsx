@@ -42,10 +42,14 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
     : `${(chain.days || 0).toFixed(1)} d`;
 
   const minehighlight = highlights.some(h => h.user_id === myUserId);
+  const kind = chain.loopTier === 'perfect' ? 'perfect'
+    : chain.loopTier === 'imperfect' ? 'loop'
+    : chain.homeOrigin ? 'home' : undefined;
 
   return (
     <article
       className="trip-card"
+      data-kind={kind}
       onClick={onOpen}
       onMouseEnter={() => onHover?.(tripKey(chain))}
       onMouseLeave={() => onHover?.(null)}
@@ -73,17 +77,20 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
 
       <div className="trip-card-meta">
         {chain.loopTier === 'perfect' && (
-          <span className="badge badge-accent" title={`Start ↔ end ${Math.round(chain.startEndKm ?? 0)}km`}>
+          <span className="badge badge-gold" title={`Start ↔ end ${Math.round(chain.startEndKm ?? 0)}km`}>
             ⭐ Perfect loop
           </span>
         )}
         {chain.loopTier === 'imperfect' && (
-          <span className="badge" title={`Start ↔ end ${Math.round(chain.startEndKm ?? 0)}km`}>
+          <span className="badge badge-spark" title={`Start ↔ end ${Math.round(chain.startEndKm ?? 0)}km`}>
             🔄 Loop ~{Math.round(chain.startEndKm ?? 0)}km
           </span>
         )}
         {!chain.loopTier && isLoop && <span className="badge badge-accent">Round trip</span>}
-        {!chain.loopTier && !isLoop && <span className="badge">Ends {dest}</span>}
+        {!chain.loopTier && !isLoop && chain.homeOrigin && (
+          <span className="badge badge-accent">🏠 from {chain.homeOrigin}</span>
+        )}
+        {!chain.loopTier && !isLoop && !chain.homeOrigin && <span className="badge">Ends {dest}</span>}
         <span className="badge">{chain.legs.length} {chain.legs.length === 1 ? 'leg' : 'legs'}</span>
         <span className="badge" title="Shortest–longest possible trip length">{daysStr}</span>
         {variantCount > 1 && (
