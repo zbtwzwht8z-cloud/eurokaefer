@@ -72,7 +72,9 @@ cp .env.example .env.local
 npm run refresh
 ```
 
-Runs the Python pipeline (fetch → search → build). ~60 seconds.
+Runs the Python pipeline (fetch → build). Chain search itself happens
+client-side in the browser (`src/lib/engine.ts`) — Python only ships the
+raw €1 offers with exact station coordinates.
 
 ### 5. Develop locally
 
@@ -97,14 +99,35 @@ vercel --prod
 ```
 [Movacar API]
     ↓ (every 6h via GitHub Actions cron, OR manual workflow_dispatch)
-[Python pipeline: fetch.py → search.py → build.py]
-    ↓ commits src/data/trip-data.ts
+[Python pipeline: fetch.py → build.py]
+    ↓ commits src/data/trip-data.ts (~44KB: raw €1 offers + station coords)
 [Vercel auto-deploys on push]
     ↓
-[Next.js: server reads cookie + Turso, client renders Apple-style UI]
+[Next.js: server reads cookie + Turso, client renders UI]
+    ↓
+[src/lib/engine.ts: chain DFS runs IN THE BROWSER (~25ms for ~90 offers)]
     ↓
 [Turso: users · highlights (⭐) · messages (💬)]
 ```
+
+### The chain engine (src/lib/engine.ts)
+
+All possible 1–6-leg trips are computed live in the browser, so the
+"Legs", "Days" and date-window filters re-run the actual search:
+
+- **Chaining rule**: leg B can follow leg A if B's pickup station is within
+  80 km of A's dropoff station (exact coordinates from the Movacar API) and
+  B's pickup window still allows ≥24h after A's pickup. `period_hours` is a
+  deadline, not a minimum hold — cars can be returned early.
+- **Scheduling**: interval propagation gives each route an exact departure
+  window (depart between X and Y) and trip-length range (min–max days)
+  instead of sampled date variants.
+- **Loops**: start↔end ≤15 km ⇒ ⭐ perfect, ≤100 km ⇒ 🔄 imperfect.
+- **Anti-spam**: an area may appear at most twice per route, and the same
+  road (area pair) may be driven at most twice — out-and-back loops
+  survive, "Berlin and back ×3" doesn't.
+- **Sanity check**: `npm run engine:sanity` runs the engine against
+  `data/movacar_offers.csv` and prints route/loop counts + invariants.
 
 ## Commands
 
@@ -113,6 +136,7 @@ vercel --prod
 | `npm run dev` | Local dev server at localhost:3000 |
 | `npm run build` | Production build |
 | `npm run refresh` | Re-fetch + rebuild trip data |
+| `npm run engine:sanity` | Run the chain engine against the offers CSV, print stats |
 | `npm run typecheck` | TypeScript check |
 
 ## Adding friends

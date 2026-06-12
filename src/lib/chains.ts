@@ -22,7 +22,10 @@ export type Variant = {
   dropoffs: string[];
   offerIds: string[];
   days: number;
-  score?: number;  // present when emitted by search v2; not strictly used in UI
+  score?: number;     // legacy (search.py v2)
+  departTo?: string;  // latest possible departure for this offer-sequence
+  minDays?: number;   // shortest possible total trip
+  maxDays?: number;   // longest possible total trip
 };
 
 export type LoopTier = 'perfect' | 'imperfect';
@@ -40,6 +43,10 @@ export type Chain = {
   type: 'loop' | 'oneway' | 'inbound' | 'nrw_start' | 'nrw_end' | 'nrw_mid';
   startUtc: string;
   endUtc: string;
+  departFrom?: string;   // earliest possible departure (engine)
+  departTo?: string;     // latest possible departure (engine)
+  minDays?: number;      // shortest possible trip length
+  maxDays?: number;      // longest possible trip length
   days: number;
   routeKm: number;
   freeKm?: number;
@@ -48,6 +55,7 @@ export type Chain = {
   countries?: string[];
   appointment?: string;
   endType?: string;
+  coords?: ([number, number] | null)[];  // lat/lng per route city (engine; exact station coords)
   variants?: Variant[];  // all (pickup, dropoff) combinations for this route
 };
 
@@ -61,6 +69,10 @@ export type TripData = {
     offerId: string;
     originName: string;
     destName: string;
+    originLat?: number;
+    originLng?: number;
+    destLat?: number;
+    destLng?: number;
     startUtc: string;
     endUtc: string;
     periodHours: number;

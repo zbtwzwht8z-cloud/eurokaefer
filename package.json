@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "refresh": "python3 scripts/fetch.py && python3 scripts/search.py && python3 scripts/build.py",
+    "refresh": "python3 scripts/fetch.py && python3 scripts/build.py",
     "fetch": "python3 scripts/fetch.py",
-    "search": "python3 scripts/search.py",
+    "engine:sanity": "npx tsx scripts/engine-sanity.ts",
     "build:data": "python3 scripts/build.py",
     "typecheck": "tsc --noEmit"
   },

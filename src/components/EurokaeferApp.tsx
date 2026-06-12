@@ -2,7 +2,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { User, Highlight } from '@/lib/turso';
 import type { TripData, Chain } from '@/lib/chains';
-import { buildAllChains, tripKey } from '@/lib/chains';
+import { tripKey } from '@/lib/chains';
+import { runEngine, DEFAULT_ENGINE_PARAMS } from '@/lib/engine';
 import { applyFilters, DEFAULT_FILTER, type FilterState } from '@/lib/filters';
 import type { HomeCity } from '@/lib/constants';
 import FilterToolbar from './FilterToolbar';
@@ -10,6 +11,7 @@ import TripCard from './TripCard';
 import TripDialog from './TripDialog';
 import LoungeChat from './LoungeChat';
 import RefreshButton from './RefreshButton';
+import RoutesMap from './RoutesMap';
 
 type Props = {
   data: TripData;
@@ -19,11 +21,27 @@ type Props = {
 };
 
 export default function EurokaeferApp({ data, user, users, initialHighlights }: Props) {
-  const allChains = useMemo(() => buildAllChains(data), [data]);
   const myHome = (user.home_city as HomeCity) || 'Bochum';
 
   const [filter, setFilter] = useState<FilterState>(DEFAULT_FILTER);
+
+  // The chain engine runs LIVE in the browser: legs / trip length / date
+  // window change the search itself, not just the display.
+  const { chains: allChains, stats } = useMemo(
+    () => runEngine(data.offers, {
+      ...DEFAULT_ENGINE_PARAMS,
+      maxLegs: filter.maxLegs,
+      maxTripDays: filter.maxDays,
+      dateFrom: filter.dateFrom,
+      dateTo: filter.dateTo,
+    }),
+    [data.offers, filter.maxLegs, filter.maxDays, filter.dateFrom, filter.dateTo],
+  );
+
   const filtered = useMemo(() => applyFilters(allChains, filter, myHome), [allChains, filter, myHome]);
+
+  const [hoverKey, setHoverKey] = useState<string | null>(null);
+  const [showMap, setShowMap] = useState(true);
 
   // Pagination: 24 visible per "page". Reset whenever filters change.
   const PAGE_SIZE = 24;
@@ -143,7 +161,8 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
           </div>
           <div className="hero-meta">
             <span className="hero-meta-dot" />
-            {data.meta.recommendedCount} chains · {data.meta.offerCount} offers
+            {stats.routes} possible trips · {stats.offers} offers
+            · ⭐ {stats.perfectLoops + stats.imperfectLoops} loops
             {data.meta.generated && ' · ' + relativeTime(data.meta.generated)}
           </div>
         </div>
@@ -155,6 +174,30 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
           <FilterToolbar value={filter} onChange={setFilter} resultCount={filtered.length} />
         </div>
       </div>
+
+      {/* ── Route map ──────────────────────────────────────── */}
+      <section className="container routes-map-section">
+        <div className="routes-map-head">
+          <span className="routes-map-title">🗺 All routes, live</span>
+          <span className="routes-map-legend">
+            <span className="legend-dot" style={{ background: '#f59e0b' }} /> perfect loop
+            <span className="legend-dot" style={{ background: '#fb923c' }} /> loop
+            <span className="legend-dot" style={{ background: '#06544a' }} /> home start
+            <span className="legend-dot" style={{ background: '#9bb4b1' }} /> other
+          </span>
+          <button className="btn btn-ghost btn-sm" onClick={() => setShowMap(v => !v)}>
+            {showMap ? 'Hide' : 'Show'}
+          </button>
+        </div>
+        {showMap && (
+          <RoutesMap
+            chains={filtered}
+            hoverKey={hoverKey}
+            onSelect={c => setOpenTrip(c)}
+            onHover={setHoverKey}
+          />
+        )}
+      </section>
 
       <main className="container section">
         {filtered.length === 0 ? (
@@ -185,6 +228,7 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
                   myUserId={user.id}
                   onOpen={() => setOpenTrip(c)}
                   onToggleHighlight={() => toggleHighlight(c)}
+                  onHover={setHoverKey}
                 />
               ))}
             </div>
