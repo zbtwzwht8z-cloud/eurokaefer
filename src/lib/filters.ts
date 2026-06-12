@@ -1,5 +1,11 @@
-// Pure filter + sort. Takes the master chain list and a filter state, returns
-// the displayed subset. All UI-side filtering lives here so it's testable in isolation.
+// Pure filter + sort. Takes the engine's chain list and a filter state,
+// returns the displayed subset.
+//
+// Division of labour since the engine overhaul:
+//   - maxLegs, maxDays, dateFrom/dateTo are ENGINE parameters — they change
+//     which chains exist at all (see src/lib/engine.ts).
+//   - Everything below (from/to/search/loops/sort) is display-side filtering
+//     over the engine's output.
 
 import { type Chain, chainFuelEur, chainDriveHours, endsInIceCity } from './chains';
 import { HOME_CITY_SET, REGIONS, type HomeCity, type RegionKey } from './constants';
@@ -11,9 +17,10 @@ export type FilterState = {
   flexFrom: boolean;           // if true, also match nearby cities in same home region
   to: RegionKey;
   flexTo: boolean;             // if true, also match any city in the broader region group
-  maxLegs: number;             // 1 | 2 | 3 | 6 (=no limit)
-  dateFrom?: string;           // ISO date (yyyy-mm-dd)
-  dateTo?: string;             // ISO date (yyyy-mm-dd)
+  maxLegs: number;             // engine param: 1 | 2 | 3 | 6
+  maxDays: number;             // engine param: cap on minimum possible trip length
+  dateFrom?: string;           // engine param: earliest departure (yyyy-mm-dd)
+  dateTo?: string;             // engine param: latest final dropoff (yyyy-mm-dd)
   search: string;
   sort: SortKey;
   loopsOnly?: boolean;
@@ -27,6 +34,7 @@ export const DEFAULT_FILTER: FilterState = {
   to: 'all',
   flexTo: false,
   maxLegs: 6,
+  maxDays: 21,
   search: '',
   sort: 'best',
 };
@@ -52,22 +60,6 @@ function resolveToSet(state: FilterState): Set<string> | null {
   return REGIONS[state.to]?.cities ?? null;
 }
 
-function matchesDateWindow(c: Chain, dateFrom?: string, dateTo?: string): boolean {
-  if (!dateFrom && !dateTo) return true;
-  // Match if ANY variant falls in the window. Falls back to canonical
-  // start/end if variants aren't populated (legacy data).
-  const candidates = (c.variants && c.variants.length)
-    ? c.variants.map(v => ({ start: v.startUtc, end: v.endUtc }))
-    : [{ start: c.startUtc, end: c.endUtc }];
-  const fromMs = dateFrom ? new Date(dateFrom).getTime() : -Infinity;
-  const toMs = dateTo ? new Date(dateTo + 'T23:59:59Z').getTime() : Infinity;
-  return candidates.some(({ start, end }) => {
-    const s = new Date(start).getTime();
-    const e = new Date(end).getTime();
-    return e >= fromMs && s <= toMs;
-  });
-}
-
 export function applyFilters(
   all: Chain[],
   state: FilterState,
@@ -81,11 +73,10 @@ export function applyFilters(
     const isLoop = c.isLoop ?? (c.type === 'loop');
     if (state.loopsOnly && !isLoop) return false;
     if (state.onewaysOnly && isLoop) return false;
-    if (state.maxLegs && c.legs.length > state.maxLegs) return false;
 
     // FROM filter
     if (fromSet) {
-      const { set: fromCitySet, key: fromKey } = fromSet;
+      const { set: fromCitySet } = fromSet;
       if (state.flexFrom) {
         // Flexible: accept if the home area appears ANYWHERE in the route
         if (!c.route.some(city => fromCitySet.has(city))) return false;
@@ -108,7 +99,6 @@ export function applyFilters(
     }
 
     if (state.iceOnly && !endsInIceCity(c).ok) return false;
-    if (!matchesDateWindow(c, state.dateFrom, state.dateTo)) return false;
     if (q) {
       const blob = (c.route.join(' ') + ' ' + (c.countries || []).join(' ')).toLowerCase();
       if (!blob.includes(q)) return false;

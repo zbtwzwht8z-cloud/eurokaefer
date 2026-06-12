@@ -81,6 +81,24 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
         </select>
       </div>
 
+      {/* Max trip length (engine param — changes which chains exist) */}
+      <div className="toolbar-group">
+        <span className="filter-label" style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>
+          Days
+        </span>
+        <select
+          value={value.maxDays}
+          onChange={e => onChange({ ...value, maxDays: Number(e.target.value) })}
+          title="Longest trip you'd consider — the engine only builds chains doable within this"
+        >
+          <option value={7}>≤ 7</option>
+          <option value={14}>≤ 14</option>
+          <option value={21}>≤ 21</option>
+          <option value={30}>≤ 30</option>
+          <option value={365}>Any</option>
+        </select>
+      </div>
+
       {/* Date range */}
       <div className="toolbar-group">
         <span className="filter-label" style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>

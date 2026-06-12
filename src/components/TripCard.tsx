@@ -1,7 +1,7 @@
 'use client';
 import { useMemo } from 'react';
 import type { Chain } from '@/lib/chains';
-import { chainFuelEur, chainDriveHours, endsInIceCity, countriesOfChain } from '@/lib/chains';
+import { chainFuelEur, chainDriveHours, endsInIceCity, countriesOfChain, tripKey } from '@/lib/chains';
 import type { Highlight, User } from '@/lib/turso';
 import { COUNTRY_FLAG } from '@/lib/constants';
 import MapView from './MapView';
@@ -13,9 +13,10 @@ type Props = {
   myUserId: number;
   onOpen: () => void;
   onToggleHighlight: () => void;
+  onHover?: (key: string | null) => void;
 };
 
-export default function TripCard({ chain, highlights, usersById, myUserId, onOpen, onToggleHighlight }: Props) {
+export default function TripCard({ chain, highlights, usersById, myUserId, onOpen, onToggleHighlight, onHover }: Props) {
   const fuel = chainFuelEur(chain);
   const driveH = chainDriveHours(chain);
   const ice = endsInIceCity(chain);
@@ -23,16 +24,32 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
   const isLoop = chain.isLoop ?? (chain.type === 'loop');
   const dest = chain.route[chain.route.length - 1];
   const variantCount = chain.variants?.length ?? 1;
+  // Consecutive duplicate names happen when a leg hands off to a nearby
+  // pickup city that displays the same — collapse for the route line only.
+  const displayRoute = chain.route.filter((c, i, a) => i === 0 || c !== a[i - 1]);
 
-  const startDate = chain.startUtc ? new Date(chain.startUtc) : null;
-  const endDate = chain.endUtc ? new Date(chain.endUtc) : null;
-  const startStr = startDate ? formatDate(startDate) : '';
-  const endStr = endDate ? formatDate(endDate) : '';
+  // Departure window (engine); falls back to fixed start date (legacy data)
+  const departFrom = chain.departFrom ? new Date(chain.departFrom) : (chain.startUtc ? new Date(chain.startUtc) : null);
+  const departTo = chain.departTo ? new Date(chain.departTo) : null;
+  const departStr = departFrom
+    ? (departTo && formatDate(departTo) !== formatDate(departFrom)
+        ? `depart ${formatDate(departFrom)} – ${formatDate(departTo)}`
+        : `depart ${formatDate(departFrom)}`)
+    : '';
+
+  const daysStr = (chain.minDays != null && chain.maxDays != null && chain.maxDays - chain.minDays >= 0.5)
+    ? `${fmtDays(chain.minDays)}–${fmtDays(chain.maxDays)} d`
+    : `${(chain.days || 0).toFixed(1)} d`;
 
   const minehighlight = highlights.some(h => h.user_id === myUserId);
 
   return (
-    <article className="trip-card" onClick={onOpen}>
+    <article
+      className="trip-card"
+      onClick={onOpen}
+      onMouseEnter={() => onHover?.(tripKey(chain))}
+      onMouseLeave={() => onHover?.(null)}
+    >
       {/* Highlight avatars */}
       {highlights.length > 0 && (
         <div className="highlight-stack" onClick={e => e.stopPropagation()}>
@@ -50,7 +67,7 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
       )}
 
       <div className="trip-card-top">
-        <div className="trip-card-route">{chain.route.join(' → ')}</div>
+        <div className="trip-card-route">{displayRoute.join(' → ')}</div>
         {chain.tripId && <span className="trip-card-id">#{chain.tripId}</span>}
       </div>
 
@@ -68,10 +85,10 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
         {!chain.loopTier && isLoop && <span className="badge badge-accent">Round trip</span>}
         {!chain.loopTier && !isLoop && <span className="badge">Ends {dest}</span>}
         <span className="badge">{chain.legs.length} {chain.legs.length === 1 ? 'leg' : 'legs'}</span>
-        <span className="badge">{(chain.days || 0).toFixed(1)} d</span>
+        <span className="badge" title="Shortest–longest possible trip length">{daysStr}</span>
         {variantCount > 1 && (
-          <span className="badge" title={`${variantCount} pickup-date variants available`}>
-            📅 {variantCount} dates
+          <span className="badge" title={`${variantCount} car/date combinations for this route`}>
+            📅 {variantCount} options
           </span>
         )}
         {ice.ok && <span className="badge badge-ice">🚄 {ice.label}</span>}
@@ -98,7 +115,7 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
 
       <div className="trip-card-footer">
         <span>
-          {countries.map(c => COUNTRY_FLAG[c] || '').filter(Boolean).join(' ')} · {startStr}{endStr && ` → ${endStr}`}
+          {countries.map(c => COUNTRY_FLAG[c] || '').filter(Boolean).join(' ')}{departStr && ` · ${departStr}`}
         </span>
         <button
           className="btn-icon"
@@ -115,4 +132,8 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
 
 function formatDate(d: Date): string {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+function fmtDays(n: number): string {
+  return Number.isInteger(Math.round(n * 2) / 2) ? String(Math.round(n)) : n.toFixed(1);
 }

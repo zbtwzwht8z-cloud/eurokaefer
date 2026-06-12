@@ -34,6 +34,12 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
   const mineHighlight = highlights.some(h => h.user_id === user.id);
   const startD = chain.startUtc ? new Date(chain.startUtc) : null;
   const endD = chain.endUtc ? new Date(chain.endUtc) : null;
+  const departFrom = chain.departFrom ? new Date(chain.departFrom) : startD;
+  const departTo = chain.departTo ? new Date(chain.departTo) : null;
+  const displayRoute = chain.route.filter((c, i, a) => i === 0 || c !== a[i - 1]);
+  const daysStr = (chain.minDays != null && chain.maxDays != null && chain.maxDays - chain.minDays >= 0.5)
+    ? `${chain.minDays.toFixed(1)}–${chain.maxDays.toFixed(1)}`
+    : (chain.days || 0).toFixed(1);
 
   function copyShare() {
     const url = `${window.location.origin}/?trip=${chain.tripId}`;
@@ -52,7 +58,7 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
       <div className="dialog-head">
         <div>
           <div className="eyebrow">Trip #{chain.tripId} · {(chain.isLoop ?? (chain.type === 'loop')) ? 'Round trip' : 'One-way'}</div>
-          <h2 className="h-2" style={{ marginTop: 4 }}>{chain.route.join(' → ')}</h2>
+          <h2 className="h-2" style={{ marginTop: 4 }}>{displayRoute.join(' → ')}</h2>
         </div>
         <div style={{ display: 'flex', gap: 6 }}>
           <a
@@ -92,7 +98,7 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
         {/* Stats */}
         <div className="stats" style={{ margin: 0 }}>
           <div className="stat">
-            <div className="stat-val">{(chain.days || 0).toFixed(1)}</div>
+            <div className="stat-val">{daysStr}</div>
             <div className="stat-lbl">Days</div>
           </div>
           <div className="stat">
@@ -111,7 +117,11 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
 
         <div style={{ marginTop: 24, display: 'flex', gap: 6, flexWrap: 'wrap', color: 'var(--ink-3)', fontSize: 14 }}>
           <span>{countries.map(c => COUNTRY_FLAG[c] || '').filter(Boolean).join(' · ')}</span>
-          {startD && endD && <span>· {startD.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} → {endD.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>}
+          {departFrom && departTo && fmtDay(departFrom) !== fmtDay(departTo) ? (
+            <span>· 🗓 depart anytime {fmtDay(departFrom)} – {fmtDay(departTo)}</span>
+          ) : startD && endD ? (
+            <span>· {fmtDay(startD)} → {fmtDay(endD)}</span>
+          ) : null}
         </div>
 
         {/* Legs */}
@@ -142,17 +152,24 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
           ))}
         </div>
 
-        {/* Date variants */}
+        {/* Car/date options for this route */}
         {chain.variants && chain.variants.length > 1 && (
           <div style={{ marginTop: 28 }}>
             <h3 className="h-3" style={{ marginBottom: 12 }}>
-              Available pickup dates · {chain.variants.length}
+              Car & date options · {chain.variants.length}
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {chain.variants.map((v, i) => {
                 const sd = new Date(v.startUtc);
-                const ed = new Date(v.endUtc);
-                const isCanonical = v.startUtc === chain.startUtc && v.endUtc === chain.endUtc;
+                const dt = v.departTo ? new Date(v.departTo) : null;
+                const isCanonical = v.startUtc === chain.startUtc
+                  && (!v.departTo || v.departTo === chain.departTo);
+                const window = dt && fmtDay(dt) !== fmtDay(sd)
+                  ? `depart ${fmtDay(sd)} – ${fmtDay(dt)}`
+                  : `depart ${sd.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}`;
+                const days = v.minDays != null && v.maxDays != null && v.maxDays - v.minDays >= 0.5
+                  ? `${v.minDays.toFixed(1)}–${v.maxDays.toFixed(1)}d`
+                  : `${v.days.toFixed(1)}d`;
                 return (
                   <div key={i} style={{
                     background: isCanonical ? 'var(--surface-3, var(--surface-2))' : 'var(--surface-2)',
@@ -164,14 +181,10 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
                     gap: 12,
                     border: isCanonical ? '1px solid var(--accent)' : '1px solid transparent',
                   }}>
-                    <span style={{ color: 'var(--ink)' }}>
-                      {sd.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
-                      {' → '}
-                      {ed.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}
-                    </span>
+                    <span style={{ color: 'var(--ink)' }}>{window}</span>
                     <span style={{ color: 'var(--ink-3)', fontSize: 12 }}>
-                      {v.days.toFixed(1)}d · {v.pickups.length} {v.pickups.length === 1 ? 'leg' : 'legs'}
-                      {isCanonical && ' · best'}
+                      {days} · {v.pickups.length} {v.pickups.length === 1 ? 'leg' : 'legs'}
+                      {isCanonical && ' · widest window'}
                     </span>
                   </div>
                 );
@@ -208,4 +221,8 @@ function formatLegTime(iso: string): string {
   if (!iso) return '?';
   const d = new Date(iso);
   return d.toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+}
+
+function fmtDay(d: Date): string {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
