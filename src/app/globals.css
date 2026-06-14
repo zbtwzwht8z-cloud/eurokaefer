@@ -1,3 +1,44 @@
+/* ── Tailwind v4 (theme + utilities ONLY — Preflight intentionally skipped so
+   it can't clobber the hand-written design system below). shadcn components in
+   src/components/ui/* consume these utilities. ───────────────────────────── */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Minimal slice of Preflight that shadcn's `border` utility needs (set border
+   default style/color without zeroing widths the existing CSS relies on). */
+@layer base {
+  *, ::before, ::after { border-style: solid; }
+}
+
+/* Map shadcn's token names to our existing brand vars — so pasted shadcn
+   components (bg-primary, text-muted-foreground, border-input…) render on-brand
+   WITHOUT redefining any of our bare vars (no --accent collision). */
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--ink);
+  --color-popover: var(--surface);
+  --color-popover-foreground: var(--ink);
+  --color-primary: var(--accent);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--surface-2);
+  --color-secondary-foreground: var(--ink);
+  --color-muted: var(--surface-2);
+  --color-muted-foreground: var(--ink-3);
+  --color-accent: var(--spark-soft);
+  --color-accent-foreground: var(--spark);
+  --color-destructive: #e5484d;
+  --color-destructive-foreground: #ffffff;
+  --color-border: var(--line-strong);
+  --color-input: var(--line-strong);
+  --color-ring: var(--accent);
+  --radius-sm: calc(var(--r-md) - 6px);
+  --radius-md: calc(var(--r-md) - 4px);
+  --radius-lg: var(--r-md);
+}
+
 /* ─────────────────────────────────────────────────────────────────────────
    Eurokäfer — "Open Road" editorial-travel design system.
    Design intelligence via the ui-ux-pro-max skill: sky-blue + adventure-orange
@@ -395,7 +436,7 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
 .routes-map-legend .legend-dot:first-child { margin-left: 0; }
 
 .routes-map {
-  width: 100%; height: 460px;
+  width: 100%; height: clamp(440px, 68vh, 680px);
   border-radius: var(--r-lg);
   border: 1px solid var(--line);
   overflow: hidden;
@@ -412,6 +453,21 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
 }
 @keyframes routeflow {
   to { stroke-dashoffset: -16; }
+}
+
+/* Directional flow: a thin white dash marching along each route from origin
+   → destination, so you can read which way a trip goes. Sits on top of the
+   solid colored line (which stays solid). Frozen under reduced-motion. */
+.route-dir {
+  stroke-dasharray: 7 17;
+  animation: routedir 1.6s linear infinite;
+}
+@keyframes routedir {
+  to { stroke-dashoffset: -24; }
+}
+/* Hovered route flows faster + more pronounced */
+.route-dir-hot {
+  animation-duration: 0.8s;
 }
 
 /* ── Trip grid ───────────────────────────────────────────────────────────── */
@@ -438,7 +494,8 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   border: 1px solid var(--line);
   padding: var(--pad-card);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  /* transform (lift) is driven by framer-motion; CSS handles depth + border */
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
   box-shadow: var(--shadow-sm);
   display: flex; flex-direction: column; gap: 14px;
   overflow: hidden;
@@ -456,7 +513,6 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
 .trip-card[data-kind="loop"]::before { background: var(--spark-fill); }
 .trip-card[data-kind="home"]::before { background: var(--accent); }
 .trip-card:hover {
-  transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
   border-color: var(--line-strong);
 }
@@ -692,7 +748,7 @@ dialog#tripDialog::backdrop {
   .toolbar-group { font-size: 13px; }
   .toolbar-search { min-width: 140px; flex: 1; }
   .trip-grid { grid-template-columns: 1fr; }
-  .routes-map { height: 300px; }
+  .routes-map { height: 420px; }
 }
 
 @media (max-width: 600px) {

@@ -1,10 +1,13 @@
 'use client';
 import { useEffect, useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import type { Chain } from '@/lib/chains';
 import { chainFuelEur, chainDriveHours, countriesOfChain, tripKey } from '@/lib/chains';
 import type { Highlight, User } from '@/lib/turso';
 import { COUNTRY_FLAG } from '@/lib/constants';
+import { EASE_OUT } from '@/lib/motion';
 import MapView from './MapView';
+import AnimatedNumber from './AnimatedNumber';
 import CommentThread from './CommentThread';
 
 type Props = {
@@ -27,6 +30,7 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
     return () => dialog?.removeEventListener('cancel', onCancel);
   }, [onClose]);
 
+  const reduce = useReducedMotion();
   const fuel = chainFuelEur(chain);
   const driveH = chainDriveHours(chain);
   const countries = countriesOfChain(chain);
@@ -55,6 +59,12 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
     <dialog id="tripDialog" ref={dialogRef} onClick={e => {
       if (e.target === dialogRef.current) onClose();
     }}>
+      <motion.div
+        initial={reduce ? false : { opacity: 0, scale: 0.96 }}
+        animate={reduce ? undefined : { opacity: 1, scale: 1 }}
+        transition={{ duration: 0.24, ease: EASE_OUT }}
+        style={{ transformOrigin: 'center' }}
+      >
       <div className="dialog-head">
         <div>
           <div className="eyebrow">Trip #{chain.tripId} · {(chain.isLoop ?? (chain.type === 'loop')) ? 'Round trip' : 'One-way'}</div>
@@ -102,15 +112,15 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
             <div className="stat-lbl">Days</div>
           </div>
           <div className="stat">
-            <div className="stat-val">{Math.round(chain.routeKm).toLocaleString()}</div>
+            <div className="stat-val"><AnimatedNumber value={chain.routeKm} locale /></div>
             <div className="stat-lbl">km</div>
           </div>
           <div className="stat">
-            <div className="stat-val">{driveH.toFixed(1)}h</div>
+            <div className="stat-val"><AnimatedNumber value={driveH} decimals={1} suffix="h" /></div>
             <div className="stat-lbl">Drive</div>
           </div>
           <div className="stat">
-            <div className="stat-val">~€{Math.round(fuel)}</div>
+            <div className="stat-val"><AnimatedNumber value={fuel} prefix="~€" /></div>
             <div className="stat-lbl">Fuel</div>
           </div>
         </div>
@@ -213,6 +223,7 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
         {/* Comments */}
         <CommentThread tripKey={key} user={user} usersById={usersById} />
       </div>
+      </motion.div>
     </dialog>
   );
 }
