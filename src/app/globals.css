@@ -455,6 +455,21 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   to { stroke-dashoffset: -16; }
 }
 
+/* Directional flow: a thin white dash marching along each route from origin
+   → destination, so you can read which way a trip goes. Sits on top of the
+   solid colored line (which stays solid). Frozen under reduced-motion. */
+.route-dir {
+  stroke-dasharray: 7 17;
+  animation: routedir 1.6s linear infinite;
+}
+@keyframes routedir {
+  to { stroke-dashoffset: -24; }
+}
+/* Hovered route flows faster + more pronounced */
+.route-dir-hot {
+  animation-duration: 0.8s;
+}
+
 /* ── Trip grid ───────────────────────────────────────────────────────────── */
 
 .trip-grid {

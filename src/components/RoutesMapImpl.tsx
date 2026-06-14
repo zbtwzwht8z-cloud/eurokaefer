@@ -42,6 +42,7 @@ export default function RoutesMapImpl({ chains, hoverKey, onSelect, onHover }: P
   const mapRef = useRef<import('leaflet').Map | null>(null);
   const layerRef = useRef<import('leaflet').LayerGroup | null>(null);
   const linesRef = useRef<Map<string, import('leaflet').Polyline>>(new Map());
+  const overlaysRef = useRef<Map<string, import('leaflet').Polyline>>(new Map());
   const baseStyleRef = useRef<Map<string, { color: string; weight: number; opacity: number }>>(new Map());
   // Keep latest callbacks without re-binding leaflet handlers
   const onSelectRef = useRef(onSelect);
@@ -83,6 +84,7 @@ export default function RoutesMapImpl({ chains, hoverKey, onSelect, onHover }: P
 
       layer.clearLayers();
       linesRef.current.clear();
+      overlaysRef.current.clear();
       baseStyleRef.current.clear();
 
       const subset = chains.slice(0, MAX_LINES);
@@ -124,6 +126,21 @@ export default function RoutesMapImpl({ chains, hoverKey, onSelect, onHover }: P
         line.addTo(layer);
         linesRef.current.set(key, line);
         baseStyleRef.current.set(key, style);
+
+        // Directional flow: a thin white dash that marches origin → destination
+        // on top of the solid line (animation lives in .route-dir CSS). Not
+        // interactive so hover/click still hit the line beneath it.
+        const overlay = L.polyline(pts, {
+          color: '#ffffff',
+          weight: Math.max(1.6, weight - 1.4),
+          opacity: 0.85,
+          lineCap: 'round',
+          lineJoin: 'round',
+          interactive: false,
+          className: 'route-dir',
+        });
+        overlay.addTo(layer);
+        overlaysRef.current.set(key, overlay);
       }
 
       if (allPts.length >= 2) {
@@ -138,13 +155,21 @@ export default function RoutesMapImpl({ chains, hoverKey, onSelect, onHover }: P
     const line = linesRef.current.get(key);
     const base = baseStyleRef.current.get(key);
     if (!line || !base) return;
+    const overlay = overlaysRef.current.get(key);
     if (on) {
       line.setStyle({ weight: base.weight + 2.5, opacity: 1 });
       line.bringToFront();
-      line.getElement()?.classList.add('route-flow');
+      if (overlay) {
+        overlay.setStyle({ weight: base.weight, opacity: 1 });
+        overlay.bringToFront();
+        overlay.getElement()?.classList.add('route-dir-hot');
+      }
     } else {
       line.setStyle({ weight: base.weight, opacity: base.opacity });
-      line.getElement()?.classList.remove('route-flow');
+      if (overlay) {
+        overlay.setStyle({ weight: Math.max(1.6, base.weight - 1.4), opacity: 0.85 });
+        overlay.getElement()?.classList.remove('route-dir-hot');
+      }
     }
   }
 
