@@ -5,10 +5,13 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
-/* Minimal slice of Preflight that shadcn's `border` utility needs (set border
-   default style/color without zeroing widths the existing CSS relies on). */
+/* Minimal slice of Preflight that shadcn's `border` utility needs: default
+   border to width 0 + solid style, so `border` utilities (width 1px) show, but
+   plain elements get NO border. (Without width:0 every element renders its
+   default medium border — the "boxes around everything" bug.) Explicit borders
+   in the hand-written CSS below set their own width and are unaffected. */
 @layer base {
-  *, ::before, ::after { border-style: solid; }
+  *, ::before, ::after { border-width: 0; border-style: solid; }
 }
 
 /* Map shadcn's token names to our existing brand vars — so pasted shadcn
