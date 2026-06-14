@@ -1,9 +1,11 @@
 'use client';
 import { useMemo } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import type { Chain } from '@/lib/chains';
 import { chainFuelEur, chainDriveHours, endsInIceCity, countriesOfChain, tripKey } from '@/lib/chains';
 import type { Highlight, User } from '@/lib/turso';
 import { COUNTRY_FLAG } from '@/lib/constants';
+import { riseItem, hoverSpring } from '@/lib/motion';
 import MapView from './MapView';
 
 type Props = {
@@ -45,11 +47,16 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
   const kind = chain.loopTier === 'perfect' ? 'perfect'
     : chain.loopTier === 'imperfect' ? 'loop'
     : chain.homeOrigin ? 'home' : undefined;
+  const reduce = useReducedMotion();
 
   return (
-    <article
+    <motion.article
       className="trip-card"
       data-kind={kind}
+      variants={reduce ? undefined : riseItem}
+      whileHover={reduce ? undefined : { y: -3 }}
+      whileTap={reduce ? undefined : { scale: 0.992 }}
+      transition={hoverSpring}
       onClick={onOpen}
       onMouseEnter={() => onHover?.(tripKey(chain))}
       onMouseLeave={() => onHover?.(null)}
@@ -133,7 +140,7 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
           {minehighlight ? '⭐' : '☆'}
         </button>
       </div>
-    </article>
+    </motion.article>
   );
 }
 

@@ -438,7 +438,8 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   border: 1px solid var(--line);
   padding: var(--pad-card);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  /* transform (lift) is driven by framer-motion; CSS handles depth + border */
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
   box-shadow: var(--shadow-sm);
   display: flex; flex-direction: column; gap: 14px;
   overflow: hidden;
@@ -456,7 +457,6 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
 .trip-card[data-kind="loop"]::before { background: var(--spark-fill); }
 .trip-card[data-kind="home"]::before { background: var(--accent); }
 .trip-card:hover {
-  transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
   border-color: var(--line-strong);
 }

@@ -1,11 +1,14 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import type { User, Highlight } from '@/lib/turso';
 import type { TripData, Chain } from '@/lib/chains';
 import { tripKey } from '@/lib/chains';
 import { runEngine, DEFAULT_ENGINE_PARAMS } from '@/lib/engine';
 import { applyFilters, DEFAULT_FILTER, type FilterState } from '@/lib/filters';
+import { gridContainer, EASE_OUT } from '@/lib/motion';
 import type { HomeCity } from '@/lib/constants';
+import AnimatedNumber from './AnimatedNumber';
 import FilterToolbar from './FilterToolbar';
 import TripCard from './TripCard';
 import TripDialog from './TripDialog';
@@ -42,6 +45,7 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
 
   const [hoverKey, setHoverKey] = useState<string | null>(null);
   const [showMap, setShowMap] = useState(true);
+  const reduce = useReducedMotion();
 
   // Pagination: 24 visible per "page". Reset whenever filters change.
   const PAGE_SIZE = 24;
@@ -142,8 +146,18 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
       {/* ── Hero ────────────────────────────────────────────── */}
       <section className="hero">
         <div className="container hero-inner">
-          <h1 className="h-display">€1 road trips, planned.</h1>
-          <div style={{ maxWidth: 680, margin: '0 auto' }}>
+          <motion.h1
+            className="h-display"
+            initial={reduce ? false : { opacity: 0, y: 18 }}
+            animate={reduce ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE_OUT }}
+          >€1 road trips, planned.</motion.h1>
+          <motion.div
+            style={{ maxWidth: 680, margin: '0 auto' }}
+            initial={reduce ? false : { opacity: 0, y: 14 }}
+            animate={reduce ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.12 }}
+          >
             <p style={{
               fontFamily: 'Georgia, "Times New Roman", serif',
               fontSize: 'clamp(20px, 2.2vw, 30px)',
@@ -158,13 +172,18 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
             }}>
               Surah Al-Mulk 67:15 — Ibn Kathīr: "Allah made the earth submissive and subservient, so travel its regions, walk its paths, and eat of what He has provided. The earth has been tamed for you as a riding animal is tamed."
             </p>
-          </div>
-          <div className="hero-meta">
+          </motion.div>
+          <motion.div
+            className="hero-meta"
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={reduce ? undefined : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.28 }}
+          >
             <span className="hero-meta-dot" />
-            {stats.routes} possible trips · {stats.offers} offers
+            <AnimatedNumber value={stats.routes} duration={1.1} /> possible trips · {stats.offers} offers
             · ⭐ {stats.perfectLoops + stats.imperfectLoops} loops
             {data.meta.generated && ' · ' + relativeTime(data.meta.generated)}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -180,10 +199,10 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
         <div className="routes-map-head">
           <span className="routes-map-title">🗺 All routes, live</span>
           <span className="routes-map-legend">
-            <span className="legend-dot" style={{ background: '#f59e0b' }} /> perfect loop
-            <span className="legend-dot" style={{ background: '#fb923c' }} /> loop
-            <span className="legend-dot" style={{ background: '#06544a' }} /> home start
-            <span className="legend-dot" style={{ background: '#9bb4b1' }} /> other
+            <span className="legend-dot" style={{ background: '#d9920a' }} /> perfect loop
+            <span className="legend-dot" style={{ background: '#f97316' }} /> loop
+            <span className="legend-dot" style={{ background: '#0284c7' }} /> home start
+            <span className="legend-dot" style={{ background: '#9aa7af' }} /> other
           </span>
           <button className="btn btn-ghost btn-sm" onClick={() => setShowMap(v => !v)}>
             {showMap ? 'Hide' : 'Show'}
@@ -218,7 +237,12 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
           </div>
         ) : (
           <>
-            <div className="trip-grid">
+            <motion.div
+              className="trip-grid"
+              variants={reduce ? undefined : gridContainer}
+              initial={reduce ? false : 'hidden'}
+              animate={reduce ? false : 'visible'}
+            >
               {filtered.slice(0, visibleCount).map(c => (
                 <TripCard
                   key={tripKey(c)}
@@ -231,7 +255,7 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
                   onHover={setHoverKey}
                 />
               ))}
-            </div>
+            </motion.div>
             {visibleCount < filtered.length && (
               <div style={{ textAlign: 'center', marginTop: 32 }}>
                 <button

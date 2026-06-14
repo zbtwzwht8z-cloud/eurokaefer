@@ -14,10 +14,10 @@ type Props = {
 const MAX_LINES = 200;
 
 function lineColor(c: Chain): string {
-  if (c.loopTier === 'perfect') return '#f59e0b';
-  if (c.loopTier === 'imperfect') return '#fb923c';
-  if (c.homeOrigin) return '#06544a';
-  return '#9bb4b1';
+  if (c.loopTier === 'perfect') return '#d9920a';
+  if (c.loopTier === 'imperfect') return '#f97316';
+  if (c.homeOrigin) return '#0284c7';
+  return '#9aa7af';
 }
 
 function lineWeight(c: Chain): number {
