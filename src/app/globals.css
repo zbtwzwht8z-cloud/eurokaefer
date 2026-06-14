@@ -395,7 +395,7 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
 .routes-map-legend .legend-dot:first-child { margin-left: 0; }
 
 .routes-map {
-  width: 100%; height: 460px;
+  width: 100%; height: clamp(440px, 68vh, 680px);
   border-radius: var(--r-lg);
   border: 1px solid var(--line);
   overflow: hidden;
@@ -692,7 +692,7 @@ dialog#tripDialog::backdrop {
   .toolbar-group { font-size: 13px; }
   .toolbar-search { min-width: 140px; flex: 1; }
   .trip-grid { grid-template-columns: 1fr; }
-  .routes-map { height: 300px; }
+  .routes-map { height: 420px; }
 }
 
 @media (max-width: 600px) {

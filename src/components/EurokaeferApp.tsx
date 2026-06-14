@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import type { User, Highlight } from '@/lib/turso';
 import type { TripData, Chain } from '@/lib/chains';
@@ -15,6 +15,8 @@ import TripDialog from './TripDialog';
 import LoungeChat from './LoungeChat';
 import RefreshButton from './RefreshButton';
 import RoutesMap from './RoutesMap';
+import AnimatedHero from './AnimatedHero';
+import ContainerScroll from './ContainerScroll';
 
 type Props = {
   data: TripData;
@@ -46,6 +48,11 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
   const [hoverKey, setHoverKey] = useState<string | null>(null);
   const [showMap, setShowMap] = useState(true);
   const reduce = useReducedMotion();
+
+  const mapSectionRef = useRef<HTMLElement>(null);
+  const gridRef = useRef<HTMLElement>(null);
+  const scrollTo = (el: HTMLElement | null) =>
+    el?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
 
   // Pagination: 24 visible per "page". Reset whenever filters change.
   const PAGE_SIZE = 24;
@@ -187,6 +194,28 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
         </div>
       </section>
 
+      {/* ── Animated hero band ─────────────────────────────── */}
+      <AnimatedHero
+        onBrowse={() => scrollTo(gridRef.current)}
+        onHowItWorks={() => scrollTo(mapSectionRef.current)}
+      />
+
+      {/* ── Scroll-reveal showcase ─────────────────────────── */}
+      <ContainerScroll
+        titleComponent={
+          <div style={{ paddingBottom: 8 }}>
+            <p className="eyebrow" style={{ marginBottom: 8 }}>The whole continent, one screen</p>
+            <h2 className="h-1" style={{ margin: 0 }}>Every €1 route, mapped.</h2>
+          </div>
+        }
+      >
+        <img
+          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1600&q=80&auto=format&fit=crop"
+          alt="An open road winding through the mountains at golden hour"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+      </ContainerScroll>
+
       {/* ── Toolbar + grid ─────────────────────────────────── */}
       <div className="toolbar">
         <div className="container">
@@ -195,7 +224,7 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
       </div>
 
       {/* ── Route map ──────────────────────────────────────── */}
-      <section className="container routes-map-section">
+      <section ref={mapSectionRef} className="container routes-map-section">
         <div className="routes-map-head">
           <span className="routes-map-title">🗺 All routes, live</span>
           <span className="routes-map-legend">
@@ -218,7 +247,7 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
         )}
       </section>
 
-      <main className="container section">
+      <main ref={gridRef} className="container section">
         {filtered.length === 0 ? (
           <div className="empty">
             <span className="empty-emoji">🤷</span>

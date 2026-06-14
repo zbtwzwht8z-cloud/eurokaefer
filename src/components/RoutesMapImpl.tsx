@@ -17,11 +17,15 @@ function lineColor(c: Chain): string {
   if (c.loopTier === 'perfect') return '#d9920a';
   if (c.loopTier === 'imperfect') return '#f97316';
   if (c.homeOrigin) return '#0284c7';
-  return '#9aa7af';
+  return '#5f7d8a';   // muted slate — darker than before so "other" routes read
 }
 
 function lineWeight(c: Chain): number {
-  return c.loopTier ? 2.5 : c.homeOrigin ? 2 : 1.5;
+  return c.loopTier ? 4.5 : c.homeOrigin ? 4 : 3;
+}
+
+function lineOpacity(c: Chain): number {
+  return c.loopTier || c.homeOrigin ? 0.95 : 0.7;
 }
 
 function chainPoints(c: Chain): [number, number][] {
@@ -92,8 +96,17 @@ export default function RoutesMapImpl({ chains, hoverKey, onSelect, onHover }: P
         if (pts.length < 2) continue;
         allPts.push(...pts);
         const key = tripKey(c);
-        const style = { color: lineColor(c), weight: lineWeight(c), opacity: c.loopTier || c.homeOrigin ? 0.75 : 0.35 };
-        const line = L.polyline(pts, { ...style, interactive: true });
+        const weight = lineWeight(c);
+        const style = { color: lineColor(c), weight, opacity: lineOpacity(c) };
+        // White casing underneath so each colored line stays crisp against the
+        // map and separates from overlapping routes (the "vague lines" fix).
+        L.polyline(pts, {
+          color: '#ffffff', weight: weight + 3.5, opacity: 0.9,
+          lineCap: 'round', lineJoin: 'round', interactive: false,
+        }).addTo(layer);
+        const line = L.polyline(pts, {
+          ...style, interactive: true, lineCap: 'round', lineJoin: 'round',
+        });
         line.bindTooltip(
           `${c.route.join(' → ')}<br><span style="opacity:.7">${c.legs.length} leg${c.legs.length > 1 ? 's' : ''}` +
           `${c.loopTier ? ' · ' + (c.loopTier === 'perfect' ? '⭐ perfect loop' : '🔄 loop') : ''}</span>`,
