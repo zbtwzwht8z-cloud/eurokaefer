@@ -144,7 +144,15 @@ export default function RoutesMapImpl({ chains, hoverKey, onSelect, onHover }: P
       }
 
       if (allPts.length >= 2) {
-        map.fitBounds(L.latLngBounds(allPts), { padding: [28, 28] });
+        const bounds = L.latLngBounds(allPts);
+        const fit = () => {
+          map.invalidateSize();
+          map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
+        };
+        fit();
+        // Re-fit once the container has settled its (tall) height — otherwise
+        // Leaflet measured a too-small box and zoomed out to the whole world.
+        setTimeout(fit, 150);
       }
     })();
     return () => { cancelled = true; };
