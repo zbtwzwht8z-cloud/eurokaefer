@@ -78,7 +78,12 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
       )}
 
       <div className="trip-card-top">
-        <div className="trip-card-route">{displayRoute.join(' → ')}</div>
+        <span
+          className="status-dot"
+          data-kind={kind}
+          title={kind === 'perfect' ? 'Perfect loop' : kind === 'loop' ? 'Loop' : kind === 'home' ? `From ${chain.homeOrigin}` : undefined}
+        />
+        <div className="trip-card-route" style={{ flex: 1 }}>{displayRoute.join(' → ')}</div>
         {chain.tripId && <span className="trip-card-id">#{chain.tripId}</span>}
       </div>
 

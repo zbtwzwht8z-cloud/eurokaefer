@@ -15,8 +15,7 @@ import TripDialog from './TripDialog';
 import LoungeChat from './LoungeChat';
 import RefreshButton from './RefreshButton';
 import RoutesMap from './RoutesMap';
-import AnimatedHero from './AnimatedHero';
-import ContainerScroll from './ContainerScroll';
+import AuroraBackground from './ui/aurora-background';
 
 type Props = {
   data: TripData;
@@ -150,71 +149,43 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
         </div>
       </header>
 
-      {/* ── Hero ────────────────────────────────────────────── */}
-      <section className="hero">
-        <div className="container hero-inner">
-          <motion.h1
-            className="h-display"
-            initial={reduce ? false : { opacity: 0, y: 18 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE_OUT }}
-          >€1 road trips, planned.</motion.h1>
+      {/* ── Aurora hero ─────────────────────────────────────── */}
+      <AuroraBackground>
+        <div className="container aurora-hero-inner">
           <motion.div
-            style={{ maxWidth: 680, margin: '0 auto' }}
-            initial={reduce ? false : { opacity: 0, y: 14 }}
+            initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.12 }}
+            transition={{ duration: 0.55, ease: EASE_OUT }}
           >
-            <p style={{
-              fontFamily: 'Georgia, "Times New Roman", serif',
-              fontSize: 'clamp(20px, 2.2vw, 30px)',
-              letterSpacing: 0, direction: 'rtl', lineHeight: 1.8,
-              color: '#ffffff',
-            }}>
-              هُوَ الَّذِي جَعَلَ لَكُمُ الْأَرْضَ ذَلُولًا فَامْشُوا فِي مَنَاكِبِهَا وَكُلُوا مِن رِّزْقِهِ ۖ وَإِلَيْهِ النُّشُورُ
+            <div className="hero-kicker">Europe · €1 camper relocations</div>
+            <h1 className="h-display" style={{ marginTop: 12 }}>Find a one-euro road trip.</h1>
+            <p style={{ color: 'var(--ink-3)', fontSize: 'clamp(15px, 1.4vw, 17px)', lineHeight: 1.6, marginTop: 12, maxWidth: 460 }}>
+              Every Movacar listing, chained into trips you can actually drive — loops, one-ways, and runs from home.
             </p>
-            <p style={{
-              fontSize: 13, color: 'rgba(255,255,255,0.55)',
-              marginTop: 14, lineHeight: 1.6, fontStyle: 'italic',
-            }}>
-              Surah Al-Mulk 67:15 — Ibn Kathīr: "Allah made the earth submissive and subservient, so travel its regions, walk its paths, and eat of what He has provided. The earth has been tamed for you as a riding animal is tamed."
-            </p>
+            <div className="hero-stats">
+              <span className="hero-stats-dot" />
+              <span style={{ color: 'var(--ink-2)', fontWeight: 600 }}><AnimatedNumber value={stats.routes} duration={1.1} /></span>
+              &nbsp;routes · {stats.offers} offers · {stats.perfectLoops + stats.imperfectLoops} loops
+              {data.meta.generated && ' · ' + relativeTime(data.meta.generated)}
+            </div>
+            <div style={{ display: 'flex', gap: 10, marginTop: 24, flexWrap: 'wrap' }}>
+              <button className="btn btn-primary" onClick={() => scrollTo(gridRef.current)}>Browse trips</button>
+              <button className="btn btn-ghost" onClick={() => scrollTo(mapSectionRef.current)}>See the map</button>
+            </div>
           </motion.div>
           <motion.div
-            className="hero-meta"
-            initial={reduce ? false : { opacity: 0, y: 10 }}
-            animate={reduce ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.28 }}
+            className="hero-photo"
+            initial={reduce ? false : { opacity: 0, scale: 0.97 }}
+            animate={reduce ? undefined : { opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.1 }}
           >
-            <span className="hero-meta-dot" />
-            <AnimatedNumber value={stats.routes} duration={1.1} /> possible trips · {stats.offers} offers
-            · ⭐ {stats.perfectLoops + stats.imperfectLoops} loops
-            {data.meta.generated && ' · ' + relativeTime(data.meta.generated)}
+            <img
+              src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&q=80&auto=format&fit=crop"
+              alt="An open road winding through the mountains at golden hour"
+            />
           </motion.div>
         </div>
-      </section>
-
-      {/* ── Animated hero band ─────────────────────────────── */}
-      <AnimatedHero
-        onBrowse={() => scrollTo(gridRef.current)}
-        onHowItWorks={() => scrollTo(mapSectionRef.current)}
-      />
-
-      {/* ── Scroll-reveal showcase ─────────────────────────── */}
-      <ContainerScroll
-        titleComponent={
-          <div style={{ paddingBottom: 8 }}>
-            <p className="eyebrow" style={{ marginBottom: 8 }}>The whole continent, one screen</p>
-            <h2 className="h-1" style={{ margin: 0 }}>Every €1 route, mapped.</h2>
-          </div>
-        }
-      >
-        <img
-          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1600&q=80&auto=format&fit=crop"
-          alt="An open road winding through the mountains at golden hour"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
-      </ContainerScroll>
+      </AuroraBackground>
 
       {/* ── Toolbar + grid ─────────────────────────────────── */}
       <div className="toolbar">
@@ -228,10 +199,10 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
         <div className="routes-map-head">
           <span className="routes-map-title">🗺 All routes, live</span>
           <span className="routes-map-legend">
-            <span className="legend-dot" style={{ background: '#d9920a' }} /> perfect loop
-            <span className="legend-dot" style={{ background: '#f97316' }} /> loop
-            <span className="legend-dot" style={{ background: '#0284c7' }} /> home start
-            <span className="legend-dot" style={{ background: '#9aa7af' }} /> other
+            <span className="legend-dot" style={{ background: '#e5c07b' }} /> perfect loop
+            <span className="legend-dot" style={{ background: '#f0883e' }} /> loop
+            <span className="legend-dot" style={{ background: '#4f8cff' }} /> home start
+            <span className="legend-dot" style={{ background: '#8a9099' }} /> other
           </span>
           <button className="btn btn-ghost btn-sm" onClick={() => setShowMap(v => !v)}>
             {showMap ? 'Hide' : 'Show'}
@@ -313,6 +284,21 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
           </>
         )}
       </main>
+
+      {/* ── Footer (verse as a quiet colophon) ─────────────── */}
+      <footer className="site-footer">
+        <div className="container">
+          <p className="footer-verse" dir="rtl">
+            فَامْشُوا فِي مَنَاكِبِهَا وَكُلُوا مِن رِّزْقِهِ
+          </p>
+          <p className="footer-cite">
+            Al-Mulk 67:15 — “travel its regions, walk its paths, and eat of what He has provided.”
+          </p>
+          <p className="footer-meta">
+            Eurokäfer · Bochum — Hannover — München — Marburg
+          </p>
+        </div>
+      </footer>
 
       {/* ── Dialog ────────────────────────────────────────── */}
       {openTrip && (
