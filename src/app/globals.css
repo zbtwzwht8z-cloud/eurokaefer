@@ -5,11 +5,15 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 
-/* Minimal slice of Preflight that shadcn's `border` utility needs (set border
-   default style/color without zeroing widths the existing CSS relies on). */
+/* Minimal slice of Preflight that shadcn's `border` utility needs: default
+   border to width 0 + solid style, so only explicit `border` utilities show.
+   WITHOUT border-width:0 every element (incl. every Leaflet map tile <img>)
+   renders its default medium border — the "boxes/grid-lines everywhere" bug. */
 @layer base {
-  *, ::before, ::after { border-style: solid; }
+  *, ::before, ::after { border-width: 0; border-style: solid; }
 }
+/* Belt-and-braces: never let the global reset put borders on map tiles. */
+.leaflet-tile, .leaflet-container img { border: 0 !important; }
 
 /* Map shadcn's token names to our existing brand vars — so pasted shadcn
    components (bg-primary, text-muted-foreground, border-input…) render on-brand
