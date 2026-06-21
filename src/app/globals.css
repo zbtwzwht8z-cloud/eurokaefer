@@ -55,33 +55,33 @@
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', system-ui, sans-serif;
 
-  /* Color palette — modern dark, near-black + restrained accent */
-  --bg: #0a0b0d;            /* near-black, slightly cool */
-  --surface: #121419;       /* card surface */
-  --surface-2: #181b21;     /* control fill */
-  --surface-3: #20242c;     /* hover / raised */
-  --ink: #edeef0;           /* near-white text */
-  --ink-2: #c4c8cd;
-  --ink-3: #8a9099;
-  --ink-4: #5f656d;
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.14);
+  /* Color palette — sunny & bright: warm sunlit white + sky blue + sun gold */
+  --bg: #fdfaf2;            /* warm sunlit white */
+  --surface: #ffffff;
+  --surface-2: #f6f0e3;     /* warm light fill */
+  --surface-3: #efe7d6;
+  --ink: #1f2a30;           /* warm dark slate */
+  --ink-2: #3f4d55;
+  --ink-3: #6b7780;
+  --ink-4: #9aa6ad;
+  --line: rgba(31, 42, 48, 0.09);
+  --line-strong: rgba(31, 42, 48, 0.16);
 
-  --accent: #4f8cff;        /* calm modern blue — interactive + home */
-  --accent-2: #3b74e6;
-  --accent-soft: rgba(79, 140, 255, 0.14);
-  --spark: #f0883e;         /* warm orange — CTA / loop */
-  --spark-fill: #f0883e;
-  --spark-soft: rgba(240, 136, 62, 0.15);
+  --accent: #0284c7;        /* sky blue — interactive + home */
+  --accent-2: #0369a1;
+  --accent-soft: #e0f2fe;
+  --spark: #ea580c;         /* sun orange — CTA / loop */
+  --spark-fill: #f97316;
+  --spark-soft: #fff1e7;
 
-  --warn: #e5c07b;
-  --warn-soft: rgba(229, 192, 123, 0.15);
-  --south: #f0883e;
-  --south-soft: rgba(240, 136, 62, 0.15);
-  --ice: #6aa5ff;
-  --ice-soft: rgba(106, 165, 255, 0.15);
-  --gold: #e5c07b;          /* perfect-loop accent */
-  --gold-soft: rgba(229, 192, 123, 0.16);
+  --warn: #b45309;
+  --warn-soft: #fdf0d5;
+  --south: #ea580c;
+  --south-soft: #fff1e7;
+  --ice: #2563eb;
+  --ice-soft: #eaf1ff;
+  --gold: #d9920a;          /* sun gold — perfect loop */
+  --gold-soft: #fdf2da;
 
   /* Radii */
   --r-xs: 6px;
@@ -196,9 +196,9 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(10, 11, 13, 0.72);
-  backdrop-filter: saturate(140%) blur(18px);
-  -webkit-backdrop-filter: saturate(140%) blur(18px);
+  background: rgba(253, 250, 242, 0.82);
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
   border-bottom: 1px solid var(--line);
 }
 .topbar-inner {
@@ -271,11 +271,11 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   position: absolute;
   inset: -20%;
   pointer-events: none;
-  opacity: 0.55;
-  filter: blur(16px) saturate(120%);
+  opacity: 0.45;
+  filter: blur(18px) saturate(130%);
   background-image:
     repeating-linear-gradient(100deg, var(--bg) 0%, var(--bg) 7%, transparent 10%, transparent 12%, var(--bg) 16%),
-    repeating-linear-gradient(100deg, #4f8cff 10%, #6aa5ff 15%, #8b7bff 20%, #b39dff 25%, #4f8cff 30%);
+    repeating-linear-gradient(100deg, #0284c7 10%, #38bdf8 15%, #f97316 20%, #fbbf24 25%, #0284c7 30%);
   background-size: 300% 200%, 220% 120%;
   background-position: 50% 50%, 50% 50%;
   animation: aurora 22s linear infinite;
@@ -422,9 +422,9 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   position: sticky;
   top: 56px;
   z-index: 900;
-  background: rgba(10, 11, 13, 0.82);
-  backdrop-filter: saturate(140%) blur(18px);
-  -webkit-backdrop-filter: saturate(140%) blur(18px);
+  background: rgba(253, 250, 242, 0.88);
+  backdrop-filter: saturate(160%) blur(18px);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
   border-bottom: 1px solid var(--line);
   padding: 12px 0;
   margin-top: 24px;
@@ -570,9 +570,9 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   flex: none; margin-top: 6px;
   background: var(--ink-4);
 }
-.status-dot[data-kind="perfect"] { background: var(--gold); box-shadow: 0 0 9px rgba(229, 192, 123, 0.55); }
-.status-dot[data-kind="loop"] { background: var(--spark-fill); box-shadow: 0 0 9px rgba(240, 136, 62, 0.45); }
-.status-dot[data-kind="home"] { background: var(--accent); box-shadow: 0 0 9px rgba(79, 140, 255, 0.45); }
+.status-dot[data-kind="perfect"] { background: var(--gold); box-shadow: 0 0 9px rgba(217, 146, 10, 0.5); }
+.status-dot[data-kind="loop"] { background: var(--spark-fill); box-shadow: 0 0 9px rgba(249, 115, 22, 0.45); }
+.status-dot[data-kind="home"] { background: var(--accent); box-shadow: 0 0 9px rgba(2, 132, 199, 0.45); }
 .trip-card:hover {
   box-shadow: var(--shadow-lg);
   border-color: var(--line-strong);

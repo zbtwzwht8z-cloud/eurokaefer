@@ -34,6 +34,7 @@ export type Chain = {
   tripId?: number;       // assigned client-side after dedup
   homeCity?: string;     // legacy field, mirrors homeOrigin
   homeOrigin?: string | null;  // cluster name if route[0] is in a home cluster
+  homeDestination?: string | null;  // cluster name if route ends in a home cluster (inbound trip)
   isLoop?: boolean;      // start area == end area, >= 2 legs
   loopTier?: LoopTier | null;  // 'perfect' (≤15km), 'imperfect' (≤100km), or null
   startEndKm?: number | null;  // great-circle distance start↔end

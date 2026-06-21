@@ -175,6 +175,12 @@ function homeOriginOf(coord: Coord | null, name: string, radiusKm: number): stri
   return best ? best.center : null;
 }
 
+/** Like homeOriginOf but for the trip's final destination — flags inbound trips
+ *  (e.g. Milan → Bochum) that are just as useful to a home user as outbound. */
+function homeDestinationOf(coord: Coord | null, name: string, radiusKm: number): string | null {
+  return homeOriginOf(coord, name, radiusKm);
+}
+
 function loopTierOf(
   startName: string, startCoord: Coord | null,
   endName: string, endCoord: Coord | null,
@@ -193,6 +199,11 @@ function scorePath(path: Node[], isLoop: boolean): number {
   score += path.length === 1 ? 15 : Math.min(path.length * 8, 30);
   const km = path.reduce((t, n) => t + (n.offer.distanceKm || 0), 0);
   score += Math.min(km / 200, 40);
+  // Spare-km headroom: rewards trips with more free-km slack than the route
+  // needs — these are more flexible (detours, side trips) and better value.
+  const freeKm = path.reduce((t, n) => t + (n.offer.freeKm || 0), 0);
+  const spareKm = freeKm - km;
+  if (spareKm > 0) score += Math.min(spareKm / 200, 15);
   if (path.some(n => SOUTH_NAMES.has(n.offer.destName))) score += 20;
   if (isLoop) score += 10;
   return score;
@@ -348,6 +359,7 @@ export function runEngine(offers: TripData['offers'], params: EngineParams): Eng
       ? loopTierOf(first.offer.originName, first.oCoord, lastN.offer.destName, lastN.dCoord, p)
       : { tier: null, km: null };
     const homeOrigin = homeOriginOf(first.oCoord, first.offer.originName, p.sameAreaKm);
+    const homeDestination = homeDestinationOf(lastN.dCoord, lastN.offer.destName, p.sameAreaKm);
     const isLoop = !!tier;
 
     const legs: Leg[] = path.map((n, i) => ({
@@ -399,6 +411,7 @@ export function runEngine(offers: TripData['offers'], params: EngineParams): Eng
       startEndKm: seKm,
       homeOrigin,
       ...(homeOrigin ? { homeCity: homeOrigin } : {}),
+      homeDestination,
       startUtc: new Date(best.sched.e[0]).toISOString(),
       endUtc: new Date(endMs).toISOString(),
       departFrom: new Date(best.sched.e[0]).toISOString(),

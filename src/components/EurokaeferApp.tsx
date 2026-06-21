@@ -165,7 +165,7 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
             <div className="hero-stats">
               <span className="hero-stats-dot" />
               <span style={{ color: 'var(--ink-2)', fontWeight: 600 }}><AnimatedNumber value={stats.routes} duration={1.1} /></span>
-              &nbsp;routes · {stats.offers} offers · {stats.perfectLoops + stats.imperfectLoops} loops
+              &nbsp;routes · {stats.offers} live offers · {stats.perfectLoops + stats.imperfectLoops} loops
               {data.meta.generated && ' · ' + relativeTime(data.meta.generated)}
             </div>
             <div style={{ display: 'flex', gap: 10, marginTop: 24, flexWrap: 'wrap' }}>
@@ -199,10 +199,10 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
         <div className="routes-map-head">
           <span className="routes-map-title">🗺 All routes, live</span>
           <span className="routes-map-legend">
-            <span className="legend-dot" style={{ background: '#e5c07b' }} /> perfect loop
-            <span className="legend-dot" style={{ background: '#f0883e' }} /> loop
-            <span className="legend-dot" style={{ background: '#4f8cff' }} /> home start
-            <span className="legend-dot" style={{ background: '#8a9099' }} /> other
+            <span className="legend-dot" style={{ background: '#d9920a' }} /> perfect loop
+            <span className="legend-dot" style={{ background: '#f97316' }} /> loop
+            <span className="legend-dot" style={{ background: '#0284c7' }} /> home start
+            <span className="legend-dot" style={{ background: '#9aa6ad' }} /> other
           </span>
           <button className="btn btn-ghost btn-sm" onClick={() => setShowMap(v => !v)}>
             {showMap ? 'Hide' : 'Show'}

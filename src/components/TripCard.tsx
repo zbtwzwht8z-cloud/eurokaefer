@@ -102,7 +102,10 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
         {!chain.loopTier && !isLoop && chain.homeOrigin && (
           <span className="badge badge-accent">🏠 from {chain.homeOrigin}</span>
         )}
-        {!chain.loopTier && !isLoop && !chain.homeOrigin && <span className="badge">Ends {dest}</span>}
+        {!chain.loopTier && !isLoop && !chain.homeOrigin && chain.homeDestination && (
+          <span className="badge badge-accent">🏠 to {chain.homeDestination}</span>
+        )}
+        {!chain.loopTier && !isLoop && !chain.homeOrigin && !chain.homeDestination && <span className="badge">Ends {dest}</span>}
         <span className="badge">{chain.legs.length} {chain.legs.length === 1 ? 'leg' : 'legs'}</span>
         <span className="badge" title="Shortest–longest possible trip length">{daysStr}</span>
         {variantCount > 1 && (
@@ -140,7 +143,7 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
           className="btn-icon"
           onClick={e => { e.stopPropagation(); onToggleHighlight(); }}
           title={minehighlight ? 'Unhighlight' : 'Highlight'}
-          style={minehighlight ? { color: '#f59e0b' } : {}}
+          style={minehighlight ? { color: 'var(--gold)' } : {}}
         >
           {minehighlight ? '⭐' : '☆'}
         </button>

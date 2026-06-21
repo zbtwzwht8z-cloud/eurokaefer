@@ -10,7 +10,9 @@
 import { type Chain, chainFuelEur, chainDriveHours, endsInIceCity } from './chains';
 import { HOME_CITY_SET, REGIONS, type HomeCity, type RegionKey } from './constants';
 
-export type SortKey = 'best' | 'fuel' | 'shortest' | 'soonest' | 'legs-asc' | 'legs-desc';
+export type SortKey = 'best' | 'fuel' | 'shortest' | 'soonest' | 'legs-asc' | 'legs-desc' | 'spare';
+
+export type TripMode = 'any' | 'loop' | 'oneway';
 
 export type FilterState = {
   from: HomeCity | 'mine' | 'any';
@@ -23,8 +25,8 @@ export type FilterState = {
   dateTo?: string;             // engine param: latest final dropoff (yyyy-mm-dd)
   search: string;
   sort: SortKey;
-  loopsOnly?: boolean;
-  onewaysOnly?: boolean;
+  tripMode: TripMode;          // any | loop | oneway (replaces loopsOnly/onewaysOnly)
+  endsAtHome?: boolean;        // only trips that end in a home cluster (inbound)
   iceOnly?: boolean;
 };
 
@@ -37,11 +39,14 @@ export const DEFAULT_FILTER: FilterState = {
   maxDays: 21,
   search: '',
   sort: 'best',
+  tripMode: 'any',
 };
 
 function priority(c: Chain): number {
   let p = 0;
+  // Home relevance: trips starting OR ending at home are most useful.
   if (c.homeOrigin) p += 4;
+  else if (c.homeDestination) p += 3;
   if (c.loopTier === 'perfect') p += 3;
   else if (c.loopTier === 'imperfect') p += 2;
   else if (c.isLoop ?? (c.type === 'loop')) p += 1;
@@ -71,8 +76,8 @@ export function applyFilters(
 
   let pool = all.filter(c => {
     const isLoop = c.isLoop ?? (c.type === 'loop');
-    if (state.loopsOnly && !isLoop) return false;
-    if (state.onewaysOnly && isLoop) return false;
+    if (state.tripMode === 'loop' && !isLoop) return false;
+    if (state.tripMode === 'oneway' && isLoop) return false;
 
     // FROM filter
     if (fromSet) {
@@ -85,6 +90,9 @@ export function applyFilters(
         if (!fromCitySet.has(c.route[0])) return false;
       }
     }
+
+    // "Ends at home" — inbound trips that finish in a home cluster
+    if (state.endsAtHome && !c.homeDestination) return false;
 
     // TO filter
     if (toSet && state.to !== 'all') {
@@ -122,6 +130,9 @@ export function applyFilters(
       break;
     case 'legs-desc':
       pool = [...pool].sort((a, b) => b.legs.length - a.legs.length || b.score - a.score);
+      break;
+    case 'spare':
+      pool = [...pool].sort((a, b) => (b.spareKm ?? 0) - (a.spareKm ?? 0));
       break;
     default:
       // Priority weights:

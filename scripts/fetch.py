@@ -3,17 +3,19 @@
 
 Strategy (two collectors):
 
-  A) Broad paginated fetch — catches current offers and chaining hubs.
-     Stops early once it stops seeing new offer IDs (stale pages).
+  A) Broad fetch — one request with ?size=1000 returns the full current
+     inventory (the API caps a response at the `size` count; ~200-300
+     live offers at any time). The old `?page=N` loop was a no-op: the
+     API ignores `page` and returns the same first 100 on every page, so
+     we silently dropped >half the inventory. `size` is the only lever.
 
   B) Origin-scoped fetch — for each home-cluster station, query
-     ?origin=<station_id>. This is what the Movacar website UI uses.
-     The unfiltered paginated endpoint misses future home-city offers
-     (e.g. Bochum → Paris CDG in June) that only appear when querying
-     by origin station ID.
+     ?origin=<station_id>&size=1000. This catches home-city offers that
+     rank outside the broad response's top results.
 
 Both collectors contribute to the same pool; dedup by (origin_id,
-dest_id, start_date) keeps one representative per route-day.
+dest_id, start_date) keeps one representative per route-day. Offers
+whose pickup window has already closed are dropped.
 
 Writes data/movacar_offers.csv with one row per unique route-day.
 """
@@ -39,6 +41,7 @@ API_BASE = 'https://crowd-api-production-615013621295.europe-west1.run.app'
 TODAY = datetime.now(timezone.utc).date()
 WINDOW_START = TODAY
 WINDOW_END = TODAY + timedelta(days=90)
+NOW_MS = int(datetime.now(timezone.utc).timestamp() * 1000)
 
 # Home-cluster station references (ULIDs) for origin-scoped API queries.
 # The Movacar API uses `reference` (ULID) for the `origin=` param, NOT the numeric id.
@@ -68,11 +71,9 @@ ALL_HOME_STATION_REFS: list[str] = [
     ref for refs in HOME_STATION_REFS.values() for ref in refs
 ]
 
-# Broad fetch: stop after this many consecutive pages with no new offer IDs
-STALE_PAGE_STOP = 5
-MAX_BROAD_PAGES = 60
-# Origin-scoped fetch: cap pages per station so we don't loop forever
-MAX_ORIGIN_PAGES = 20
+# Broad fetch: the API ignores ?page=N (returns the same results every page),
+# but honors ?size=N. One size=1000 request pulls the full live inventory.
+FETCH_SIZE = 1000
 
 
 def http_get(url: str, retries: int = 3) -> Any:
@@ -111,66 +112,55 @@ def _ingest_included(included: list[dict]) -> None:
 # ── Collector A: broad paginated fetch ───────────────────────────────────────
 
 def collector_broad() -> list[dict]:
-    """Unfiltered paginated fetch. Stops on stale pages."""
-    all_offers: list[dict] = []
-    seen_ids: set[str] = set()
-    stale = 0
-    base = (
+    """Single broad fetch with size=1000 — pulls the full live inventory.
+
+    The API ignores ?page=N (identical results every page), so pagination
+    loops are dead weight. ?size=N is the only lever that raises the
+    response cap. One request gets everything Movacar currently lists.
+    """
+    url = (
         f'{API_BASE}/v1/offers'
         f'?pickupDateFrom={WINDOW_START.isoformat()}'
         f'&pickupDateTo={WINDOW_END.isoformat()}'
+        f'&size={FETCH_SIZE}'
     )
-    for page in range(1, MAX_BROAD_PAGES + 1):
-        raw = http_get(f'{base}&page={page}')
-        batch = raw.get('data', [])
-        if not batch:
-            break
-        _ingest_included(raw.get('included', []))
-        new = [o for o in batch if o.get('id') not in seen_ids]
-        seen_ids.update(o.get('id', '') for o in batch)
-        all_offers.extend(new)
-        stale = 0 if new else stale + 1
-        print(f'  broad p{page}: {len(batch)} raw, {len(new)} new (total {len(all_offers)})')
-        if stale >= STALE_PAGE_STOP or len(batch) < 100:
-            break
-    return all_offers
+    raw = http_get(url)
+    batch = raw.get('data', [])
+    _ingest_included(raw.get('included', []))
+    print(f'  broad: {len(batch)} offers in one size={FETCH_SIZE} request')
+    return batch
 
 
 # ── Collector B: origin-scoped fetch for home clusters ───────────────────────
 
 def collector_home_origins() -> list[dict]:
-    """Query each home-cluster station by origin= param. Now paginates per origin."""
+    """Query each home-cluster station by origin= with size=1000.
+
+    The broad fetch already gets the full inventory, but origin-scoped
+    queries catch home-city offers that rank outside the broad response
+    and act as a belt-and-braces cross-check.
+    """
     all_offers: list[dict] = []
     seen_ids: set[str] = set()
     base = (
         f'{API_BASE}/v1/offers'
         f'?pickupDateFrom={WINDOW_START.isoformat()}'
         f'&pickupDateTo={WINDOW_END.isoformat()}'
+        f'&size={FETCH_SIZE}'
     )
     for station_id in ALL_HOME_STATION_REFS:
-        # Resolve display name: find station whose reference matches this ULID
         city = next(
             (a.get('city', station_id) for a in _stations.values() if a.get('reference') == station_id),
             station_id,
         )
-        station_total = 0
-        station_new = 0
-        for page in range(1, MAX_ORIGIN_PAGES + 1):
-            url = f'{base}&origin={station_id}&page={page}'
-            raw = http_get(url)
-            batch = raw.get('data', [])
-            if not batch:
-                break
-            _ingest_included(raw.get('included', []))
-            new = [o for o in batch if o.get('id') not in seen_ids]
-            seen_ids.update(o.get('id', '') for o in batch)
-            all_offers.extend(new)
-            station_total += len(batch)
-            station_new += len(new)
-            # If page returned < 100 we're at the end
-            if len(batch) < 100:
-                break
-        print(f'  origin {station_id} ({city}): {station_total} offers across pages, {station_new} new')
+        url = f'{base}&origin={station_id}'
+        raw = http_get(url)
+        batch = raw.get('data', [])
+        _ingest_included(raw.get('included', []))
+        new = [o for o in batch if o.get('id') not in seen_ids]
+        seen_ids.update(o.get('id', '') for o in batch)
+        all_offers.extend(new)
+        print(f'  origin {station_id} ({city}): {len(batch)} offers, {len(new)} new')
     return all_offers
 
 
@@ -198,6 +188,7 @@ def log_station_discovery() -> None:
 
 def parse_offers(raw_offers: list[dict]) -> list[dict]:
     rows: list[dict] = []
+    skipped_expired = 0
     for offer in raw_offers:
         attrs = offer.get('attributes', {})
         rels = offer.get('relationships', {})
@@ -214,6 +205,18 @@ def parse_offers(raw_offers: list[dict]) -> list[dict]:
 
         origin_name = origin_st.get('city') or origin_id
         dest_name = dest_st.get('city') or dest_id
+
+        # Drop offers whose pickup window has already closed — they can't
+        # chain into anything a user could actually book now.
+        end_date = attrs.get('end_date') or ''
+        if end_date:
+            try:
+                end_ms = int(datetime.fromisoformat(end_date.replace('Z', '+00:00')).timestamp() * 1000)
+                if end_ms < NOW_MS:
+                    skipped_expired += 1
+                    continue
+            except ValueError:
+                pass
 
         distance_m = float(attrs.get('distance') or 0)
         distance_km = distance_m / 1000.0
@@ -241,6 +244,8 @@ def parse_offers(raw_offers: list[dict]) -> list[dict]:
             'price_eur': f'{price_cents / 100:.2f}',
             'is_eur_1': 'yes' if price_cents <= 100 else 'no',
         })
+    if skipped_expired:
+        print(f'  dropped {skipped_expired} expired offers (pickup window already closed)')
     return rows
 
 
