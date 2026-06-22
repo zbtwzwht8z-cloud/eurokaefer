@@ -36,7 +36,6 @@ yarn-error.log*
 
 # generated data
 /data/raw_json/
-/data/*.csv
 
 # vercel
 .vercel

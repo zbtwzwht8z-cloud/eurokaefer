@@ -14,18 +14,18 @@ type Props = {
 const MAX_LINES = 200;
 
 function lineColor(c: Chain): string {
-  if (c.loopTier === 'perfect') return '#e5c07b';   // gold
-  if (c.loopTier === 'imperfect') return '#f0883e'; // orange
-  if (c.homeOrigin) return '#4f8cff';               // blue
-  return '#8a9099';   // light slate — reads on the dark basemap
+  if (c.loopTier === 'perfect') return '#d9920a';   // sun gold
+  if (c.loopTier === 'imperfect') return '#f97316'; // sun orange
+  if (c.homeOrigin || c.homeDestination) return '#0284c7'; // sky blue
+  return '#6b7780';   // warm slate — reads on the light basemap
 }
 
 function lineWeight(c: Chain): number {
-  return c.loopTier ? 4.5 : c.homeOrigin ? 4 : 3;
+  return c.loopTier ? 4.5 : (c.homeOrigin || c.homeDestination) ? 4 : 3;
 }
 
 function lineOpacity(c: Chain): number {
-  return c.loopTier || c.homeOrigin ? 0.95 : 0.7;
+  return c.loopTier || c.homeOrigin || c.homeDestination ? 0.95 : 0.7;
 }
 
 function chainPoints(c: Chain): [number, number][] {
@@ -57,7 +57,7 @@ export default function RoutesMapImpl({ chains, hoverKey, onSelect, onHover }: P
       const L = await import('leaflet');
       if (cancelled || !ref.current || mapRef.current) return;
       const map = L.map(ref.current, { zoomControl: true, attributionControl: false });
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
       map.setView([48.5, 8.5], 5);
       layerRef.current = L.layerGroup().addTo(map);
       mapRef.current = map;
@@ -100,10 +100,10 @@ export default function RoutesMapImpl({ chains, hoverKey, onSelect, onHover }: P
         const key = tripKey(c);
         const weight = lineWeight(c);
         const style = { color: lineColor(c), weight, opacity: lineOpacity(c) };
-        // Dark casing underneath so each colored line stays crisp against the
-        // dark basemap and separates where routes overlap.
+        // Light casing underneath so each colored line stays crisp against the
+        // light basemap and separates where routes overlap.
         L.polyline(pts, {
-          color: '#0a0b0d', weight: weight + 3.5, opacity: 0.85,
+          color: '#ffffff', weight: weight + 3.5, opacity: 0.9,
           lineCap: 'round', lineJoin: 'round', interactive: false,
         }).addTo(layer);
         const line = L.polyline(pts, {
