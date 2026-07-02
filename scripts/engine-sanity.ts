@@ -34,7 +34,6 @@ function parseCsv(text: string): Record<string, string>[] {
 
 const csv = parseCsv(readFileSync(join(ROOT, 'data', 'movacar_offers.csv'), 'utf-8'));
 const offers: TripData['offers'] = csv
-  .filter(r => r.is_eur_1 === 'yes')
   .map(r => ({
     offerId: r.offer_id,
     originName: r.origin_name,
@@ -50,21 +49,26 @@ const offers: TripData['offers'] = csv
     freeKm: parseFloat(r.free_km) || 0,
     make: r.make,
     model: r.model,
+    priceEur: parseFloat(r.price_eur) || 0,
   }));
 
-console.log(`${offers.length} €1 offers loaded`);
+const eur1Count = offers.filter(o => (o.priceEur ?? 1) <= 1).length;
+console.log(`${offers.length} offers loaded (${eur1Count} at €1)`);
 
-for (const maxDays of [14, 21, 365]) {
-  const res = runEngine(offers, { ...DEFAULT_ENGINE_PARAMS, maxTripDays: maxDays });
-  const s = res.stats;
-  const byLegs = new Map<number, number>();
-  for (const c of res.chains) byLegs.set(c.legs.length, (byLegs.get(c.legs.length) || 0) + 1);
-  const legsStr = [...byLegs.entries()].sort((a, b) => a[0] - b[0]).map(([l, n]) => `${l}L:${n}`).join(' ');
-  console.log(
-    `maxDays=${String(maxDays).padEnd(3)} → ${s.routes} routes (${s.rawPaths} raw) · ` +
-    `⭐${s.perfectLoops} 🔄${s.imperfectLoops} loops · 🏠${s.homeOrigin} home · ` +
-    `[${legsStr}] · ${s.ms}ms${s.truncated ? ' · ⚠ TRUNCATED' : ''}`,
-  );
+for (const priceMode of ['€1-only', 'all-prices'] as const) {
+  const maxLegPriceEur = priceMode === '€1-only' ? 1 : undefined;
+  for (const maxDays of [14, 21, 365]) {
+    const res = runEngine(offers, { ...DEFAULT_ENGINE_PARAMS, maxTripDays: maxDays, maxLegPriceEur });
+    const s = res.stats;
+    const byLegs = new Map<number, number>();
+    for (const c of res.chains) byLegs.set(c.legs.length, (byLegs.get(c.legs.length) || 0) + 1);
+    const legsStr = [...byLegs.entries()].sort((a, b) => a[0] - b[0]).map(([l, n]) => `${l}L:${n}`).join(' ');
+    console.log(
+      `${priceMode.padEnd(10)} maxDays=${String(maxDays).padEnd(3)} → ${s.routes} routes (${s.rawPaths} raw) · ` +
+      `⭐${s.perfectLoops} 🔄${s.imperfectLoops} loops · 🏠${s.homeOrigin} home · ` +
+      `[${legsStr}] · ${s.ms}ms${s.truncated ? ' · ⚠ TRUNCATED' : ''}`,
+    );
+  }
 }
 
 // Spot-check: show top 5 loops

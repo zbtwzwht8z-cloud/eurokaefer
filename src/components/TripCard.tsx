@@ -2,7 +2,7 @@
 import { useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import type { Chain } from '@/lib/chains';
-import { chainFuelEur, chainDriveHours, endsInIceCity, countriesOfChain, tripKey } from '@/lib/chains';
+import { chainFuelEur, chainDriveHours, chainPriceEur, chainIsAllEur1, endsInIceCity, countriesOfChain, tripKey } from '@/lib/chains';
 import type { Highlight, User } from '@/lib/turso';
 import { COUNTRY_FLAG } from '@/lib/constants';
 import { riseItem, hoverSpring } from '@/lib/motion';
@@ -21,6 +21,8 @@ type Props = {
 export default function TripCard({ chain, highlights, usersById, myUserId, onOpen, onToggleHighlight, onHover }: Props) {
   const fuel = chainFuelEur(chain);
   const driveH = chainDriveHours(chain);
+  const rentalEur = chainPriceEur(chain);
+  const allEur1 = chainIsAllEur1(chain);
   const ice = endsInIceCity(chain);
   const countries = useMemo(() => countriesOfChain(chain), [chain]);
   const isLoop = chain.isLoop ?? (chain.type === 'loop');
@@ -53,13 +55,21 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
     <motion.article
       className="trip-card"
       data-kind={kind}
+      role="button"
+      tabIndex={0}
+      aria-label={`Trip ${displayRoute.join(' to ')}`}
       variants={reduce ? undefined : riseItem}
       whileHover={reduce ? undefined : { y: -3 }}
       whileTap={reduce ? undefined : { scale: 0.992 }}
       transition={hoverSpring}
       onClick={onOpen}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(); }
+      }}
       onMouseEnter={() => onHover?.(tripKey(chain))}
       onMouseLeave={() => onHover?.(null)}
+      onFocus={() => onHover?.(tripKey(chain))}
+      onBlur={() => onHover?.(null)}
     >
       {/* Highlight avatars */}
       {highlights.length > 0 && (
@@ -88,6 +98,15 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
       </div>
 
       <div className="trip-card-meta">
+        {allEur1 ? (
+          <span className="badge badge-gold" title={`Every leg is a €1 relocation — €${chain.legs.length} total rental`}>
+            €1 × {chain.legs.length}
+          </span>
+        ) : (
+          <span className="badge badge-warn" title="Includes paid legs — total rental price">
+            💶 €{Math.round(rentalEur)} rental
+          </span>
+        )}
         {chain.loopTier === 'perfect' && (
           <span className="badge badge-gold" title={`Start ↔ end ${Math.round(chain.startEndKm ?? 0)}km`}>
             ⭐ Perfect loop
@@ -117,7 +136,7 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
       </div>
 
       <div className="trip-card-map">
-        <MapView route={chain.route} mini />
+        <MapView route={chain.route} coords={chain.coords} mini />
       </div>
 
       <div className="trip-card-stats">
