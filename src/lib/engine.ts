@@ -177,12 +177,6 @@ function homeOriginOf(coord: Coord | null, name: string, radiusKm: number): stri
   return best ? best.center : null;
 }
 
-/** Like homeOriginOf but for the trip's final destination — flags inbound trips
- *  (e.g. Milan → Bochum) that are just as useful to a home user as outbound. */
-function homeDestinationOf(coord: Coord | null, name: string, radiusKm: number): string | null {
-  return homeOriginOf(coord, name, radiusKm);
-}
-
 function loopTierOf(
   startName: string, startCoord: Coord | null,
   endName: string, endCoord: Coord | null,
@@ -369,7 +363,8 @@ export function runEngine(offers: TripData['offers'], params: EngineParams): Eng
       ? loopTierOf(first.offer.originName, first.oCoord, lastN.offer.destName, lastN.dCoord, p)
       : { tier: null, km: null };
     const homeOrigin = homeOriginOf(first.oCoord, first.offer.originName, p.sameAreaKm);
-    const homeDestination = homeDestinationOf(lastN.dCoord, lastN.offer.destName, p.sameAreaKm);
+    // Same cluster test on the trip's END flags inbound trips (Milan → Bochum).
+    const homeDestination = homeOriginOf(lastN.dCoord, lastN.offer.destName, p.sameAreaKm);
     const isLoop = !!tier;
 
     const legs: Leg[] = path.map((n, i) => ({

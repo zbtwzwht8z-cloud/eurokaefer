@@ -189,8 +189,8 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
             transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.1 }}
           >
             <img
-              src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&q=80&auto=format&fit=crop"
-              alt="An open road winding through the mountains at golden hour"
+              src="https://images.unsplash.com/photo-1594495894542-a46cc73e081a?w=1200&q=80&auto=format&fit=crop"
+              alt="A sunny yellow VW camper van parked on an Alpine pass road"
             />
           </motion.div>
         </div>

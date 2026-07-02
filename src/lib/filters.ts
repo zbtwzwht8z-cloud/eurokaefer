@@ -117,7 +117,14 @@ export function applyFilters(
 
     if (state.iceOnly && !endsInIceCity(c).ok) return false;
     if (q) {
-      const blob = (c.route.join(' ') + ' ' + (c.countries || []).join(' ')).toLowerCase();
+      // Searchable: route cities, countries, trip #ID, vehicle make/model —
+      // everything the placeholder promises.
+      const blob = (
+        c.route.join(' ') + ' ' +
+        (c.countries || []).join(' ') + ' ' +
+        (c.tripId != null ? `#${c.tripId}` : '') + ' ' +
+        c.legs.map(l => `${l.make || ''} ${l.model || ''}`).join(' ')
+      ).toLowerCase();
       if (!blob.includes(q)) return false;
     }
     return true;

@@ -37,14 +37,14 @@ export const REGIONS: Record<RegionKey, { label: string; cities: Set<string> }> 
     cities: new Set([
       'Milan', 'Milan / Castellanza', 'Castellanza', 'Bergamo', 'Bologna',
       'Florence', 'Roma', 'Turin', 'Venezia', 'Napoli', 'Genova', 'Palermo',
-      'Cagliari', 'Olbia', 'Bastia', 'Bari', 'Pisa',
+      'Cagliari', 'Olbia', 'Bastia', 'Bari', 'Pisa', 'Catania',
     ]),
   },
   spain: {
     label: '🇪🇸 Spain',
     cities: new Set([
       'Barcelona', 'Viladecans', 'Madrid', 'Sevilla', 'Bilbao', 'Zamudio',
-      'A Coruña', 'Valencia', 'Alacant/Alicante',
+      'A Coruña', 'Valencia', 'València', 'Alacant/Alicante', 'Málaga',
     ]),
   },
   portugal: { label: '🇵🇹 Portugal', cities: new Set(['Porto', 'Lisbon', 'Faro']) },
@@ -83,6 +83,7 @@ export const REGIONS: Record<RegionKey, { label: string; cities: Set<string> }> 
     cities: new Set([
       'Bochum', 'Essen', 'Dormagen', 'Bielefeld', 'Bonn', 'Duisburg',
       'Dortmund', 'Düsseldorf', 'Köln', 'Cologne', 'Münster', 'Aachen',
+      'Brilon', 'Lippstadt', 'Soest',
     ]),
   },
   southern_germany: {
@@ -93,16 +94,20 @@ export const REGIONS: Record<RegionKey, { label: string; cities: Set<string> }> 
       'Korntal-Münchingen', 'Ettlingenweier', 'Neu-Ulm', 'Würzburg', 'Regensburg',
       'Heidelberg', 'Karlsruhe', 'Sinsheim', 'Freiburg', 'Konstanz', 'Friedrichshafen',
       'Bamberg', 'Bayreuth', 'Rosenheim', 'Reutlingen', 'Fürth', 'Freilassing',
-      'Landsberg am Lech', 'Weiden',
+      'Landsberg am Lech', 'Weiden', 'Hof',
     ]),
   },
   northern_germany: {
     label: 'Northern Germany',
-    cities: new Set(['Hamburg', 'Hannover', 'Laatzen', 'Kiel', 'Flensburg', 'Bremen', 'Weyhe']),
+    cities: new Set([
+      'Hamburg', 'Hannover', 'Laatzen', 'Kiel', 'Flensburg', 'Bremen', 'Weyhe',
+      'Büdelsdorf', 'Celle', 'Leer', 'Oldenburg', 'Wolfsburg', 'Braunschweig',
+      'Achim bei Bremen', 'Dollern',
+    ]),
   },
   eastern_germany: {
     label: 'Eastern Germany',
-    cities: new Set(['Berlin', 'Dresden', 'Leipzig', 'Erfurt', 'Chemnitz', 'Bautzen', 'Zwickau', 'Halle']),
+    cities: new Set(['Berlin', 'Dresden', 'Leipzig', 'Erfurt', 'Chemnitz', 'Bautzen', 'Zwickau', 'Halle', 'Jena']),
   },
   scandinavia: {
     label: '🇸🇪 Scandinavia',
@@ -115,7 +120,7 @@ export const REGIONS: Record<RegionKey, { label: string; cities: Set<string> }> 
     label: '🇧🇪 Benelux',
     cities: new Set([
       'Sint-Pieters-Leeuw', 'Sint-Pieters-Leeuw / Brussels', 'Antwerp',
-      'Amsterdam / Amstelveen', 'Amstelveen', 'Rotterdam',
+      'Amsterdam / Amstelveen', 'Amstelveen', 'Rotterdam', 'Brüssel',
     ]),
   },
   balkans: {
@@ -152,6 +157,10 @@ export const COUNTRY_OF: Record<string, string> = {
   'Reutlingen': 'Germany', 'Fürth': 'Germany', 'Freilassing': 'Germany',
   'Landsberg am Lech': 'Germany', 'Weiden': 'Germany', 'Halle': 'Germany',
   'Zwickau': 'Germany',
+  'Achim bei Bremen': 'Germany', Braunschweig: 'Germany', Brilon: 'Germany',
+  'Büdelsdorf': 'Germany', Celle: 'Germany', Dollern: 'Germany', Hof: 'Germany',
+  Jena: 'Germany', Leer: 'Germany', Lippstadt: 'Germany', Soest: 'Germany',
+  Wolfsburg: 'Germany',
   // France
   Paris: 'France', 'Paris CDG': 'France', Champlan: 'France', Nantes: 'France',
   Mérignac: 'France', Lille: 'France', Strasbourg: 'France', Cabriès: 'France',
@@ -164,16 +173,17 @@ export const COUNTRY_OF: Record<string, string> = {
   // Italy
   Milan: 'Italy', 'Milan / Castellanza': 'Italy', Bergamo: 'Italy', Bologna: 'Italy',
   Florence: 'Italy', Roma: 'Italy', Turin: 'Italy', Venezia: 'Italy', Napoli: 'Italy',
-  Genova: 'Italy', Palermo: 'Italy', Bari: 'Italy', Pisa: 'Italy',
+  Genova: 'Italy', Palermo: 'Italy', Bari: 'Italy', Pisa: 'Italy', Catania: 'Italy',
   // Spain
   Barcelona: 'Spain', Viladecans: 'Spain', Madrid: 'Spain', Sevilla: 'Spain',
   Bilbao: 'Spain', Zamudio: 'Spain', 'A Coruña': 'Spain', Valencia: 'Spain',
-  'Alacant/Alicante': 'Spain',
+  'València': 'Spain', 'Alacant/Alicante': 'Spain', 'Málaga': 'Spain',
   // Sweden / Norway
   'Göteborgs Stad': 'Sweden', 'Staffanstorps kommun': 'Sweden', Stockholm: 'Sweden',
   Skedsmo: 'Norway', Blomsterdalen: 'Norway', Tromsø: 'Norway',
   // Belgium / NL
   'Sint-Pieters-Leeuw / Brussels': 'Belgium', 'Sint-Pieters-Leeuw': 'Belgium', Antwerp: 'Belgium',
+  'Brüssel': 'Belgium',
   'Amsterdam / Amstelveen': 'Netherlands', Amstelveen: 'Netherlands', Rotterdam: 'Netherlands',
   // Austria
   'Wiener Neudorf': 'Austria', Wien: 'Austria', Vienna: 'Austria', Salzburg: 'Austria',
@@ -228,6 +238,10 @@ export const CITY_COORDS: Record<string, [number, number]> = {
   Reutlingen: [48.491, 9.204], Fürth: [49.475, 10.991], Freilassing: [47.833, 12.997],
   'Landsberg am Lech': [48.046, 10.862], Weiden: [49.672, 12.157], Halle: [51.482, 11.971],
   Zwickau: [50.718, 12.494],
+  'Achim bei Bremen': [53.009, 9.041], Braunschweig: [52.25, 10.535], Brilon: [51.406, 8.563],
+  'Büdelsdorf': [54.316, 9.679], Celle: [52.61, 10.076], Dollern: [53.541, 9.544],
+  Hof: [50.312, 11.881], Jena: [50.897, 11.582], Leer: [53.232, 7.463],
+  Lippstadt: [51.652, 8.343], Soest: [51.557, 8.143], Wolfsburg: [52.425, 10.791],
   // France
   Paris: [48.8566, 2.3522], Nantes: [47.2184, -1.5536], Champlan: [48.7197, 2.27],
   Mérignac: [44.8333, -0.6444], Lille: [50.6292, 3.0573],
@@ -242,12 +256,13 @@ export const CITY_COORDS: Record<string, [number, number]> = {
   Roma: [41.9028, 12.4964], Turin: [45.0703, 7.6869], Venezia: [45.4408, 12.3155],
   Napoli: [40.8518, 14.2681], Genova: [44.4056, 8.9463], Palermo: [38.1157, 13.3613],
   Cagliari: [39.224, 9.122], Olbia: [40.923, 9.503], Bastia: [42.701, 9.450],
-  Bari: [41.117, 16.872], Pisa: [43.7228, 10.402],
+  Bari: [41.117, 16.872], Pisa: [43.7228, 10.402], Catania: [37.445, 15.067],
   // Spain
   Barcelona: [41.3851, 2.1734], Viladecans: [41.3158, 2.0184], Madrid: [40.4168, -3.7038],
   Sevilla: [37.3886, -5.9823], Bilbao: [43.263, -2.935],
   'A Coruña': [43.3623, -8.4115], Valencia: [39.4699, -0.3763],
-  'Alacant/Alicante': [38.345, -0.481],
+  'València': [39.583, -0.329], 'Alacant/Alicante': [38.345, -0.481],
+  'Málaga': [36.673, -4.579],
   // Austria
   'Wiener Neudorf': [48.077, 16.317], Wien: [48.2082, 16.3738], Vienna: [48.2082, 16.3738],
   Salzburg: [47.8095, 13.055], Graz: [47.0707, 15.4395], Innsbruck: [47.2692, 11.4041],
@@ -259,7 +274,7 @@ export const CITY_COORDS: Record<string, [number, number]> = {
   Warszawa: [52.230, 21.012],
   // Other
   'Sint-Pieters-Leeuw / Brussels': [50.7833, 4.25], 'Sint-Pieters-Leeuw': [50.7833, 4.25],
-  Antwerp: [51.2194, 4.4025],
+  Antwerp: [51.2194, 4.4025], 'Brüssel': [50.969, 4.494],
   'Amsterdam / Amstelveen': [52.3676, 4.9041], Amstelveen: [52.308, 4.861], Rotterdam: [51.9244, 4.4777],
   Porto: [41.1579, -8.6291], Lisbon: [38.7223, -9.1393], Faro: [37.019, -7.930],
   Zürich: [47.3769, 8.5417], Basel: [47.5596, 7.5886], Geneva: [46.2044, 6.1432], Bern: [46.948, 7.4474],

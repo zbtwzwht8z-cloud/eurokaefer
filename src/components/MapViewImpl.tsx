@@ -2,9 +2,19 @@
 import { useEffect, useRef } from 'react';
 import { CITY_COORDS } from '@/lib/constants';
 
-type Props = { route: string[]; mini?: boolean };
+type Props = {
+  route: string[];
+  coords?: ([number, number] | null)[];  // exact station coords from the engine
+  mini?: boolean;
+};
 
-export default function MapViewImpl({ route, mini }: Props) {
+// Palette-matched colors (Leaflet draws SVG, needs literals, not CSS vars).
+const LINE = '#0284c7';    // sky blue — route
+const ORIGIN = '#059669';  // green — start
+const DEST = '#ea580c';    // sun orange — end
+const MID = '#0284c7';
+
+export default function MapViewImpl({ route, coords, mini }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -16,8 +26,9 @@ export default function MapViewImpl({ route, mini }: Props) {
       const L = await import('leaflet');
       if (cancelled || !ref.current) return;
 
+      // Prefer exact station coords; fall back to the city lookup table.
       const pts = route
-        .map(c => CITY_COORDS[c])
+        .map((c, i) => coords?.[i] ?? CITY_COORDS[c] ?? null)
         .filter((p): p is [number, number] => Array.isArray(p));
 
       if (pts.length < 2) {
@@ -37,11 +48,13 @@ export default function MapViewImpl({ route, mini }: Props) {
         attributionControl: !mini,
       });
 
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
         maxZoom: 19,
       }).addTo(map);
 
-      L.polyline(pts, { color: '#06544a', weight: mini ? 2 : 3, opacity: 0.85 }).addTo(map);
+      // White casing keeps the line crisp on the light basemap.
+      L.polyline(pts, { color: '#ffffff', weight: mini ? 4.5 : 6, opacity: 0.9 }).addTo(map);
+      L.polyline(pts, { color: LINE, weight: mini ? 2.5 : 3.5, opacity: 0.9 }).addTo(map);
 
       pts.forEach((pt, i) => {
         const isEnd = i === 0 || i === pts.length - 1;
@@ -49,7 +62,7 @@ export default function MapViewImpl({ route, mini }: Props) {
           radius: isEnd ? 5 : 3.5,
           color: '#fff',
           weight: 1.5,
-          fillColor: i === 0 ? '#0a6640' : i === pts.length - 1 ? '#b91c1c' : '#06544a',
+          fillColor: i === 0 ? ORIGIN : i === pts.length - 1 ? DEST : MID,
           fillOpacity: 1,
         }).addTo(map!);
       });
@@ -60,7 +73,7 @@ export default function MapViewImpl({ route, mini }: Props) {
     })();
 
     return () => { cancelled = true; map?.remove(); };
-  }, [route, mini]);
+  }, [route, coords, mini]);
 
   return <div ref={ref} style={{ width: '100%', height: '100%', isolation: 'isolate' }} />;
 }

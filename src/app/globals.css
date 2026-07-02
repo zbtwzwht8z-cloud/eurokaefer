@@ -322,82 +322,6 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
   width: 6px; height: 6px; border-radius: 50%; background: #3ecf8e;
 }
 
-/* ── Hero ────────────────────────────────────────────────────────────────── */
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1800&q=80&auto=format&fit=crop');
-  background-size: cover;
-  background-position: center 45%;
-}
-
-/* Warm sunset overlay so text stays legible */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(120% 80% at 50% 0%, rgba(2, 132, 199, 0.28) 0%, transparent 55%),
-    linear-gradient(
-      165deg,
-      rgba(12, 22, 30, 0.58) 0%,
-      rgba(20, 28, 30, 0.50) 45%,
-      rgba(124, 45, 8, 0.42) 100%
-    );
-}
-/* Paper fade at the bottom so the hero melts into the page */
-.hero::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 96px;
-  background: linear-gradient(to bottom, transparent, var(--bg));
-  z-index: 1;
-}
-
-.hero-inner {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: clamp(100px, 14vw, 180px) 0 clamp(60px, 7vw, 100px);
-}
-
-.hero h1 {
-  margin-bottom: 16px;
-  color: #ffffff;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.25);
-}
-.hero p {
-  color: rgba(255, 255, 255, 0.82);
-  font-size: clamp(17px, 1.5vw, 21px);
-  max-width: 620px;
-  margin: 0 auto;
-}
-.hero-meta {
-  position: relative; z-index: 2;
-  display: inline-flex; align-items: center; gap: 8px;
-  margin-top: 28px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  border-radius: var(--r-pill);
-  font-size: 13px; font-weight: 500; color: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-}
-.hero-meta-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: #34d399;
-  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6);
-  animation: pulse-dot 2.4s ease-out infinite;
-}
-@keyframes pulse-dot {
-  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
-  70% { box-shadow: 0 0 0 7px rgba(52, 211, 153, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
-}
-
 /* ── Stats strip ─────────────────────────────────────────────────────────── */
 
 .stats {
@@ -477,6 +401,10 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
 
 /* ── Routes map ──────────────────────────────────────────────────────────── */
 
+/* Sticky topbar (56px) + toolbar (~64px) sit above scrolled-to sections —
+   without this offset, "See the map" / "Browse trips" land underneath them. */
+.routes-map-section, .section { scroll-margin-top: 132px; }
+
 .routes-map-section { margin-top: 24px; }
 
 .routes-map-head {
@@ -508,15 +436,6 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
 }
 
 .routes-map-loading { display: block; }
-
-/* Animated dash on the hovered route */
-.route-flow {
-  stroke-dasharray: 7 9;
-  animation: routeflow 0.7s linear infinite;
-}
-@keyframes routeflow {
-  to { stroke-dashoffset: -16; }
-}
 
 /* Directional flow: a thin white dash marching along each route from origin
    → destination, so you can read which way a trip goes. Sits on top of the
@@ -575,7 +494,7 @@ button { font: inherit; cursor: pointer; background: transparent; border: 0; col
 .status-dot[data-kind="home"] { background: var(--accent); box-shadow: 0 0 9px rgba(2, 132, 199, 0.45); }
 .trip-card:hover {
   box-shadow: var(--shadow-lg);
-  border-color: var(--line-strong);
+  border-color: rgba(2, 132, 199, 0.30);
 }
 .trip-card-top {
   display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
@@ -807,24 +726,9 @@ dialog#tripDialog::backdrop {
 .empty { padding: 60px 20px; text-align: center; color: var(--ink-3); }
 .empty-emoji { font-size: 44px; display: block; margin-bottom: 10px; }
 
-.progress-bar {
-  width: 100%; height: 4px;
-  background: var(--surface-2);
-  border-radius: var(--r-pill);
-  overflow: hidden;
-  margin: 10px 0;
-}
-.progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: var(--r-pill);
-  transition: width 0.3s ease;
-}
-
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 
 @media (max-width: 720px) {
-  .hero-inner { padding: 72px 0 48px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .toolbar-inner { gap: 6px; }
   .toolbar-group { font-size: 13px; }

@@ -104,7 +104,7 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
       <div className="dialog-body">
         {/* Map */}
         <div className="dialog-map">
-          <MapView route={chain.route} />
+          <MapView route={chain.route} coords={chain.coords} />
         </div>
 
         {/* Stats */}

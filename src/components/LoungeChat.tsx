@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import type { User, Message } from '@/lib/turso';
+import { formatMessageTime, renderMessageBody } from '@/lib/chat';
 
 type Props = {
   open: boolean;
@@ -95,8 +96,8 @@ export default function LoungeChat({ open, onClose, user, usersById }: Props) {
                 <div key={m.id} className="comment">
                   <span className="comment-emoji">{u?.emoji || '🚐'}</span>
                   <div className="comment-bubble">
-                    <div className="comment-meta">{u?.name || 'someone'} · {formatTime(m.created_at)}</div>
-                    <div className="comment-body">{renderBody(m.body)}</div>
+                    <div className="comment-meta">{u?.name || 'someone'} · {formatMessageTime(m.created_at)}</div>
+                    <div className="comment-body">{renderMessageBody(m.body)}</div>
                   </div>
                 </div>
               );
@@ -118,31 +119,4 @@ export default function LoungeChat({ open, onClose, user, usersById }: Props) {
     </aside>
     </>
   );
-}
-
-function formatTime(ts: number): string {
-  const d = new Date(ts);
-  const today = new Date();
-  if (d.toDateString() === today.toDateString()) {
-    return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-  }
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-}
-
-function renderBody(body: string): React.ReactNode {
-  const parts = body.split(/(#\d+)/g);
-  return parts.map((part, i) => {
-    const match = part.match(/^#(\d+)$/);
-    if (match) {
-      const id = match[1];
-      return (
-        <span key={i} className="trip-mention" onClick={() => {
-          const url = new URL(window.location.href);
-          url.searchParams.set('trip', id);
-          window.location.href = url.toString();
-        }}>#{id}</span>
-      );
-    }
-    return <span key={i}>{part}</span>;
-  });
 }
