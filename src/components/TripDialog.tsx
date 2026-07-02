@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import type { Chain } from '@/lib/chains';
-import { chainFuelEur, chainDriveHours, countriesOfChain, tripKey } from '@/lib/chains';
+import { chainFuelEur, chainDriveHours, chainPriceEur, chainIsAllEur1, countriesOfChain, tripKey } from '@/lib/chains';
 import type { Highlight, User } from '@/lib/turso';
 import { COUNTRY_FLAG } from '@/lib/constants';
 import { EASE_OUT } from '@/lib/motion';
@@ -33,6 +33,8 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
   const reduce = useReducedMotion();
   const fuel = chainFuelEur(chain);
   const driveH = chainDriveHours(chain);
+  const rentalEur = chainPriceEur(chain);
+  const allEur1 = chainIsAllEur1(chain);
   const countries = countriesOfChain(chain);
   const key = tripKey(chain);
   const mineHighlight = highlights.some(h => h.user_id === user.id);
@@ -123,6 +125,12 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
             <div className="stat-val"><AnimatedNumber value={fuel} prefix="~€" /></div>
             <div className="stat-lbl">Fuel</div>
           </div>
+          <div className="stat">
+            <div className="stat-val" style={allEur1 ? { color: 'var(--gold)' } : undefined}>
+              <AnimatedNumber value={rentalEur} prefix="€" />
+            </div>
+            <div className="stat-lbl">{allEur1 ? 'Rental (all €1!)' : 'Rental'}</div>
+          </div>
         </div>
 
         <div style={{ marginTop: 24, display: 'flex', gap: 6, flexWrap: 'wrap', color: 'var(--ink-3)', fontSize: 14 }}>
@@ -152,6 +160,13 @@ export default function TripDialog({ chain, user, usersById, highlights, onClose
                   <div style={{ color: 'var(--ink-3)', fontSize: 13, marginTop: 4 }}>
                     {formatLegTime(leg.pickup)} → {formatLegTime(leg.dropoff)} ·{' '}
                     {Math.round(leg.distanceKm)} km · {leg.vehicle || leg.model || 'Camper'}
+                    {leg.priceEur != null && (
+                      <span style={leg.priceEur <= 1
+                        ? { color: 'var(--gold)', fontWeight: 600 }
+                        : { color: 'var(--warn)', fontWeight: 600 }}>
+                        {' '}· €{leg.priceEur <= 1 ? '1' : Math.round(leg.priceEur)}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <span style={{ color: 'var(--ink-4)', fontSize: 11, fontFamily: 'monospace' }}>

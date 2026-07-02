@@ -30,6 +30,7 @@ export type EngineParams = {
   passThrough: boolean;     // true: any area max 2 visits; false: only start area may repeat
   dateFrom?: string;        // ISO date — earliest departure
   dateTo?: string;          // ISO date — latest final dropoff
+  maxLegPriceEur?: number;  // only chain offers at or below this price (1 = €1-only mode)
 };
 
 export const DEFAULT_ENGINE_PARAMS: EngineParams = {
@@ -44,6 +45,7 @@ export const DEFAULT_ENGINE_PARAMS: EngineParams = {
 
 export type EngineStats = {
   offers: number;
+  eur1Offers: number;
   rawPaths: number;
   routes: number;
   perfectLoops: number;
@@ -206,6 +208,11 @@ function scorePath(path: Node[], isLoop: boolean): number {
   if (spareKm > 0) score += Math.min(spareKm / 200, 15);
   if (path.some(n => SOUTH_NAMES.has(n.offer.destName))) score += 20;
   if (isLoop) score += 10;
+  // Price: the €1 premise is the product. A chain of €1 legs keeps its full
+  // score; every paid leg drags it down (€99 leg ≈ -12), so cheap chains
+  // float without banishing paid ones the user explicitly wants to see.
+  const totalPrice = path.reduce((t, n) => t + (n.offer.priceEur ?? 1), 0);
+  score -= Math.min(totalPrice / 8, 30);
   return score;
 }
 
@@ -219,10 +226,13 @@ export function runEngine(offers: TripData['offers'], params: EngineParams): Eng
   const toMs = p.dateTo ? new Date(p.dateTo + 'T23:59:59Z').getTime() : Infinity;
 
   const nodes: Node[] = [];
+  let eur1Offers = 0;
   for (const o of offers) {
     const wStart = new Date(o.startUtc).getTime();
     const wEnd = new Date(o.endUtc).getTime();
     if (!Number.isFinite(wStart) || !Number.isFinite(wEnd)) continue;
+    if (p.maxLegPriceEur != null && (o.priceEur ?? 1) > p.maxLegPriceEur) continue;
+    if ((o.priceEur ?? 1) <= 1) eur1Offers++;
     nodes.push({
       offer: o,
       oCoord: coordOf(o.originLat, o.originLng, o.originName),
@@ -372,10 +382,13 @@ export function runEngine(offers: TripData['offers'], params: EngineParams): Eng
       model: n.offer.model,
       distanceKm: n.offer.distanceKm || 0,
       offerId: n.offer.offerId,
+      priceEur: n.offer.priceEur,
     }));
 
     const routeKm = path.reduce((t, n) => t + (n.offer.distanceKm || 0), 0);
     const freeKm = path.reduce((t, n) => t + (n.offer.freeKm || 0), 0);
+    const totalPriceEur = path.reduce((t, n) => t + (n.offer.priceEur ?? 1), 0);
+    const allEur1 = path.every(n => (n.offer.priceEur ?? 1) <= 1);
 
     const variants: Variant[] = group.map(g => {
       const gp = g.idxs.map(i => nodes[i]);
@@ -426,6 +439,8 @@ export function runEngine(offers: TripData['offers'], params: EngineParams): Eng
       countries,
       coords: [first.oCoord, ...path.map(n => n.dCoord)],
       variants,
+      totalPriceEur: Math.round(totalPriceEur * 100) / 100,
+      allEur1,
     };
     chains.push(chain);
     if (tier === 'perfect') perfectLoops++;
@@ -441,6 +456,7 @@ export function runEngine(offers: TripData['offers'], params: EngineParams): Eng
     chains,
     stats: {
       offers: nodes.length,
+      eur1Offers,
       rawPaths: raw.length,
       routes: chains.length,
       perfectLoops,

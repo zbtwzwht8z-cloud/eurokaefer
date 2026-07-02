@@ -38,11 +38,20 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
       maxTripDays: filter.maxDays,
       dateFrom: filter.dateFrom,
       dateTo: filter.dateTo,
+      maxLegPriceEur: filter.priceMode === 'eur1' ? 1 : undefined,
     }),
-    [data.offers, filter.maxLegs, filter.maxDays, filter.dateFrom, filter.dateTo],
+    [data.offers, filter.maxLegs, filter.maxDays, filter.dateFrom, filter.dateTo, filter.priceMode],
   );
 
   const filtered = useMemo(() => applyFilters(allChains, filter, myHome), [allChains, filter, myHome]);
+
+  // Every city in the live network, for the From/To pickers.
+  const originCities = useMemo(
+    () => [...new Set(data.offers.map(o => o.originName))].sort((a, b) => a.localeCompare(b)),
+    [data.offers]);
+  const destCities = useMemo(
+    () => [...new Set(data.offers.map(o => o.destName))].sort((a, b) => a.localeCompare(b)),
+    [data.offers]);
 
   const [hoverKey, setHoverKey] = useState<string | null>(null);
   const [showMap, setShowMap] = useState(true);
@@ -165,7 +174,7 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
             <div className="hero-stats">
               <span className="hero-stats-dot" />
               <span style={{ color: 'var(--ink-2)', fontWeight: 600 }}><AnimatedNumber value={stats.routes} duration={1.1} /></span>
-              &nbsp;routes · {stats.offers} live offers · {stats.perfectLoops + stats.imperfectLoops} loops
+              &nbsp;routes · {stats.offers} live offers ({stats.eur1Offers} at €1) · {stats.perfectLoops + stats.imperfectLoops} loops
               {data.meta.generated && ' · ' + relativeTime(data.meta.generated)}
             </div>
             <div style={{ display: 'flex', gap: 10, marginTop: 24, flexWrap: 'wrap' }}>
@@ -190,7 +199,13 @@ export default function EurokaeferApp({ data, user, users, initialHighlights }: 
       {/* ── Toolbar + grid ─────────────────────────────────── */}
       <div className="toolbar">
         <div className="container">
-          <FilterToolbar value={filter} onChange={setFilter} resultCount={filtered.length} />
+          <FilterToolbar
+            value={filter}
+            onChange={setFilter}
+            resultCount={filtered.length}
+            originCities={originCities}
+            destCities={destCities}
+          />
         </div>
       </div>
 

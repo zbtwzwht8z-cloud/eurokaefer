@@ -2,7 +2,7 @@
 import { useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import type { Chain } from '@/lib/chains';
-import { chainFuelEur, chainDriveHours, endsInIceCity, countriesOfChain, tripKey } from '@/lib/chains';
+import { chainFuelEur, chainDriveHours, chainPriceEur, chainIsAllEur1, endsInIceCity, countriesOfChain, tripKey } from '@/lib/chains';
 import type { Highlight, User } from '@/lib/turso';
 import { COUNTRY_FLAG } from '@/lib/constants';
 import { riseItem, hoverSpring } from '@/lib/motion';
@@ -21,6 +21,8 @@ type Props = {
 export default function TripCard({ chain, highlights, usersById, myUserId, onOpen, onToggleHighlight, onHover }: Props) {
   const fuel = chainFuelEur(chain);
   const driveH = chainDriveHours(chain);
+  const rentalEur = chainPriceEur(chain);
+  const allEur1 = chainIsAllEur1(chain);
   const ice = endsInIceCity(chain);
   const countries = useMemo(() => countriesOfChain(chain), [chain]);
   const isLoop = chain.isLoop ?? (chain.type === 'loop');
@@ -88,6 +90,15 @@ export default function TripCard({ chain, highlights, usersById, myUserId, onOpe
       </div>
 
       <div className="trip-card-meta">
+        {allEur1 ? (
+          <span className="badge badge-gold" title={`Every leg is a €1 relocation — €${chain.legs.length} total rental`}>
+            €1 × {chain.legs.length}
+          </span>
+        ) : (
+          <span className="badge badge-warn" title="Includes paid legs — total rental price">
+            💶 €{Math.round(rentalEur)} rental
+          </span>
+        )}
         {chain.loopTier === 'perfect' && (
           <span className="badge badge-gold" title={`Start ↔ end ${Math.round(chain.startEndKm ?? 0)}km`}>
             ⭐ Perfect loop

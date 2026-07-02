@@ -13,6 +13,7 @@ export type Leg = {
   model?: string;
   distanceKm: number;
   offerId: string;
+  priceEur?: number;     // rental price of this leg (€1 relocations or above)
 };
 
 export type Variant = {
@@ -58,6 +59,8 @@ export type Chain = {
   endType?: string;
   coords?: ([number, number] | null)[];  // lat/lng per route city (engine; exact station coords)
   variants?: Variant[];  // all (pickup, dropoff) combinations for this route
+  totalPriceEur?: number;  // sum of leg rental prices
+  allEur1?: boolean;       // every leg is a €1 relocation
 };
 
 export type TripData = {
@@ -81,6 +84,7 @@ export type TripData = {
     freeKm: number;
     make: string;
     model: string;
+    priceEur?: number;
     homeCity?: string;
   }>;
   recommended: Chain[];
@@ -95,6 +99,16 @@ const AVG_SPEED_KPH = 85;
 export function chainFuelEur(c: Chain): number {
   const km = c.routeKm ?? c.legs.reduce((t, l) => t + (l.distanceKm || 0), 0);
   return (km * FUEL_CONSUMPTION_L_PER_100KM / 100) * FUEL_PRICE_EUR_PER_L;
+}
+
+export function chainPriceEur(c: Chain): number {
+  if (c.totalPriceEur != null) return c.totalPriceEur;
+  return c.legs.reduce((t, l) => t + (l.priceEur ?? 1), 0);
+}
+
+export function chainIsAllEur1(c: Chain): boolean {
+  if (c.allEur1 != null) return c.allEur1;
+  return c.legs.every(l => (l.priceEur ?? 1) <= 1);
 }
 
 export function chainDriveHours(c: Chain): number {
@@ -147,6 +161,7 @@ export function singleLegChainFromOffer(o: TripData['offers'][number]): Chain {
       model: o.model,
       distanceKm: o.distanceKm,
       offerId: o.offerId,
+      priceEur: o.priceEur,
     }],
     type: 'oneway',
     homeCity: o.homeCity,
@@ -160,6 +175,8 @@ export function singleLegChainFromOffer(o: TripData['offers'][number]): Chain {
     spareKm: (o.freeKm || 0) - (o.distanceKm || 0),
     driveHours: o.distanceKm / AVG_SPEED_KPH,
     countries: undefined,
+    totalPriceEur: o.priceEur,
+    allEur1: (o.priceEur ?? 1) <= 1,
   };
 }
 

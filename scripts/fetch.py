@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch Movacar €1 relocation offers.
+"""Fetch ALL Movacar relocation offers (every price, not just €1).
 
 Strategy (two collectors):
 
@@ -193,9 +193,12 @@ def parse_offers(raw_offers: list[dict]) -> list[dict]:
         attrs = offer.get('attributes', {})
         rels = offer.get('relationships', {})
 
+        # Keep EVERY price tier — the site shows the full inventory now.
+        # €1 offers stay first-class via the is_eur_1 flag; offers with an
+        # unresolvable price are dropped (can't rank or display them honestly).
         price_id = (rels.get('base_price') or {}).get('data', {}).get('id', '')
-        price_cents = _prices.get(price_id, 999999)
-        if price_cents > 100:
+        price_cents = _prices.get(price_id)
+        if price_cents is None:
             continue
 
         origin_id = (rels.get('origin') or {}).get('data', {}).get('id', '')
@@ -254,15 +257,20 @@ def parse_offers(raw_offers: list[dict]) -> list[dict]:
 def dedup_by_route_day(rows: list[dict]) -> list[dict]:
     """Keep best offer per (origin_id, dest_id, pickup_day).
 
-    'Best' = most free_km. Preserves all date diversity for chain-building
-    while eliminating duplicate vehicles on the same route+day.
+    'Best' = cheapest first, then most free_km. A €1 offer always beats a
+    €49 one on the same route+day; among equals, more slack wins. Preserves
+    all date diversity for chain-building while eliminating duplicate
+    vehicles on the same route+day.
     """
+    def rank(row: dict) -> tuple[float, float]:
+        return (-float(row['price_eur'] or 0), float(row['free_km'] or 0))
+
     best: dict[tuple, dict] = {}
     for row in rows:
         pickup_day = row['start_date_utc'][:10]
         key = (row['origin_location_id'], row['destination_location_id'], pickup_day)
         existing = best.get(key)
-        if existing is None or float(row['free_km'] or 0) > float(existing['free_km'] or 0):
+        if existing is None or rank(row) > rank(existing):
             best[key] = row
     return list(best.values())
 
@@ -295,9 +303,8 @@ def main() -> None:
     log_station_discovery()
 
     rows = parse_offers(all_raw)
-    kept = len(rows)
-    rejected = len(all_raw) - kept
-    print(f'  {kept} are €1 (price ≤ €1.00), {rejected} rejected as non-€1')
+    eur1 = sum(1 for r in rows if r['is_eur_1'] == 'yes')
+    print(f'  {len(rows)} offers kept ({eur1} at €1, {len(rows) - eur1} priced above)')
     before_dedup = len(rows)
     rows = dedup_by_route_day(rows)
     print(f'  {before_dedup} → {len(rows)} after dedup by (origin, dest, day) [kept best free_km]')

@@ -1,17 +1,19 @@
 'use client';
 import { useState } from 'react';
-import { type FilterState, type SortKey, type TripMode } from '@/lib/filters';
-import { HOME_CITIES, REGIONS, type HomeCity, type RegionKey } from '@/lib/constants';
+import { type FilterState, type SortKey, type TripMode, type PriceMode } from '@/lib/filters';
+import { HOME_CITIES, REGIONS } from '@/lib/constants';
 
 type Props = {
   value: FilterState;
   onChange: (next: FilterState) => void;
   resultCount: number;
+  originCities: string[];   // every departure city in the live network
+  destCities: string[];     // every arrival city in the live network
 };
 
 const TODAY = new Date().toISOString().slice(0, 10);
 
-export default function FilterToolbar({ value, onChange, resultCount }: Props) {
+export default function FilterToolbar({ value, onChange, resultCount, originCities, destCities }: Props) {
   const [localSearch, setLocalSearch] = useState(value.search);
 
   function onSearchChange(s: string) {
@@ -53,41 +55,80 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
 
   return (
     <div className="toolbar-inner">
-      {/* From */}
+      {/* From — home clusters pinned, then every departure city in the network */}
       <div className="toolbar-group">
         <span className="filter-label" style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>From</span>
         <select
           value={value.from}
-          onChange={e => onChange({ ...value, from: e.target.value as HomeCity | 'mine' | 'any', flexFrom: false })}
+          onChange={e => onChange({ ...value, from: e.target.value, flexFrom: false })}
         >
           <option value="any">Anywhere</option>
-          {HOME_CITIES.filter(c => c !== 'Other').map(c => (
-            <option key={c} value={c}>{c}</option>
-          ))}
+          <optgroup label="Home">
+            {HOME_CITIES.filter(c => c !== 'Other').map(c => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </optgroup>
+          <optgroup label="All cities">
+            {originCities
+              .filter(c => !(HOME_CITIES as string[]).includes(c))
+              .map(c => <option key={c} value={c}>{c}</option>)}
+          </optgroup>
         </select>
         {value.from !== 'any' && (
           pill(value.flexFrom, 'flex',
-            'Also show trips where this home area appears anywhere in the route, not just as the start',
+            'Also show trips where this place appears anywhere in the route, not just as the start',
             () => onChange({ ...value, flexFrom: !value.flexFrom }))
         )}
       </div>
 
-      {/* To */}
+      {/* To — regions, then every arrival city in the network */}
       <div className="toolbar-group">
         <span className="filter-label" style={{ padding: '6px 12px', color: 'var(--ink-3)', fontSize: 13, fontWeight: 500 }}>To</span>
         <select
           value={value.to}
-          onChange={e => onChange({ ...value, to: e.target.value as RegionKey, flexTo: false })}
+          onChange={e => onChange({ ...value, to: e.target.value, flexTo: false })}
         >
-          {Object.entries(REGIONS).map(([k, v]) => (
-            <option key={k} value={k}>{v.label}</option>
-          ))}
+          <optgroup label="Regions">
+            {Object.entries(REGIONS).map(([k, v]) => (
+              <option key={k} value={k}>{v.label}</option>
+            ))}
+          </optgroup>
+          <optgroup label="Cities">
+            {destCities.map(c => <option key={c} value={`city:${c}`}>{c}</option>)}
+          </optgroup>
         </select>
         {value.to !== 'all' && (
           pill(value.flexTo, 'flex',
-            'Also show trips where this region appears as a mid-stop, not just the final destination',
+            'Also show trips where this place appears as a mid-stop, not just the final destination',
             () => onChange({ ...value, flexTo: !value.flexTo }))
         )}
+      </div>
+
+      {/* Price — engine param: €1-only mode rebuilds chains from €1 offers alone */}
+      <div className="toolbar-group">
+        {([
+          ['eur1', '€1 only'],
+          ['any', 'All prices'],
+        ] as Array<[PriceMode, string]>).map(([mode, label]) => (
+          <button
+            key={mode}
+            type="button"
+            className={'seg' + (value.priceMode === mode ? ' active' : '')}
+            onClick={() => onChange({ ...value, priceMode: mode })}
+            title={mode === 'eur1'
+              ? 'Build trips only from €1 relocation offers'
+              : 'Include paid offers (~€99) — more routes, more chains'}
+            style={{
+              padding: '6px 12px', borderRadius: 999, cursor: 'pointer',
+              fontSize: 13, fontWeight: 500, whiteSpace: 'nowrap',
+              background: value.priceMode === mode ? 'var(--spark)' : 'transparent',
+              color: value.priceMode === mode ? '#fff' : 'var(--ink-3)',
+              border: 0, transition: 'background .15s, color .15s',
+            }}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
       {/* Trip mode: 3-way segmented control */}
@@ -200,6 +241,7 @@ export default function FilterToolbar({ value, onChange, resultCount }: Props) {
           onChange={e => onChange({ ...value, sort: e.target.value as SortKey })}
         >
           <option value="best">Best</option>
+          <option value="price">Cheapest (€ total)</option>
           <option value="fuel">Cheapest fuel</option>
           <option value="shortest">Shortest drive</option>
           <option value="spare">Most spare km</option>
