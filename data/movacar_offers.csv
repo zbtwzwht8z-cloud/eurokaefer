@@ -1,5 +1,4 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
-251811,2853,Marburg,2289,Sint-Pieters-Leeuw,Marburg,50.8298189,8.7682135,Sint-Pieters-Leeuw,50.760643,4.2515687,2026-07-02T22:00:00Z,2026-07-10T21:59:59Z,48,442.7,1000,CAMPER CASTLE,Fiat Tracer 680DL - Fiat Ducato Serie 2,CAMPER CASTLE,1.00,yes
 250229,6103,Essen,6097,Nantes,Essen,51.488823,6.958733,Nantes,46.956933,-1.6210282,2026-07-03T04:00:00Z,2026-07-11T19:00:00Z,96,951.6,1079,Fiat,Ducato,Active Poptop Select,99.00,no
 250438,6135,Alacant/Alicante,6094,Bordeaux,Alacant/Alicante,38.447022,-0.807049,Bordeaux,44.8862672,-0.6386488,2026-07-03T04:00:00Z,2026-07-12T19:00:00Z,120,961.5,1178,Fiat,Ducato,Comfort Standard,99.00,no
 251460,6130,Madrid,6096,Châteauneuf-les-Martigues,Madrid,40.4446704,-3.5019514,Châteauneuf-les-Martigues,43.3779066,5.1441734,2026-07-03T04:00:00Z,2026-07-14T19:00:00Z,144,1054.9,1309,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
@@ -7,7 +6,7 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 251921,6166,Dresden,5305,Salzburg,Dresden,50.9917461,13.8084463,Salzburg,47.794086,12.989844,2026-07-03T04:00:00Z,2026-07-10T21:00:00Z,24,521.3,1000,Unbekannt,Unbekannt,tirol,1.00,yes
 251924,6166,Dresden,5302,München,Dresden,50.9917461,13.8084463,München,48.1270138,11.6583018,2026-07-04T04:00:00Z,2026-07-09T21:00:00Z,24,476.6,1000,Unbekannt,Unbekannt,tirol,1.00,yes
 251395,2595,Wolfsburg,2508,Bremen,Wolfsburg,52.424782,10.790998,Bremen,53.052387,8.786666,2026-07-06T07:00:00Z,2026-07-08T21:00:00Z,24,202.7,250,Opel,Corsa,Mystery Auto,1.00,yes
-251395,2595,Wolfsburg,2617,Düsseldorf,Wolfsburg,52.424782,10.790998,Düsseldorf,51.217186,6.778432,2026-07-06T07:00:00Z,2026-07-08T21:00:00Z,24,361.3,450,Opel,Corsa,Mystery Auto,1.00,yes
+251395,2595,Wolfsburg,2518,Düsseldorf,Wolfsburg,52.424782,10.790998,Düsseldorf,51.21735,6.79263,2026-07-06T07:00:00Z,2026-07-08T21:00:00Z,24,361.9,450,Opel,Corsa,Mystery Auto,1.00,yes
 251395,2595,Wolfsburg,2505,Hamburg,Wolfsburg,52.424782,10.790998,Hamburg,53.62951,10.00496,2026-07-06T07:00:00Z,2026-07-08T21:00:00Z,24,242.7,300,Opel,Corsa,Mystery Auto,1.00,yes
 250990,2290,Dresden,5327,Duisburg,Dresden,51.14,13.795,Duisburg,51.3955661,6.7519003,2026-07-06T22:00:00Z,2026-07-08T21:59:59Z,48,580.5,1000,BEACH HOSTEL,VW California Beach,BEACH HOSTEL,1.00,yes
 249456,6107,Reutlingen,6097,Nantes,Reutlingen,48.4921753,9.2005581,Nantes,46.956933,-1.6210282,2026-07-07T04:00:00Z,2026-07-15T19:00:00Z,72,1059.9,1380,Fiat,Ducato,Active Poptop Select,99.00,no
@@ -42,12 +41,12 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 251910,6117,Napoli,6129,Bilbao,Napoli,40.9104355,14.2277438,Bilbao,43.2904901,-2.8944743,2026-07-07T04:00:00Z,2026-07-19T19:00:00Z,216,1886.4,2093,Volkswagen,California,California Standard,99.00,no
 251915,6138,Stockholm,6137,Malmö,Stockholm,59.6316048,18.002391,Malmö,55.5189213,13.013365,2026-07-07T04:00:00Z,2026-07-12T19:00:00Z,72,660.1,813,Volkswagen,California,California Standard,99.00,no
 250517,6117,Napoli,6112,Bologna,Napoli,40.9104355,14.2277438,Bologna,44.554605,11.3202569,2026-07-08T04:00:00Z,2026-07-15T19:00:00Z,72,578.7,784,Volkswagen,California,California Standard,1.00,yes
-251919,6103,Essen,6105,Hamburg,Essen,51.488823,6.958733,Hamburg,53.5455055,10.0407124,2026-07-08T04:00:00Z,2026-07-15T19:00:00Z,72,356.7,609,Fiat,Ducato,Active Standard Select,1.00,yes
 250700,6130,Madrid,6094,Bordeaux,Madrid,40.4446704,-3.5019514,Bordeaux,44.8862672,-0.6386488,2026-07-09T04:00:00Z,2026-07-21T19:00:00Z,72,690.3,893,Fiat,Ducato,Active Poptop Select,1.00,yes
 250478,6119,Roma,6113,Cagliari,Roma,41.817718,12.313638,Cagliari,39.278007,9.057308,2026-07-10T04:00:00Z,2026-07-17T19:00:00Z,72,558.8,772,Fiat,Ducato,Active Poptop Select,1.00,yes
 251479,6106,Berglern,6085,Berlin,Berglern,48.3697906,11.9297161,Berlin,52.4281113,13.5568964,2026-07-10T04:00:00Z,2026-07-17T19:00:00Z,72,598.2,786,Fiat,Ducato,Active Standard Select,1.00,yes
 251824,6117,Napoli,6116,Milan,Napoli,40.9104355,14.2277438,Milan,45.6197196,8.7600985,2026-07-10T04:00:00Z,2026-07-18T19:00:00Z,96,815.8,973,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 251839,6119,Roma,6111,Bergamo,Roma,41.817718,12.313638,Bergamo,45.672881,9.686563,2026-07-10T04:00:00Z,2026-07-17T19:00:00Z,72,623.3,799,Fiat,Ducato,Active Standard Select,99.00,no
+251811,2853,Marburg,2289,Sint-Pieters-Leeuw,Marburg,50.8298189,8.7682135,Sint-Pieters-Leeuw,50.760643,4.2515687,2026-07-10T22:00:00Z,2026-07-12T21:59:59Z,48,442.7,1000,CAMPER CASTLE,Fiat Tracer 680DL - Fiat Ducato Serie 2,CAMPER CASTLE,1.00,yes
 251345,6142,London,6141,Edinburgh,London,51.4153497,-0.5315773,Edinburgh,55.9392303,-3.3982138,2026-07-11T04:00:00Z,2026-07-15T19:00:00Z,72,681.9,849,Pilote,V630J or similar,Active Long Select,99.00,no
 251449,6133,Sevilla,6097,Nantes,Sevilla,37.2964668,-5.9136377,Nantes,46.956933,-1.6210282,2026-07-11T04:00:00Z,2026-07-22T19:00:00Z,168,1502.5,1699,Fiat,Ducato,Active Poptop Select,99.00,no
 251817,6117,Napoli,6120,Venezia,Napoli,40.9104355,14.2277438,Venezia,45.542029,12.289827,2026-07-11T04:00:00Z,2026-07-19T19:00:00Z,96,721.1,925,Fiat,Ducato,Active Bunk,99.00,no
