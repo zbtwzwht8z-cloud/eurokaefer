@@ -1,6 +1,6 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
 251921,6166,Dresden,5305,Salzburg,Dresden,50.9917461,13.8084463,Salzburg,47.794086,12.989844,2026-07-03T04:00:00Z,2026-07-10T21:00:00Z,24,521.3,1000,Unbekannt,Unbekannt,tirol,1.00,yes
-252067,2562,Wiesbaden,5091,Vizzola Ticino,Wiesbaden,50.070715,8.241461,Vizzola Ticino,45.6274,8.7124,2026-07-08T12:59:43Z,2026-07-10T21:59:00Z,24,672.3,850,BMW,320 EST DI AUT,Mystery Auto,1.00,yes
+252139,2595,Wolfsburg,4691,Hamburg,Wolfsburg,52.424782,10.790998,Hamburg,53.570858,10.026821,2026-07-08T22:00:00Z,2026-07-11T10:00:00Z,24,223.6,300,CITRO,C5 AIRCROSS OFF HBB AUT,Mystery Auto,1.00,yes
 250469,6117,Napoli,6116,Milan,Napoli,40.9104355,14.2277438,Milan,45.6197196,8.7600985,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,96,815.8,973,Volkswagen,California,California Standard,99.00,no
 250863,6118,Palermo,6113,Cagliari,Palermo,38.142823,13.089665,Cagliari,39.278007,9.057308,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,72,434.5,866,Fiat,Ducato,Active Poptop,1.00,yes
 250877,6118,Palermo,6163,Olbia,Palermo,38.142823,13.089665,Olbia,40.9030631,9.5328432,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,96,689.9,935,Fiat,Ducato,Comfort Standard,1.00,yes
@@ -15,12 +15,7 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252084,6122,Bergen,6105,Hamburg,Bergen,60.4351795577,5.4621228577,Hamburg,53.5455055,10.0407124,2026-07-09T04:00:00Z,2026-07-19T19:00:00Z,144,1090.9,1310,Fiat,Ducato,Active Standard Select,99.00,no
 252103,6114,Catania,6116,Milan,Catania,37.4449646,15.0669056,Milan,45.6197196,8.7600985,2026-07-09T04:00:00Z,2026-07-20T19:00:00Z,168,1399.7,1541,Fiat,Ducato,Comfort Standard,99.00,no
 252116,6122,Bergen,6085,Berlin,Bergen,60.4351795577,5.4621228577,Berlin,52.4281113,13.5568964,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,168,1378.5,1601,Fiat,Ducato,Active Standard Select,99.00,no
-252117,6118,Palermo,6085,Berlin,Palermo,38.142823,13.089665,Berlin,52.4281113,13.5568964,2026-07-09T04:00:00Z,2026-07-25T19:00:00Z,288,2453.8,2600,Fiat,Ducato,Active Poptop,99.00,no
-252075,1204,Schwäbisch Gmünd,4282,Esslingen am Neckar,Schwäbisch Gmünd,48.7933,9.7746,Esslingen am Neckar,48.7298,9.3316,2026-07-09T06:00:00Z,2026-07-09T21:59:00Z,24,56.9,100,Transporter,,TMHW - GR.3 IVECO,1.00,yes
-252076,1255,Ludwigsburg,4282,Esslingen am Neckar,Ludwigsburg,48.9022,9.1914,Esslingen am Neckar,48.7298,9.3316,2026-07-09T06:00:00Z,2026-07-09T21:59:00Z,24,28.4,50,Transporter,,TMHW - GR.3 IVECO,1.00,yes
-252077,1458,Stuttgart,1302,Balingen,Stuttgart,48.8246,9.1726,Balingen,48.2534,8.8571,2026-07-09T06:00:00Z,2026-07-09T21:59:00Z,24,85.5,150,Transporter,,KPIW - GR.0 VW,1.00,yes
-252078,1630,Friedrichshafen,1756,Kempten,Friedrichshafen,47.6545,9.4718,Kempten,47.7367,10.3275,2026-07-09T06:00:00Z,2026-07-09T21:59:00Z,24,117.4,150,Transporter,,TMHW - GR.3 IVECO,1.00,yes
-252079,1564,München,1756,Kempten,München,48.1493,11.4551,Kempten,47.7367,10.3275,2026-07-09T06:00:00Z,2026-07-09T21:59:00Z,24,115.3,150,Transporter,,TMHW - GR.3 IVECO,1.00,yes
+252130,2487,München,4723,Nürnberg,München,48.18654,11.5843,Nürnberg,49.453274,11.014275,2026-07-09T08:34:10Z,2026-07-09T17:00:00Z,24,165.6,200,IVECO,"EC 75E21 7,5 TO KO6 HEB DI MAN",Mystery Auto,1.00,yes
 250478,6119,Roma,6113,Cagliari,Roma,41.817718,12.313638,Cagliari,39.278007,9.057308,2026-07-10T04:00:00Z,2026-07-22T19:00:00Z,72,558.8,772,Fiat,Ducato,Active Poptop Select,1.00,yes
 251831,6106,Berglern,6085,Berlin,Berglern,48.3697906,11.9297161,Berlin,52.4281113,13.5568964,2026-07-10T04:00:00Z,2026-07-17T19:00:00Z,72,598.2,786,Fiat,Ducato,Comfort Standard,1.00,yes
 252083,6122,Bergen,6105,Hamburg,Bergen,60.4351795577,5.4621228577,Hamburg,53.5455055,10.0407124,2026-07-10T04:00:00Z,2026-07-20T19:00:00Z,144,1090.9,1310,Fiat,Ducato,Active Standard Select,99.00,no
