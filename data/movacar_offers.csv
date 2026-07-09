@@ -1,9 +1,6 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
 251921,6166,Dresden,5305,Salzburg,Dresden,50.9917461,13.8084463,Salzburg,47.794086,12.989844,2026-07-03T04:00:00Z,2026-07-10T21:00:00Z,24,521.3,1000,Unbekannt,Unbekannt,tirol,1.00,yes
-251950,2855,Dresden,6180,Darmstadt,Dresden,51.0821325,13.6360537,Darmstadt,49.8867968,8.6570854,2026-07-06T06:00:00Z,2026-07-10T18:00:00Z,24,483.5,600,Volkswagen,T6 9 Sitzer,9-Sitzer,1.00,yes
-250990,2290,Dresden,5327,Duisburg,Dresden,51.14,13.795,Duisburg,51.3955661,6.7519003,2026-07-06T22:00:00Z,2026-07-08T21:59:59Z,48,580.5,1000,BEACH HOSTEL,VW California Beach,BEACH HOSTEL,1.00,yes
 252067,2562,Wiesbaden,5091,Vizzola Ticino,Wiesbaden,50.070715,8.241461,Vizzola Ticino,45.6274,8.7124,2026-07-08T12:59:43Z,2026-07-10T21:59:00Z,24,672.3,850,BMW,320 EST DI AUT,Mystery Auto,1.00,yes
-252062,2501,Köln,2665,Mannheim,Köln,50.879475,7.121378,Mannheim,49.4492,8.505276,2026-07-08T18:45:23Z,2026-07-10T18:00:00Z,24,234.1,300,NISSA,PRIMASTAR MPV 9S DI MAN,Mystery Van,1.00,yes
 250469,6117,Napoli,6116,Milan,Napoli,40.9104355,14.2277438,Milan,45.6197196,8.7600985,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,96,815.8,973,Volkswagen,California,California Standard,99.00,no
 250863,6118,Palermo,6113,Cagliari,Palermo,38.142823,13.089665,Cagliari,39.278007,9.057308,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,72,434.5,866,Fiat,Ducato,Active Poptop,1.00,yes
 250877,6118,Palermo,6163,Olbia,Palermo,38.142823,13.089665,Olbia,40.9030631,9.5328432,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,96,689.9,935,Fiat,Ducato,Comfort Standard,1.00,yes
@@ -41,7 +38,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 251837,6118,Palermo,6113,Cagliari,Palermo,38.142823,13.089665,Cagliari,39.278007,9.057308,2026-07-14T04:00:00Z,2026-07-21T19:00:00Z,72,434.5,666,Fiat,Ducato,Active Standard Select,1.00,yes
 252095,6156,Maura,6104,Frankfurt am Main,Maura,60.226302,11.0837547,Frankfurt am Main,50.1420333,8.8076945,2026-07-14T04:00:00Z,2026-07-25T19:00:00Z,168,1370.1,1509,Fiat,Ducato,Active Poptop,99.00,no
 252096,6156,Maura,6085,Berlin,Maura,60.226302,11.0837547,Berlin,52.4281113,13.5568964,2026-07-14T04:00:00Z,2026-07-23T19:00:00Z,120,1146.1,1234,Fiat,Ducato,Comfort Standard,99.00,no
-252115,6116,Milan,6105,Hamburg,Milan,45.6197196,8.7600985,Hamburg,53.5455055,10.0407124,2026-07-14T04:00:00Z,2026-07-24T19:00:00Z,144,1102.9,1310,Ford,Transit/Jumper or similar,Comfort Compact Select,99.00,no
 252106,6122,Bergen,6105,Hamburg,Bergen,60.4351795577,5.4621228577,Hamburg,53.5455055,10.0407124,2026-07-15T04:00:00Z,2026-07-25T19:00:00Z,144,1090.9,1310,Fiat,Ducato,Active Standard Select,99.00,no
 252097,6106,Berglern,6085,Berlin,Berglern,48.3697906,11.9297161,Berlin,52.4281113,13.5568964,2026-07-16T04:00:00Z,2026-07-23T19:00:00Z,72,598.2,786,Fiat,Ducato,Active Poptop,1.00,yes
 252104,6156,Maura,6105,Hamburg,Maura,60.226302,11.0837547,Hamburg,53.5455055,10.0407124,2026-07-16T04:00:00Z,2026-07-24T19:00:00Z,96,870.3,1014,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
