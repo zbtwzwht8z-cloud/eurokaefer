@@ -1,5 +1,4 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
-251921,6166,Dresden,5305,Salzburg,Dresden,50.9917461,13.8084463,Salzburg,47.794086,12.989844,2026-07-03T04:00:00Z,2026-07-10T21:00:00Z,24,521.3,1000,Unbekannt,Unbekannt,tirol,1.00,yes
 250469,6117,Napoli,6116,Milan,Napoli,40.9104355,14.2277438,Milan,45.6197196,8.7600985,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,96,815.8,973,Volkswagen,California,California Standard,99.00,no
 250863,6118,Palermo,6113,Cagliari,Palermo,38.142823,13.089665,Cagliari,39.278007,9.057308,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,72,434.5,866,Fiat,Ducato,Active Poptop,1.00,yes
 250877,6118,Palermo,6163,Olbia,Palermo,38.142823,13.089665,Olbia,40.9030631,9.5328432,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,96,689.9,935,Fiat,Ducato,Comfort Standard,1.00,yes
@@ -12,8 +11,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252080,6114,Catania,6120,Venezia,Catania,37.4449646,15.0669056,Venezia,45.542029,12.289827,2026-07-09T04:00:00Z,2026-07-19T19:00:00Z,144,1314.5,1494,Fiat,Ducato,Comfort Standard,99.00,no
 252103,6114,Catania,6116,Milan,Catania,37.4449646,15.0669056,Milan,45.6197196,8.7600985,2026-07-09T04:00:00Z,2026-07-20T19:00:00Z,168,1399.7,1541,Fiat,Ducato,Comfort Standard,99.00,no
 252116,6122,Bergen,6085,Berlin,Bergen,60.4351796,5.4621229,Berlin,52.4281113,13.5568964,2026-07-09T04:00:00Z,2026-07-22T19:00:00Z,168,1378.5,1601,Fiat,Ducato,Active Standard Select,99.00,no
-252154,2527,Potsdam,4723,Nürnberg,Potsdam,52.390076,13.122834,Nürnberg,49.453274,11.014275,2026-07-09T13:05:03Z,2026-07-11T13:00:00Z,24,425.5,550,IVECO,"EC 75E21 7,5 TO KO6 HEB DI MAN",Mystery Auto,1.00,yes
-252145,2490,Frankfurt,2782,Wetzlar,Frankfurt,50.05138,8.567991,Wetzlar,50.57789,8.490211,2026-07-09T16:39:10Z,2026-07-11T09:00:00Z,24,78.3,100,OPEL,CORSA LIM BE MAN,Mystery Auto,1.00,yes
 250478,6119,Roma,6113,Cagliari,Roma,41.817718,12.313638,Cagliari,39.278007,9.057308,2026-07-10T04:00:00Z,2026-07-22T19:00:00Z,72,558.8,772,Fiat,Ducato,Active Poptop Select,1.00,yes
 251831,6106,Berglern,6085,Berlin,Berglern,48.3697906,11.9297161,Berlin,52.4281113,13.5568964,2026-07-10T04:00:00Z,2026-07-17T19:00:00Z,72,598.2,786,Fiat,Ducato,Comfort Standard,1.00,yes
 252085,6156,Maura,6085,Berlin,Maura,60.226302,11.0837547,Berlin,52.4281113,13.5568964,2026-07-10T04:00:00Z,2026-07-19T19:00:00Z,120,1146.1,1234,Fiat,Ducato,Comfort Standard,99.00,no
