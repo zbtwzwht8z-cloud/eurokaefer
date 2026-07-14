@@ -7,7 +7,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 250869,6118,Palermo,6163,Olbia,Palermo,38.142823,13.089665,Olbia,40.9030631,9.5328432,2026-07-14T04:00:00Z,2026-07-22T19:00:00Z,96,689.9,935,Fiat,Ducato,Active Poptop,1.00,yes
 251267,6107,Reutlingen,6105,Hamburg,Reutlingen,48.4921753,9.2005581,Hamburg,53.5455055,10.0407124,2026-07-14T04:00:00Z,2026-07-22T19:00:00Z,72,697.8,858,Volkswagen,California,California Standard,99.00,no
 252375,6097,Nantes,6095,Lyon,Nantes,46.956933,-1.6210282,Lyon,45.667261,5.092593,2026-07-14T04:00:00Z,2026-07-21T19:00:00Z,72,752.3,885,Volkswagen,California,California Standard,99.00,no
-252376,6086,Warszawa,6089,Wiener Neudorf,Warszawa,52.1709685,20.9742229,Wiener Neudorf,48.14047,16.44293,2026-07-14T04:00:00Z,2026-07-24T19:00:00Z,72,671.0,873,Fiat,Ducato,Comfort Standard,99.00,no
 252379,6131,Málaga,6095,Lyon,Málaga,36.6729608,-4.578534,Lyon,45.667261,5.092593,2026-07-14T04:00:00Z,2026-07-21T19:00:00Z,168,1614.4,1812,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 252383,6117,Napoli,6120,Venezia,Napoli,40.9104355,14.2277438,Venezia,45.542029,12.289827,2026-07-14T04:00:00Z,2026-07-20T19:00:00Z,96,721.1,925,Fiat,Ducato,Active Standard Select,99.00,no
 252384,6095,Lyon,6098,Nice,Lyon,45.667261,5.092593,Nice,43.6159547,7.1111765,2026-07-14T04:00:00Z,2026-07-17T19:00:00Z,72,469.2,678,Fiat,Ducato,Comfort Standard,1.00,yes
@@ -20,5 +19,3 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252260,6099,Saint-Mesmes,6100,Grigny,Saint-Mesmes,48.9875914,2.691353,Grigny,48.74792,2.39253,2026-07-21T04:00:00Z,2026-07-24T19:00:00Z,72,56.1,222,Fiat,Ducato,Active Poptop Select,1.00,yes
 252377,6086,Warszawa,6089,Wiener Neudorf,Warszawa,52.1709685,20.9742229,Wiener Neudorf,48.14047,16.44293,2026-07-25T04:00:00Z,2026-07-31T19:00:00Z,72,671.0,873,Fiat,Ducato,Active Poptop,99.00,no
 252382,6097,Nantes,6094,Bordeaux,Nantes,46.956933,-1.6210282,Bordeaux,44.8862672,-0.6386488,2026-07-25T04:00:00Z,2026-08-08T19:00:00Z,72,340.0,549,Fiat,Ducato,Active Poptop,1.00,yes
-252380,6095,Lyon,6100,Grigny,Lyon,45.667261,5.092593,Grigny,48.74792,2.39253,2026-07-27T04:00:00Z,2026-08-02T19:00:00Z,72,495.6,658,Fiat,Ducato,Comfort Standard,1.00,yes
-252381,6128,Barcelona,6094,Bordeaux,Barcelona,41.29824,2.0123,Bordeaux,44.8862672,-0.6386488,2026-07-27T04:00:00Z,2026-08-07T19:00:00Z,72,662.2,836,Fiat,Ducato,Active Poptop Select,99.00,no
