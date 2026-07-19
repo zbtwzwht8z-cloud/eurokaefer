@@ -1,8 +1,8 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
 252554,1739,Homburg,1220,Aschaffenburg,Homburg,49.3406,7.3458,Aschaffenburg,49.9797,9.129,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,200.1,250,Mystery,Auto,Mystery Auto,1.00,yes
 252554,1739,Homburg,1438,Darmstadt,Homburg,49.3406,7.3458,Darmstadt,49.8894,8.6448,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,144.5,200,Mystery,Auto,Mystery Auto,1.00,yes
-252554,1739,Homburg,1449,Dillenburg,Homburg,49.3406,7.3458,Dillenburg,50.768,8.2896,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,264.9,350,Mystery,Auto,Mystery Auto,1.00,yes
-252554,1739,Homburg,1284,Frankfurt am Main,Homburg,49.3406,7.3458,Frankfurt am Main,50.121,8.6211,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,168.9,250,Mystery,Auto,Mystery Auto,1.00,yes
+252554,1739,Homburg,5907,Dillenburg,Homburg,49.3406,7.3458,Dillenburg,50.7684,8.2924,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,265.2,350,Mystery,Auto,Mystery Auto,1.00,yes
+252554,1739,Homburg,1279,Frankfurt am Main,Homburg,49.3406,7.3458,Frankfurt am Main,50.1073,8.6646,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,170.8,250,Mystery,Auto,Mystery Auto,1.00,yes
 252554,1739,Homburg,1281,Frankfurt,Homburg,49.3406,7.3458,Frankfurt,50.0507,8.5687,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,143.0,200,Mystery,Auto,Mystery Auto,1.00,yes
 252554,1739,Homburg,1280,Friedberg,Homburg,49.3406,7.3458,Friedberg,50.3308,8.751,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,195.1,250,Mystery,Auto,Mystery Auto,1.00,yes
 252554,1739,Homburg,1634,Fulda,Homburg,49.3406,7.3458,Fulda,50.5501,9.6877,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,269.9,350,Mystery,Auto,Mystery Auto,1.00,yes
@@ -36,7 +36,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252645,6120,Venezia,6103,Essen,Venezia,45.542029,12.289827,Essen,51.488823,6.958733,2026-07-21T04:00:00Z,2026-07-25T19:00:00Z,96,1156.1,1322,Fiat,Ducato,Comfort Standard,99.00,no
 252677,6155,A Coruña,6128,Barcelona,A Coruña,43.348185,-8.431217,Barcelona,41.29824,2.0123,2026-07-21T04:00:00Z,2026-08-09T19:00:00Z,120,1069.8,1287,Fiat,Ducato,Active Poptop Select,99.00,no
 252694,6135,Alacant/Alicante,6121,Amstelveen,Alacant/Alicante,38.447022,-0.807049,Amstelveen,52.252707,4.5663118,2026-07-21T04:00:00Z,2026-07-26T19:00:00Z,120,2023.1,2249,Fiat,Ducato,Comfort Standard,99.00,no
-252624,6090,Brüssel,6089,Wiener Neudorf,Brüssel,50.9691843,4.493581,Wiener Neudorf,48.14047,16.44293,2026-07-22T04:00:00Z,2026-07-25T19:00:00Z,72,1112.8,1304,Fiat,Ducato,Comfort Standard,99.00,no
 252667,6126,Lisbon,6127,Porto,Lisbon,38.8565412,-9.0627724,Porto,41.2843513,-8.6313783,2026-07-22T04:00:00Z,2026-08-01T19:00:00Z,72,312.5,514,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,1.00,yes
 252668,6126,Lisbon,6125,Faro,Lisbon,38.8565412,-9.0627724,Faro,37.11444,-8.11228,2026-07-22T04:00:00Z,2026-08-01T19:00:00Z,72,264.9,477,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,1.00,yes
 252657,6126,Lisbon,6127,Porto,Lisbon,38.8565412,-9.0627724,Porto,41.2843513,-8.6313783,2026-07-23T04:00:00Z,2026-08-01T19:00:00Z,72,312.5,514,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,1.00,yes
@@ -51,9 +50,7 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252696,6095,Lyon,6101,Toulouse,Lyon,45.667261,5.092593,Toulouse,43.714399,1.3889351,2026-07-26T04:00:00Z,2026-08-06T19:00:00Z,72,572.3,738,Fiat,Ducato,Comfort Standard,1.00,yes
 252673,6095,Lyon,6097,Nantes,Lyon,45.667261,5.092593,Nantes,46.956933,-1.6210282,2026-07-27T04:00:00Z,2026-08-06T19:00:00Z,72,752.3,886,Pilote,G690 GJ or similar,Comfort Space Select,99.00,no
 252652,6126,Lisbon,6127,Porto,Lisbon,38.8565412,-9.0627724,Porto,41.2843513,-8.6313783,2026-07-28T04:00:00Z,2026-08-01T19:00:00Z,72,312.5,514,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,1.00,yes
-252675,6095,Lyon,6128,Barcelona,Lyon,45.667261,5.092593,Barcelona,41.29824,2.0123,2026-08-01T04:00:00Z,2026-08-07T19:00:00Z,72,680.8,839,Fiat,Ducato,Comfort Standard,99.00,no
 252672,6095,Lyon,6097,Nantes,Lyon,45.667261,5.092593,Nantes,46.956933,-1.6210282,2026-08-02T04:00:00Z,2026-08-06T19:00:00Z,72,752.3,886,Fiat,Ducato,Comfort Standard,99.00,no
-252670,6128,Barcelona,6125,Faro,Barcelona,41.29824,2.0123,Faro,37.11444,-8.11228,2026-08-03T04:00:00Z,2026-08-08T19:00:00Z,120,1195.1,1394,Fiat,Ducato,Comfort Standard,99.00,no
 252671,6095,Lyon,6097,Nantes,Lyon,45.667261,5.092593,Nantes,46.956933,-1.6210282,2026-08-04T04:00:00Z,2026-08-06T19:00:00Z,48,752.3,886,Fiat,Ducato,Active Poptop,99.00,no
 252682,6126,Lisbon,6125,Faro,Lisbon,38.8565412,-9.0627724,Faro,37.11444,-8.11228,2026-08-07T04:00:00Z,2026-08-13T19:00:00Z,72,264.9,477,Volkswagen,California,California Standard,1.00,yes
 252686,6126,Lisbon,6125,Faro,Lisbon,38.8565412,-9.0627724,Faro,37.11444,-8.11228,2026-08-12T04:00:00Z,2026-08-22T19:00:00Z,72,264.9,477,Fiat,Sport 346 or similar,Comfort Family Select,1.00,yes
