@@ -33,7 +33,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252639,6094,Bordeaux,6101,Toulouse,Bordeaux,44.8862672,-0.6386488,Toulouse,43.714399,1.3889351,2026-07-22T04:00:00Z,2026-07-24T19:00:00Z,48,242.5,444,Fiat,Ducato,Comfort Standard,1.00,yes
 252642,6096,Châteauneuf-les-Martigues,6098,Nice,Châteauneuf-les-Martigues,43.3779066,5.1441734,Nice,43.6159547,7.1111765,2026-07-22T04:00:00Z,2026-07-30T19:00:00Z,48,194.6,404,Fiat,Ducato,Comfort Standard,1.00,yes
 252668,6126,Lisbon,6125,Faro,Lisbon,38.8565412,-9.0627724,Faro,37.11444,-8.11228,2026-07-22T04:00:00Z,2026-08-01T19:00:00Z,72,264.9,477,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,1.00,yes
-252802,6085,Berlin,6129,Bilbao,Berlin,52.4281113,13.5568964,Bilbao,43.2904901,-2.8944743,2026-07-22T04:00:00Z,2026-08-03T19:00:00Z,240,1971.0,2166,Volkswagen,California,California Standard,99.00,no
 252817,6163,Olbia,6113,Cagliari,Olbia,40.9030631,9.5328432,Cagliari,39.278007,9.057308,2026-07-22T04:00:00Z,2026-07-24T19:00:00Z,48,256.2,462,Fiat,Ducato,Active Bunk,1.00,yes
 252819,6096,Châteauneuf-les-Martigues,6101,Toulouse,Châteauneuf-les-Martigues,43.3779066,5.1441734,Toulouse,43.714399,1.3889351,2026-07-22T04:00:00Z,2026-07-25T19:00:00Z,72,391.3,604,Fiat,Ducato,Active Standard Select,1.00,yes
 252820,6099,Saint-Mesmes,6100,Grigny,Saint-Mesmes,48.9875914,2.691353,Grigny,48.74792,2.39253,2026-07-22T04:00:00Z,2026-08-02T19:00:00Z,72,56.1,222,Fiat,Ducato,Active Poptop Select,1.00,yes
@@ -43,7 +42,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252665,6126,Lisbon,6127,Porto,Lisbon,38.8565412,-9.0627724,Porto,41.2843513,-8.6313783,2026-07-23T04:00:00Z,2026-08-01T19:00:00Z,72,312.5,514,Pilote,G690 GJ or similar,Comfort Space Select,1.00,yes
 252674,6095,Lyon,6097,Nantes,Lyon,45.667261,5.092593,Nantes,46.956933,-1.6210282,2026-07-23T04:00:00Z,2026-08-06T19:00:00Z,72,752.3,886,Fiat,Ducato,Active Poptop,99.00,no
 252807,6118,Palermo,6163,Olbia,Palermo,38.142823,13.089665,Olbia,40.9030631,9.5328432,2026-07-25T04:00:00Z,2026-08-01T19:00:00Z,96,689.9,935,Fiat,Ducato,Active Poptop,99.00,no
-252808,6116,Milan,6128,Barcelona,Milan,45.6197196,8.7600985,Barcelona,41.29824,2.0123,2026-07-25T04:00:00Z,2026-08-09T19:00:00Z,120,1019.4,1181,Volkswagen,California,California Standard,99.00,no
 252822,6097,Nantes,6094,Bordeaux,Nantes,46.956933,-1.6210282,Bordeaux,44.8862672,-0.6386488,2026-07-25T04:00:00Z,2026-08-08T19:00:00Z,72,340.0,549,Fiat,Ducato,Active Poptop,1.00,yes
 252823,6126,Lisbon,6127,Porto,Lisbon,38.8565412,-9.0627724,Porto,41.2843513,-8.6313783,2026-07-25T04:00:00Z,2026-08-01T19:00:00Z,72,312.5,514,Pilote,G690 GJ or similar,Comfort Space Select,1.00,yes
 251198,6118,Palermo,6163,Olbia,Palermo,38.142823,13.089665,Olbia,40.9030631,9.5328432,2026-07-27T04:00:00Z,2026-07-29T19:00:00Z,96,689.9,935,Fiat,Ducato,Active Poptop,99.00,no
@@ -51,12 +49,10 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252804,6099,Saint-Mesmes,6100,Grigny,Saint-Mesmes,48.9875914,2.691353,Grigny,48.74792,2.39253,2026-07-27T04:00:00Z,2026-08-01T19:00:00Z,72,56.1,222,Pilote,V630J or similar,Active Long Select,1.00,yes
 252805,6101,Toulouse,6100,Grigny,Toulouse,43.714399,1.3889351,Grigny,48.74792,2.39253,2026-07-27T04:00:00Z,2026-08-06T19:00:00Z,72,657.8,870,Fiat,Ducato,Active Poptop Select,99.00,no
 252809,6135,Alacant/Alicante,6128,Barcelona,Alacant/Alicante,38.447022,-0.807049,Barcelona,41.29824,2.0123,2026-07-27T04:00:00Z,2026-08-08T19:00:00Z,72,486.3,723,Fiat,Ducato,Comfort Standard,1.00,yes
-252806,6100,Grigny,6155,A Coruña,Grigny,48.74792,2.39253,A Coruña,43.348185,-8.431217,2026-07-29T04:00:00Z,2026-08-03T19:00:00Z,120,1448.7,1647,Fiat,Ducato,Comfort Standard,99.00,no
 252803,6129,Bilbao,6128,Barcelona,Bilbao,43.2904901,-2.8944743,Barcelona,41.29824,2.0123,2026-07-30T04:00:00Z,2026-08-02T19:00:00Z,72,599.0,808,Fiat,Ducato,Active Standard Select,1.00,yes
 252821,6089,Wiener Neudorf,6111,Bergamo,Wiener Neudorf,48.14047,16.44293,Bergamo,45.672881,9.686563,2026-07-30T04:00:00Z,2026-08-06T19:00:00Z,96,793.2,1020,Fiat,Ducato,Active Standard Select,99.00,no
 252810,6098,Nice,6100,Grigny,Nice,43.6159547,7.1111765,Grigny,48.74792,2.39253,2026-08-02T04:00:00Z,2026-08-07T19:00:00Z,120,908.7,1125,Fiat,Ducato,Active Poptop,99.00,no
 252671,6095,Lyon,6097,Nantes,Lyon,45.667261,5.092593,Nantes,46.956933,-1.6210282,2026-08-04T04:00:00Z,2026-08-06T19:00:00Z,48,752.3,886,Fiat,Ducato,Active Poptop,99.00,no
-252814,6126,Lisbon,6125,Faro,Lisbon,38.8565412,-9.0627724,Faro,37.11444,-8.11228,2026-08-12T04:00:00Z,2026-08-22T19:00:00Z,72,264.9,477,Fiat,Sport 346 or similar,Comfort Family Select,1.00,yes
 252811,6134,València,6133,Sevilla,València,39.5825525,-0.3288505,Sevilla,37.2964668,-5.9136377,2026-08-14T04:00:00Z,2026-08-20T19:00:00Z,72,670.6,855,Fiat,Ducato,Comfort Standard,99.00,no
 252812,6126,Lisbon,6127,Porto,Lisbon,38.8565412,-9.0627724,Porto,41.2843513,-8.6313783,2026-08-15T04:00:00Z,2026-08-22T19:00:00Z,72,312.5,514,Fiat,Sport 346 or similar,Comfort Family Select,1.00,yes
 252816,6126,Lisbon,6125,Faro,Lisbon,38.8565412,-9.0627724,Faro,37.11444,-8.11228,2026-08-15T04:00:00Z,2026-09-01T19:00:00Z,72,264.9,477,Fiat,Ducato,Active Poptop,1.00,yes
