@@ -1,8 +1,8 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
 252554,1739,Homburg,1220,Aschaffenburg,Homburg,49.3406,7.3458,Aschaffenburg,49.9797,9.129,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,200.1,250,Mystery,Auto,Mystery Auto,1.00,yes
 252554,1739,Homburg,1438,Darmstadt,Homburg,49.3406,7.3458,Darmstadt,49.8894,8.6448,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,144.5,200,Mystery,Auto,Mystery Auto,1.00,yes
-252554,1739,Homburg,5907,Dillenburg,Homburg,49.3406,7.3458,Dillenburg,50.7684,8.2924,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,265.2,350,Mystery,Auto,Mystery Auto,1.00,yes
-252554,1739,Homburg,1279,Frankfurt am Main,Homburg,49.3406,7.3458,Frankfurt am Main,50.1073,8.6646,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,170.8,250,Mystery,Auto,Mystery Auto,1.00,yes
+252554,1739,Homburg,1449,Dillenburg,Homburg,49.3406,7.3458,Dillenburg,50.768,8.2896,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,264.9,350,Mystery,Auto,Mystery Auto,1.00,yes
+252554,1739,Homburg,1284,Frankfurt am Main,Homburg,49.3406,7.3458,Frankfurt am Main,50.121,8.6211,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,168.9,250,Mystery,Auto,Mystery Auto,1.00,yes
 252554,1739,Homburg,1281,Frankfurt,Homburg,49.3406,7.3458,Frankfurt,50.0507,8.5687,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,143.0,200,Mystery,Auto,Mystery Auto,1.00,yes
 252554,1739,Homburg,1280,Friedberg,Homburg,49.3406,7.3458,Friedberg,50.3308,8.751,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,195.1,250,Mystery,Auto,Mystery Auto,1.00,yes
 252554,1739,Homburg,1634,Fulda,Homburg,49.3406,7.3458,Fulda,50.5501,9.6877,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,269.9,350,Mystery,Auto,Mystery Auto,1.00,yes
@@ -17,16 +17,13 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252554,1739,Homburg,1915,Wiesbaden,Homburg,49.3406,7.3458,Wiesbaden,50.0679,8.2501,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,135.6,200,Mystery,Auto,Mystery Auto,1.00,yes
 252554,1739,Homburg,1585,Kelsterbach,Homburg,49.3406,7.3458,Kelsterbach,50.0512,8.5423,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,144.5,200,Mystery,Auto,Mystery Auto,1.00,yes
 252554,1739,Homburg,1447,Diez,Homburg,49.3406,7.3458,Diez,50.3706,8.0269,2026-07-20T04:00:00Z,2026-07-24T21:00:00Z,24,190.1,250,Mystery,Auto,Mystery Auto,1.00,yes
-252765,1598,Flensburg,1314,Bergen auf Rügen,Flensburg,54.7716,9.4237,Bergen auf Rügen,54.4236,13.4165,2026-07-21T07:00:00Z,2026-07-24T07:00:00Z,24,407.7,500,Mystery,Auto,Mystery Auto,1.00,yes
 252766,1387,Bremen,1314,Bergen auf Rügen,Bremen,53.0831,8.8079,Bergen auf Rügen,54.4236,13.4165,2026-07-21T07:00:00Z,2026-07-24T21:00:00Z,24,413.4,500,Mystery,Auto,Mystery Auto,1.00,yes
-252948,2550,Osnabrück,2684,Siegen,Osnabrück,52.272987,8.064694,Siegen,50.863518,8.011497,2026-07-21T22:00:00Z,2026-07-24T16:00:00Z,24,211.5,300,FORD,TRANSIT CUSTOM KAS DI MAN,Mystery Van,1.00,yes
 252800,1792,Lingen,1314,Bergen auf Rügen,Lingen,52.5305,7.3441,Bergen auf Rügen,54.4236,13.4165,2026-07-22T07:00:00Z,2026-07-24T10:00:00Z,24,538.7,650,Mystery,Auto,Mystery Auto,1.00,yes
 252801,1809,Münster,1314,Bergen auf Rügen,Münster,51.94,7.6276,Bergen auf Rügen,54.4236,13.4165,2026-07-22T07:00:00Z,2026-07-24T10:00:00Z,24,582.2,700,Mystery,Auto,Mystery Auto,1.00,yes
-252964,2496,Neuenstein,2735,Paderborn,Neuenstein,50.91307,9.576899,Paderborn,51.69704,8.735777,2026-07-22T11:53:39Z,2026-07-24T12:00:00Z,24,132.0,200,NISSA,PRIMASTAR MPV 9S DI AUT,Mystery Auto,1.00,yes
-252981,2619,Sinsheim,2665,Mannheim,Sinsheim,49.247635,8.876671,Mannheim,49.4492,8.505276,2026-07-22T12:56:37Z,2026-07-24T16:00:00Z,24,42.3,100,MB,VITO 116L KAS DI AUT,Mystery Van,1.00,yes
+253000,2684,Siegen,2564,Bochum,Siegen,50.863518,8.011497,Bochum,51.484543,7.219885,2026-07-22T22:00:00Z,2026-07-24T12:00:00Z,24,112.2,150,MAXUS,"DELIVER 9 3,5 TO KAS DI MAN",Mystery Van,1.00,yes
+252997,2729,Friedrichshafen,2584,Erfurt,Friedrichshafen,47.672157,9.523718,Erfurt,51.013187,10.987587,2026-07-23T06:49:51Z,2026-07-25T10:00:00Z,24,477.8,600,FORD,TOURNEO CUSTOM MPV 9S DI AUT,Mystery Auto,1.00,yes
+253002,2613,Straubing,5091,Vizzola Ticino,Straubing,48.882744,12.585778,Vizzola Ticino,45.6274,8.7124,2026-07-23T08:14:50Z,2026-07-27T21:59:00Z,24,628.1,800,VOLVO,XC60 UTL HBPP AUT,Mystery Auto,1.00,yes
 252992,6095,Lyon,6094,Bordeaux,Lyon,45.667261,5.092593,Bordeaux,44.8862672,-0.6386488,2026-07-24T04:00:00Z,2026-08-06T19:00:00Z,72,586.1,753,Fiat,Ducato,Active Poptop,1.00,yes
-252989,6091,Split,6092,Zagreb,Split,43.5481455,16.3000223,Zagreb,45.7707879,16.1179182,2026-07-25T04:00:00Z,2026-08-03T19:00:00Z,72,388.4,609,Fiat,Ducato,Active Poptop,1.00,yes
-252988,6091,Split,6092,Zagreb,Split,43.5481455,16.3000223,Zagreb,45.7707879,16.1179182,2026-07-27T04:00:00Z,2026-08-17T19:00:00Z,72,388.4,609,Fiat,Ducato,Active Poptop,1.00,yes
 252993,6163,Olbia,6113,Cagliari,Olbia,40.9030631,9.5328432,Cagliari,39.278007,9.057308,2026-07-27T04:00:00Z,2026-08-03T19:00:00Z,72,256.2,462,Fiat,Ducato,Active Poptop Select,1.00,yes
 252845,1318,Dortmund,1314,Bergen auf Rügen,Dortmund,51.52,7.4194,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,654.7,800,Mystery,Auto,Mystery Auto,1.00,yes
 252846,1320,Dortmund,1314,Bergen auf Rügen,Dortmund,51.5413,7.4576,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,642.3,800,Mystery,Auto,Mystery Auto,1.00,yes
