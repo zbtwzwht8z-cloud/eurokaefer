@@ -1,5 +1,4 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
-252766,1387,Bremen,1314,Bergen auf Rügen,Bremen,53.0831,8.8079,Bergen auf Rügen,54.4236,13.4165,2026-07-21T07:00:00Z,2026-07-24T21:00:00Z,24,413.4,500,Mystery,Auto,Mystery Auto,1.00,yes
 253000,2684,Siegen,2564,Bochum,Siegen,50.863518,8.011497,Bochum,51.484543,7.219885,2026-07-22T22:00:00Z,2026-07-24T12:00:00Z,24,112.2,150,MAXUS,"DELIVER 9 3,5 TO KAS DI MAN",Mystery Van,1.00,yes
 252997,2729,Friedrichshafen,2584,Erfurt,Friedrichshafen,47.672157,9.523718,Erfurt,51.013187,10.987587,2026-07-23T06:49:51Z,2026-07-25T10:00:00Z,24,477.8,600,FORD,TOURNEO CUSTOM MPV 9S DI AUT,Mystery Auto,1.00,yes
 253002,2613,Straubing,5091,Vizzola Ticino,Straubing,48.882744,12.585778,Vizzola Ticino,45.6274,8.7124,2026-07-23T08:14:50Z,2026-07-27T21:59:00Z,24,628.1,800,VOLVO,XC60 UTL HBPP AUT,Mystery Auto,1.00,yes
@@ -15,7 +14,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252852,1533,Duisburg,1314,Bergen auf Rügen,Duisburg,51.4348,6.7731,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,698.2,850,Mystery,Auto,Mystery Auto,1.00,yes
 252853,1589,Essen,1314,Bergen auf Rügen,Essen,51.4635,7.0168,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,678.2,850,Mystery,Auto,Mystery Auto,1.00,yes
 252854,1591,Essen,1314,Bergen auf Rügen,Essen,51.3789,6.9382,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,692.3,850,Mystery,Auto,Mystery Auto,1.00,yes
-252855,1668,Kleve,1314,Bergen auf Rügen,Kleve,51.7997,6.1365,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,755.0,950,Mystery,Auto,Mystery Auto,1.00,yes
 252856,1687,Gummersbach,1314,Bergen auf Rügen,Gummersbach,51.0102,7.5716,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,706.0,850,Mystery,Auto,Mystery Auto,1.00,yes
 252857,1689,Hagen,1314,Bergen auf Rügen,Hagen,51.3596,7.4625,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,656.2,800,Mystery,Auto,Mystery Auto,1.00,yes
 252858,1717,Hattingen,1314,Bergen auf Rügen,Hattingen,51.3957,7.1816,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,675.9,850,Mystery,Auto,Mystery Auto,1.00,yes
@@ -24,10 +22,8 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252861,1798,Lünen,1314,Bergen auf Rügen,Lünen,51.6112,7.5122,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,640.2,800,Mystery,Auto,Mystery Auto,1.00,yes
 252862,1806,Mülheim an der Ruhr,1314,Bergen auf Rügen,Mülheim an der Ruhr,51.4287,6.8907,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,691.2,850,Mystery,Auto,Mystery Auto,1.00,yes
 252863,1829,Oberhausen,1314,Bergen auf Rügen,Oberhausen,51.4909,6.8385,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,690.0,850,Mystery,Auto,Mystery Auto,1.00,yes
-252864,1860,Rhede,1314,Bergen auf Rügen,Rhede,51.8331,6.7053,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,643.1,800,Mystery,Auto,Mystery Auto,1.00,yes
 252865,1920,Witten,1314,Bergen auf Rügen,Witten,51.449,7.3265,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,661.8,800,Mystery,Auto,Mystery Auto,1.00,yes
 252866,4294,Recklinghausen,1314,Bergen auf Rügen,Recklinghausen,51.5697,7.1992,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,634.7,800,Mystery,Auto,Mystery Auto,1.00,yes
 252867,4644,Herne,1314,Bergen auf Rügen,Herne,51.5495,7.2389,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,655.9,800,Mystery,Auto,Mystery Auto,1.00,yes
 252868,5457,Bergkamen,1314,Bergen auf Rügen,Bergkamen,51.6265,7.6574,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,612.8,750,Mystery,Auto,Mystery Auto,1.00,yes
 252671,6095,Lyon,6097,Nantes,Lyon,45.667261,5.092593,Nantes,46.956933,-1.6210282,2026-08-04T04:00:00Z,2026-08-08T19:00:00Z,48,752.3,886,Fiat,Ducato,Active Poptop,99.00,no
-252938,2311,Champlan,2856,Korntal-Münchingen,Champlan,48.6787193,2.345228,Korntal-Münchingen,48.8291562,9.1320567,2026-09-13T22:00:00Z,2026-09-21T21:59:59Z,48,607.4,1000,SURFER SUITE,VW California Ocean,SURFER SUITE,1.00,yes
