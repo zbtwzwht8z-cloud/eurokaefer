@@ -1,5 +1,4 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
-252997,2729,Friedrichshafen,2584,Erfurt,Friedrichshafen,47.672157,9.523718,Erfurt,51.013187,10.987587,2026-07-23T06:49:51Z,2026-07-25T10:00:00Z,24,477.8,600,FORD,TOURNEO CUSTOM MPV 9S DI AUT,Mystery Auto,1.00,yes
 253002,2613,Straubing,5091,Vizzola Ticino,Straubing,48.882744,12.585778,Vizzola Ticino,45.6274,8.7124,2026-07-23T08:14:50Z,2026-07-27T21:59:00Z,24,628.1,800,VOLVO,XC60 UTL HBPP AUT,Mystery Auto,1.00,yes
 253066,2676,Hildesheim,2537,Bremen,Hildesheim,52.16568,9.942546,Bremen,53.049957,8.849719,2026-07-23T22:00:00Z,2026-07-27T17:00:00Z,24,150.7,200,FORD,TRANSIT CUSTOM KAS DI MAN,Mystery Van,1.00,yes
 253067,2816,Forchheim,2707,München,Forchheim,49.702057,11.056232,München,48.140034,11.566841,2026-07-23T22:00:00Z,2026-07-25T18:00:00Z,24,0.0,0,AUDI,A3 SB LIM DI AUT,Mystery Auto,1.00,yes
@@ -9,7 +8,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253098,2522,Rostock,2802,Berlin,Rostock,54.13623,12.06046,Berlin,52.553146,13.303751,2026-07-24T17:56:39Z,2026-07-27T18:00:00Z,24,224.7,300,FIAT,DUCATO L4H2 KAS DI MAN,Mystery Van,1.00,yes
 253064,1303,Bamberg,1925,Rottendorf,Bamberg,49.9104,10.8818,Rottendorf,49.794,9.9925,2026-07-27T07:00:00Z,2026-07-28T07:00:00Z,24,92.1,150,FORD,FO TRANSIT-TMHW,TMHW - GR.3 IVECO,1.00,yes
 253090,6096,Châteauneuf-les-Martigues,6099,Saint-Mesmes,Châteauneuf-les-Martigues,43.3779066,5.1441734,Saint-Mesmes,48.9875914,2.691353,2026-07-28T04:00:00Z,2026-07-30T19:00:00Z,48,808.8,975,Volkswagen,California,California Grand,99.00,no
-253091,6128,Barcelona,6090,Brüssel,Barcelona,41.29824,2.0123,Brüssel,50.9691843,4.493581,2026-07-28T04:00:00Z,2026-08-01T19:00:00Z,96,1392.8,1538,Fiat,Ducato,Comfort Standard,99.00,no
 252845,1318,Dortmund,1314,Bergen auf Rügen,Dortmund,51.52,7.4194,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,654.7,800,Mystery,Auto,Mystery Auto,1.00,yes
 252846,1320,Dortmund,1314,Bergen auf Rügen,Dortmund,51.5413,7.4576,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,642.3,800,Mystery,Auto,Mystery Auto,1.00,yes
 252847,1321,Dortmund,1314,Bergen auf Rügen,Dortmund,51.5239,7.5154,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,641.4,800,Mystery,Auto,Mystery Auto,1.00,yes
@@ -43,7 +41,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253094,6085,Berlin,6116,Milan,Berlin,52.4281113,13.5568964,Milan,45.6197196,8.7600985,2026-08-06T04:00:00Z,2026-08-09T19:00:00Z,72,1042.2,1236,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 253097,6105,Hamburg,6116,Milan,Hamburg,53.5455055,10.0407124,Milan,45.6197196,8.7600985,2026-08-06T04:00:00Z,2026-08-10T19:00:00Z,96,1102.9,1309,Fiat,Ducato,Active Poptop,99.00,no
 253027,6105,Hamburg,6116,Milan,Hamburg,53.5455055,10.0407124,Milan,45.6197196,8.7600985,2026-08-07T04:00:00Z,2026-08-09T19:00:00Z,48,1102.9,1309,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
-253092,6085,Berlin,6104,Frankfurt am Main,Berlin,52.4281113,13.5568964,Frankfurt am Main,50.1420333,8.8076945,2026-08-12T04:00:00Z,2026-08-14T19:00:00Z,48,549.1,750,Fiat,Sport 346 or similar,Comfort Family,1.00,yes
 253048,2304,Madrid,5584,Leipzig,Madrid,40.395,-3.581,Leipzig,51.3455043,12.4650845,2026-08-31T22:00:00Z,2026-09-08T21:59:59Z,120,2250.0,2600,ROAD HOUSE,Westfalia Eliseo C540 - Fiat Ducato 8,ROAD HOUSE,129.00,no
 253055,2282,Viladecans,5584,Leipzig,Viladecans,41.3206,2.0303,Leipzig,51.3455043,12.4650845,2026-09-02T22:00:00Z,2026-09-10T21:59:59Z,120,1736.4,2200,BEACH HOSTEL,VW California Beach,BEACH HOSTEL,129.00,no
 253057,2282,Viladecans,5584,Leipzig,Viladecans,41.3206,2.0303,Leipzig,51.3455043,12.4650845,2026-09-09T22:00:00Z,2026-09-17T21:59:59Z,120,1736.4,2200,SURFER SUITE,VW California Ocean,SURFER SUITE,129.00,no
@@ -54,5 +51,4 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253062,4615,Rotterdam,5329,Weyhe,Rotterdam,51.8601602,4.3951066,Weyhe,53.0138949,8.852995,2026-09-18T22:00:00Z,2026-09-26T21:59:59Z,48,403.6,1000,SURFER SUITE,VW California Ocean,SURFER SUITE,1.00,yes
 253054,2282,Viladecans,5584,Leipzig,Viladecans,41.3206,2.0303,Leipzig,51.3455043,12.4650845,2026-09-21T22:00:00Z,2026-09-29T21:59:59Z,120,1736.4,2200,SURFER SUITE,VW California Ocean,SURFER SUITE,129.00,no
 253052,2282,Viladecans,5584,Leipzig,Viladecans,41.3206,2.0303,Leipzig,51.3455043,12.4650845,2026-09-23T22:00:00Z,2026-10-01T21:59:59Z,120,1736.4,2200,SURFER SUITE,VW California Ocean,SURFER SUITE,129.00,no
-253065,4615,Rotterdam,5329,Weyhe,Rotterdam,51.8601602,4.3951066,Weyhe,53.0138949,8.852995,2026-09-23T22:00:00Z,2026-10-01T21:59:59Z,48,403.6,1000,SURFER SUITE,VW California Ocean,SURFER SUITE,1.00,yes
 253056,2282,Viladecans,5584,Leipzig,Viladecans,41.3206,2.0303,Leipzig,51.3455043,12.4650845,2026-09-25T22:00:00Z,2026-10-03T21:59:59Z,120,1736.4,2200,ROAD HOUSE,Westfalia Eliseo C540 - Fiat Ducato 8,ROAD HOUSE,129.00,no
