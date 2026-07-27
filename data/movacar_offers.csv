@@ -7,12 +7,10 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252847,1321,Dortmund,1314,Bergen auf Rügen,Dortmund,51.5239,7.5154,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,641.4,800,Mystery,Auto,Mystery Auto,1.00,yes
 252848,1322,Dortmund,1314,Bergen auf Rügen,Dortmund,51.5185,7.6145,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,640.1,800,Mystery,Auto,Mystery Auto,1.00,yes
 252849,1369,Bochum,1314,Bergen auf Rügen,Bochum,51.48,7.2065,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,672.5,850,Mystery,Auto,Mystery Auto,1.00,yes
-252850,1379,Bottrop,1314,Bergen auf Rügen,Bottrop,51.5084,6.9345,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,681.3,850,Mystery,Auto,Mystery Auto,1.00,yes
 252851,1448,Siegen,1314,Bergen auf Rügen,Siegen,50.8808,8.0272,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,731.4,900,Mystery,Auto,Mystery Auto,1.00,yes
 252852,1533,Duisburg,1314,Bergen auf Rügen,Duisburg,51.4348,6.7731,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,698.2,850,Mystery,Auto,Mystery Auto,1.00,yes
 252853,1589,Essen,1314,Bergen auf Rügen,Essen,51.4635,7.0168,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,678.2,850,Mystery,Auto,Mystery Auto,1.00,yes
 252854,1591,Essen,1314,Bergen auf Rügen,Essen,51.3789,6.9382,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,692.3,850,Mystery,Auto,Mystery Auto,1.00,yes
-252855,1668,Kleve,1314,Bergen auf Rügen,Kleve,51.7997,6.1365,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,755.0,950,Mystery,Auto,Mystery Auto,1.00,yes
 252856,1687,Gummersbach,1314,Bergen auf Rügen,Gummersbach,51.0102,7.5716,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,706.0,850,Mystery,Auto,Mystery Auto,1.00,yes
 252857,1689,Hagen,1314,Bergen auf Rügen,Hagen,51.3596,7.4625,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,656.2,800,Mystery,Auto,Mystery Auto,1.00,yes
 252858,1717,Hattingen,1314,Bergen auf Rügen,Hattingen,51.3957,7.1816,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,675.9,850,Mystery,Auto,Mystery Auto,1.00,yes
@@ -20,8 +18,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 252860,1797,Lüdenscheid,1314,Bergen auf Rügen,Lüdenscheid,51.2274,7.6467,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,672.7,850,Mystery,Auto,Mystery Auto,1.00,yes
 252861,1798,Lünen,1314,Bergen auf Rügen,Lünen,51.6112,7.5122,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,640.2,800,Mystery,Auto,Mystery Auto,1.00,yes
 252862,1806,Mülheim an der Ruhr,1314,Bergen auf Rügen,Mülheim an der Ruhr,51.4287,6.8907,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,691.2,850,Mystery,Auto,Mystery Auto,1.00,yes
-252863,1829,Oberhausen,1314,Bergen auf Rügen,Oberhausen,51.4909,6.8385,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,690.0,850,Mystery,Auto,Mystery Auto,1.00,yes
-252864,1860,Rhede,1314,Bergen auf Rügen,Rhede,51.8331,6.7053,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,643.1,800,Mystery,Auto,Mystery Auto,1.00,yes
 252865,1920,Witten,1314,Bergen auf Rügen,Witten,51.449,7.3265,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,661.8,800,Mystery,Auto,Mystery Auto,1.00,yes
 252866,4294,Recklinghausen,1314,Bergen auf Rügen,Recklinghausen,51.5697,7.1992,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,634.7,800,Mystery,Auto,Mystery Auto,1.00,yes
 252867,4644,Herne,1314,Bergen auf Rügen,Herne,51.5495,7.2389,Bergen auf Rügen,54.4236,13.4165,2026-07-28T07:00:00Z,2026-07-31T07:00:00Z,24,655.9,800,Mystery,Auto,Mystery Auto,1.00,yes
@@ -32,8 +28,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253028,6105,Hamburg,6116,Milan,Hamburg,53.5455055,10.0407124,Milan,45.6197196,8.7600985,2026-08-05T04:00:00Z,2026-08-08T19:00:00Z,72,1102.9,1309,Fiat,Ducato,Active Poptop Select,99.00,no
 253094,6085,Berlin,6116,Milan,Berlin,52.4281113,13.5568964,Milan,45.6197196,8.7600985,2026-08-06T04:00:00Z,2026-08-09T19:00:00Z,72,1042.2,1236,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 253027,6105,Hamburg,6116,Milan,Hamburg,53.5455055,10.0407124,Milan,45.6197196,8.7600985,2026-08-07T04:00:00Z,2026-08-09T19:00:00Z,48,1102.9,1309,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
-253057,2282,Viladecans,5584,Leipzig,Viladecans,41.3206,2.0303,Leipzig,51.3455043,12.4650845,2026-09-09T22:00:00Z,2026-09-17T21:59:59Z,120,1736.4,2200,SURFER SUITE,VW California Ocean,SURFER SUITE,129.00,no
-253059,4538,Sevilla,2856,Korntal-Münchingen,Sevilla,37.346991,-5.8656901,Korntal-Münchingen,48.8291562,9.1320567,2026-09-11T22:00:00Z,2026-09-19T21:59:59Z,120,2237.3,2600,SURFER SUITE,VW California Ocean,SURFER SUITE,129.00,no
 253054,2282,Viladecans,5584,Leipzig,Viladecans,41.3206,2.0303,Leipzig,51.3455043,12.4650845,2026-09-21T22:00:00Z,2026-09-29T21:59:59Z,120,1736.4,2200,SURFER SUITE,VW California Ocean,SURFER SUITE,129.00,no
 253052,2282,Viladecans,5584,Leipzig,Viladecans,41.3206,2.0303,Leipzig,51.3455043,12.4650845,2026-09-23T22:00:00Z,2026-10-01T21:59:59Z,120,1736.4,2200,SURFER SUITE,VW California Ocean,SURFER SUITE,129.00,no
 253056,2282,Viladecans,5584,Leipzig,Viladecans,41.3206,2.0303,Leipzig,51.3455043,12.4650845,2026-09-25T22:00:00Z,2026-10-03T21:59:59Z,120,1736.4,2200,ROAD HOUSE,Westfalia Eliseo C540 - Fiat Ducato 8,ROAD HOUSE,129.00,no
