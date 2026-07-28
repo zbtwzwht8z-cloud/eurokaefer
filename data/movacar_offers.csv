@@ -1,5 +1,5 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
-253152,1640,Hamburg,1478,Köln,Hamburg,53.5552,10.0102,Köln,50.9389,6.9789,2026-07-27T04:00:00Z,2026-07-31T08:00:00Z,24,431.1,550,Mystery,Auto,Mystery Auto,1.00,yes
+253152,1640,Hamburg,1487,Köln,Hamburg,53.5552,10.0102,Köln,50.9459,6.9006,2026-07-27T04:00:00Z,2026-07-31T08:00:00Z,24,432.7,550,Mystery,Auto,Mystery Auto,1.00,yes
 253153,1640,Hamburg,1372,Bonn,Hamburg,53.5552,10.0102,Bonn,50.7421,7.0774,2026-07-27T07:00:00Z,2026-07-31T10:00:00Z,24,458.7,600,Mystery,Auto,Mystery Auto,1.00,yes
 253127,1640,Hamburg,1589,Essen,Hamburg,53.5552,10.0102,Essen,51.4635,7.0168,2026-07-27T10:00:00Z,2026-07-30T10:00:00Z,24,359.8,450,Mystery,Auto,Mystery Auto,1.00,yes
 253254,2776,Ueberlingen,2490,Frankfurt,Ueberlingen,47.778202,9.202129,Frankfurt,50.05138,8.567991,2026-07-27T22:00:00Z,2026-07-30T21:59:00Z,24,350.7,450,BMW,420 CAB DI AUT,Mystery Auto,1.00,yes
@@ -33,7 +33,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253289,6085,Berlin,6106,Berglern,Berlin,52.4281113,13.5568964,Berglern,48.3697906,11.9297161,2026-08-04T04:00:00Z,2026-08-10T19:00:00Z,72,598.2,786,Fiat,Ducato,Active Standard Select,1.00,yes
 253303,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-08-04T04:00:00Z,2026-08-12T19:00:00Z,96,788.1,991,Volkswagen,California,California Standard,99.00,no
 253306,6085,Berlin,6116,Milan,Berlin,52.4281113,13.5568964,Milan,45.6197196,8.7600985,2026-08-04T04:00:00Z,2026-08-13T19:00:00Z,120,1042.2,1236,Fiat,Ducato,Active Poptop,99.00,no
-253310,6105,Hamburg,6115,Florence,Hamburg,53.5455055,10.0407124,Florence,43.786851,11.085733,2026-08-04T04:00:00Z,2026-08-14T19:00:00Z,168,1406.5,1652,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 253323,6085,Berlin,6107,Reutlingen,Berlin,52.4281113,13.5568964,Reutlingen,48.4921753,9.2005581,2026-08-04T04:00:00Z,2026-08-12T19:00:00Z,72,685.5,836,Volkswagen,California,California Standard,99.00,no
 253415,6105,Hamburg,6116,Milan,Hamburg,53.5455055,10.0407124,Milan,45.6197196,8.7600985,2026-08-04T04:00:00Z,2026-08-06T19:00:00Z,48,1102.9,1309,Fiat,Ducato,Active Poptop Select,99.00,no
 253277,6085,Berlin,6106,Berglern,Berlin,52.4281113,13.5568964,Berglern,48.3697906,11.9297161,2026-08-05T04:00:00Z,2026-08-09T19:00:00Z,72,598.2,786,Fiat,Ducato,Comfort Standard,1.00,yes
@@ -76,7 +75,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253399,6111,Bergamo,6120,Venezia,Bergamo,45.672881,9.686563,Venezia,45.542029,12.289827,2026-08-20T04:00:00Z,2026-09-02T19:00:00Z,72,226.0,427,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,1.00,yes
 253369,6112,Bologna,6163,Olbia,Bologna,44.554605,11.3202569,Olbia,40.9030631,9.5328432,2026-08-21T04:00:00Z,2026-09-02T19:00:00Z,72,502.8,700,Fiat,Ducato,Active Standard Select,1.00,yes
 253386,6115,Florence,6163,Olbia,Florence,43.786851,11.085733,Olbia,40.9030631,9.5328432,2026-08-21T04:00:00Z,2026-09-02T19:00:00Z,72,396.0,605,Ford,Transit/Jumper or similar,Comfort Compact Select,1.00,yes
-253398,6111,Bergamo,6120,Venezia,Bergamo,45.672881,9.686563,Venezia,45.542029,12.289827,2026-08-21T04:00:00Z,2026-09-02T19:00:00Z,72,226.0,427,Volkswagen,California,California Grand,1.00,yes
 253368,6120,Venezia,6163,Olbia,Venezia,45.542029,12.289827,Olbia,40.9030631,9.5328432,2026-08-22T04:00:00Z,2026-09-02T19:00:00Z,72,645.5,842,Fiat,Ducato,Comfort Standard,99.00,no
 253384,6119,Roma,6163,Olbia,Roma,41.817718,12.313638,Olbia,40.9030631,9.5328432,2026-08-22T04:00:00Z,2026-09-02T19:00:00Z,72,309.1,512,Fiat,Ducato,Active Poptop,1.00,yes
 253385,6112,Bologna,6120,Venezia,Bologna,44.554605,11.3202569,Venezia,45.542029,12.289827,2026-08-22T04:00:00Z,2026-09-02T19:00:00Z,72,155.4,354,Fiat,Ducato,Active Poptop Select,1.00,yes
