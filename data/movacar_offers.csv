@@ -22,7 +22,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253490,6098,Nice,6128,Barcelona,Nice,43.6159547,7.1111765,Barcelona,41.29824,2.0123,2026-07-31T04:00:00Z,2026-08-09T19:00:00Z,72,663.5,869,Fiat,Ducato,Comfort Standard,99.00,no
 253495,6090,Brüssel,6099,Saint-Mesmes,Brüssel,50.9691843,4.493581,Saint-Mesmes,48.9875914,2.691353,2026-07-31T04:00:00Z,2026-08-11T19:00:00Z,72,316.3,512,Pilote,V630J or similar,Active Long Select,1.00,yes
 253498,6098,Nice,6100,Grigny,Nice,43.6159547,7.1111765,Grigny,48.74792,2.39253,2026-07-31T04:00:00Z,2026-08-11T19:00:00Z,120,908.7,1125,Fiat,Ducato,Active Standard Select,99.00,no
-253506,6131,Málaga,6128,Barcelona,Málaga,36.6729608,-4.578534,Barcelona,41.29824,2.0123,2026-07-31T04:00:00Z,2026-08-05T19:00:00Z,120,951.0,1180,Ford,Transit/Jumper or similar,Comfort Compact Select,99.00,no
 253294,6105,Hamburg,6107,Reutlingen,Hamburg,53.5455055,10.0407124,Reutlingen,48.4921753,9.2005581,2026-08-01T04:00:00Z,2026-08-10T19:00:00Z,72,697.8,858,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 253328,6105,Hamburg,6107,Reutlingen,Hamburg,53.5455055,10.0407124,Reutlingen,48.4921753,9.2005581,2026-08-02T04:00:00Z,2026-08-12T19:00:00Z,72,697.8,858,Fiat,Ducato,Active Poptop Select,99.00,no
 253354,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-08-02T04:00:00Z,2026-08-14T19:00:00Z,96,788.1,991,Pilote,G690 GJ or similar,Comfort Space Select,99.00,no
@@ -56,7 +55,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253280,6105,Hamburg,6107,Reutlingen,Hamburg,53.5455055,10.0407124,Reutlingen,48.4921753,9.2005581,2026-08-07T04:00:00Z,2026-08-10T19:00:00Z,72,697.8,858,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 253300,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-08-07T04:00:00Z,2026-08-12T19:00:00Z,96,788.1,991,Volkswagen,California,California Standard,99.00,no
 253342,6085,Berlin,6107,Reutlingen,Berlin,52.4281113,13.5568964,Reutlingen,48.4921753,9.2005581,2026-08-07T04:00:00Z,2026-08-13T19:00:00Z,72,685.5,836,Fiat,Ducato,Active Standard Select,99.00,no
-253508,6089,Wiener Neudorf,6106,Berglern,Wiener Neudorf,48.14047,16.44293,Berglern,48.3697906,11.9297161,2026-08-07T04:00:00Z,2026-08-15T19:00:00Z,72,402.9,604,Fiat,Sport 346 or similar,Comfort Family,1.00,yes
 253282,6105,Hamburg,6107,Reutlingen,Hamburg,53.5455055,10.0407124,Reutlingen,48.4921753,9.2005581,2026-08-08T04:00:00Z,2026-08-10T19:00:00Z,48,697.8,858,Fiat,Ducato,Active Poptop,99.00,no
 253313,6085,Berlin,6106,Berglern,Berlin,52.4281113,13.5568964,Berglern,48.3697906,11.9297161,2026-08-08T04:00:00Z,2026-08-12T19:00:00Z,72,598.2,786,Fiat,Ducato,Comfort Standard,1.00,yes
 253352,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-08-08T04:00:00Z,2026-08-14T19:00:00Z,96,788.1,991,Volkswagen,California,California Standard,99.00,no
@@ -71,10 +69,7 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253478,6128,Barcelona,6107,Reutlingen,Barcelona,41.29824,2.0123,Reutlingen,48.4921753,9.2005581,2026-08-10T04:00:00Z,2026-08-12T19:00:00Z,48,1275.7,1464,Volkswagen,California,California Standard,99.00,no
 253332,6085,Berlin,6116,Milan,Berlin,52.4281113,13.5568964,Milan,45.6197196,8.7600985,2026-08-12T04:00:00Z,2026-08-14T19:00:00Z,48,1042.2,1236,Volkswagen,California,California Grand,99.00,no
 253351,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-08-12T04:00:00Z,2026-08-14T19:00:00Z,48,788.1,991,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
-253503,6131,Málaga,6135,Alacant/Alicante,Málaga,36.6729608,-4.578534,Alacant/Alicante,38.447022,-0.807049,2026-08-12T04:00:00Z,2026-08-18T19:00:00Z,72,489.9,678,Fiat,Ducato,Comfort Standard,1.00,yes
-253502,6096,Châteauneuf-les-Martigues,6131,Málaga,Châteauneuf-les-Martigues,43.3779066,5.1441734,Málaga,36.6729608,-4.578534,2026-08-13T04:00:00Z,2026-08-20T19:00:00Z,168,1435.6,1677,Ford,Transit/Jumper or similar,Comfort Compact Select,99.00,no
 253501,6090,Brüssel,6096,Châteauneuf-les-Martigues,Brüssel,50.9691843,4.493581,Châteauneuf-les-Martigues,43.3779066,5.1441734,2026-08-14T04:00:00Z,2026-08-17T19:00:00Z,72,1044.3,1221,Fiat,Sport 346 or similar,Comfort Family,99.00,no
-253504,6096,Châteauneuf-les-Martigues,6131,Málaga,Châteauneuf-les-Martigues,43.3779066,5.1441734,Málaga,36.6729608,-4.578534,2026-08-16T04:00:00Z,2026-08-25T19:00:00Z,168,1435.6,1677,Pilote,V630J or similar,Active Long Select,99.00,no
 253131,4615,Rotterdam,5329,Weyhe,Rotterdam,51.8601602,4.3951066,Weyhe,53.0138949,8.852995,2026-09-18T22:00:00Z,2026-09-26T21:59:59Z,48,403.6,1000,SURFER SUITE,VW California Ocean,SURFER SUITE,1.00,yes
 253130,2280,Amstelveen,5329,Weyhe,Amstelveen,52.283,4.835,Weyhe,53.0138949,8.852995,2026-09-21T22:00:00Z,2026-09-29T21:59:59Z,24,358.1,600,CAMPER CABIN,Ford Nugget - Ford Transit Custom V710,CAMPER CABIN,1.00,yes
 253136,4615,Rotterdam,5329,Weyhe,Rotterdam,51.8601602,4.3951066,Weyhe,53.0138949,8.852995,2026-09-25T22:00:00Z,2026-10-03T21:59:59Z,48,403.6,1000,CAMPER CABIN,Ford Nugget - Ford Transit Custom V710,CAMPER CABIN,1.00,yes
