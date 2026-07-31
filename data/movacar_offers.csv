@@ -1,7 +1,7 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
-253523,2735,Paderborn,5091,Vizzola Ticino,Paderborn,51.69704,8.735777,Vizzola Ticino,45.6274,8.7124,2026-07-30T10:20:57Z,2026-08-03T21:59:00Z,24,882.8,1100,AUDI,A6 EST HBD AUT,Mystery Auto,1.00,yes
-253529,2740,Flensburg,2594,Leipzig,Flensburg,54.771291,9.426981,Leipzig,51.34044,12.366001,2026-07-30T12:15:53Z,2026-08-02T20:00:00Z,24,557.1,700,NISSA,PRIMASTAR MPV 9S DI AUT,Mystery Auto,1.00,yes
+253260,1598,Flensburg,1516,Düsseldorf,Flensburg,54.7716,9.4237,Düsseldorf,51.279,6.7658,2026-07-28T14:00:00Z,2026-08-03T21:00:00Z,24,540.5,650,Mystery,Auto,Mystery Auto,1.00,yes
 253518,1657,Hamburg,2999,Westerland,Hamburg,53.6309,10.006,Westerland,54.9075,8.3113,2026-07-30T13:00:00Z,2026-08-05T21:00:00Z,24,276.8,350,Mystery,Auto,Mystery Auto,1.00,yes
+253558,2694,Braunschweig,2554,Bielefeld,Braunschweig,52.250095,10.53527,Bielefeld,52.02402,8.529082,2026-07-31T03:58:12Z,2026-08-03T14:00:00Z,24,181.0,250,CUPRA,TAVASCAN OFF 5S EL AUT,Mystery Auto,1.00,yes
 253188,6141,Edinburgh,6143,Manchester,Edinburgh,55.9392303,-3.3982138,Manchester,53.4089969,-2.2030739,2026-07-31T04:00:00Z,2026-08-02T19:00:00Z,72,389.5,550,Fiat,Ducato,Active Bunk,1.00,yes
 253356,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-07-31T04:00:00Z,2026-08-14T19:00:00Z,96,788.1,991,Volkswagen,California,California Standard,99.00,no
 253413,6114,Catania,6115,Florence,Catania,37.4449646,15.0669056,Florence,43.786851,11.085733,2026-07-31T04:00:00Z,2026-08-03T19:00:00Z,120,1070.0,1241,Fiat,Ducato,Comfort Standard,99.00,no
@@ -11,6 +11,8 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253489,6095,Lyon,6099,Saint-Mesmes,Lyon,45.667261,5.092593,Saint-Mesmes,48.9875914,2.691353,2026-07-31T04:00:00Z,2026-08-11T19:00:00Z,72,526.4,666,Fiat,Ducato,Active Bunk,1.00,yes
 253553,6117,Napoli,6116,Milan,Napoli,40.9104355,14.2277438,Milan,45.6197196,8.7600985,2026-07-31T04:00:00Z,2026-08-04T19:00:00Z,96,815.8,973,Fiat,Ducato,Active Standard,99.00,no
 253554,6110,Bari,6116,Milan,Bari,41.0769419,16.7584513,Milan,45.6197196,8.7600985,2026-07-31T04:00:00Z,2026-08-07T19:00:00Z,96,922.0,1082,Fiat,Ducato,Active Standard Select,99.00,no
+253559,2735,Paderborn,5091,Vizzola Ticino,Paderborn,51.69704,8.735777,Vizzola Ticino,45.6274,8.7124,2026-07-31T07:38:32Z,2026-08-04T21:59:00Z,24,882.8,1100,AUDI,A6 EST HBD AUT,Mystery Auto,1.00,yes
+253561,2694,Braunschweig,2733,Gütersloh,Braunschweig,52.250095,10.53527,Gütersloh,51.91255,8.36681,2026-07-31T07:38:32Z,2026-08-04T12:00:00Z,24,198.1,250,CUPRA,TAVASCAN OFF 5S EL AUT,Mystery Auto,1.00,yes
 253517,1598,Flensburg,2999,Westerland,Flensburg,54.7716,9.4237,Westerland,54.9075,8.3113,2026-07-31T10:00:00Z,2026-08-05T06:00:00Z,24,134.2,200,Mystery,Auto,Mystery Auto,1.00,yes
 253294,6105,Hamburg,6107,Reutlingen,Hamburg,53.5455055,10.0407124,Reutlingen,48.4921753,9.2005581,2026-08-01T04:00:00Z,2026-08-10T19:00:00Z,72,697.8,858,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 253519,1318,Dortmund,2999,Westerland,Dortmund,51.52,7.4194,Westerland,54.9075,8.3113,2026-08-01T06:00:00Z,2026-08-05T16:00:00Z,24,634.1,800,Mystery,Auto,Mystery Auto,1.00,yes
@@ -35,6 +37,7 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253318,6105,Hamburg,6107,Reutlingen,Hamburg,53.5455055,10.0407124,Reutlingen,48.4921753,9.2005581,2026-08-05T04:00:00Z,2026-08-12T19:00:00Z,72,697.8,858,Fiat,Ducato,Active Poptop Select,99.00,no
 253480,6120,Venezia,6116,Milan,Venezia,45.542029,12.289827,Milan,45.6197196,8.7600985,2026-08-05T04:00:00Z,2026-08-07T19:00:00Z,48,305.3,467,Pilote,V630J or similar,Active Long Select,1.00,yes
 253491,6095,Lyon,6099,Saint-Mesmes,Lyon,45.667261,5.092593,Saint-Mesmes,48.9875914,2.691353,2026-08-05T04:00:00Z,2026-08-11T19:00:00Z,72,526.4,666,Pilote,G690 GJ or similar,Comfort Space Select,1.00,yes
+253564,5204,Dormagen,5465,Bergamo,Dormagen,51.1072563,6.818826,Bergamo,45.6057278,9.5843822,2026-08-05T22:00:00Z,2026-08-13T21:59:59Z,72,881.7,1400,SURFER SUITE,VW California Ocean,SURFER SUITE,1.00,yes
 253301,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-08-06T04:00:00Z,2026-08-12T19:00:00Z,96,788.1,991,Volkswagen,California,California Standard,99.00,no
 253346,6085,Berlin,6106,Berglern,Berlin,52.4281113,13.5568964,Berglern,48.3697906,11.9297161,2026-08-06T04:00:00Z,2026-08-13T19:00:00Z,72,598.2,786,Fiat,Ducato,Comfort Standard,1.00,yes
 253349,6085,Berlin,6107,Reutlingen,Berlin,52.4281113,13.5568964,Reutlingen,48.4921753,9.2005581,2026-08-06T04:00:00Z,2026-08-13T19:00:00Z,72,685.5,836,Fiat,Ducato,Active Standard Select,99.00,no
@@ -58,6 +61,7 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253551,6085,Berlin,6106,Berglern,Berlin,52.4281113,13.5568964,Berglern,48.3697906,11.9297161,2026-08-11T04:00:00Z,2026-08-16T19:00:00Z,72,598.2,786,Volkswagen,California,California Standard,1.00,yes
 253351,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-08-12T04:00:00Z,2026-08-14T19:00:00Z,48,788.1,991,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 253501,6090,Brüssel,6096,Châteauneuf-les-Martigues,Brüssel,50.9691843,4.493581,Châteauneuf-les-Martigues,43.3779066,5.1441734,2026-08-14T04:00:00Z,2026-08-17T19:00:00Z,72,1044.3,1221,Fiat,Sport 346 or similar,Comfort Family,99.00,no
+253560,2321,Turin,2853,Marburg,Turin,45.112,7.6751,Marburg,50.8298189,8.7682135,2026-09-16T22:00:00Z,2026-09-24T21:59:59Z,72,822.0,1400,COUPLE COTTAGE,Weinsberg Signeo C590 - Ford Transit V363,COUPLE COTTAGE,1.00,yes
 253132,4615,Rotterdam,5329,Weyhe,Rotterdam,51.8601602,4.3951066,Weyhe,53.0138949,8.852995,2026-09-18T22:00:00Z,2026-09-26T21:59:59Z,48,403.6,1000,CAMPER CABIN,Ford Nugget - Ford Transit Custom V710,CAMPER CABIN,1.00,yes
 253130,2280,Amstelveen,5329,Weyhe,Amstelveen,52.283,4.835,Weyhe,53.0138949,8.852995,2026-09-21T22:00:00Z,2026-09-29T21:59:59Z,24,358.1,600,CAMPER CABIN,Ford Nugget - Ford Transit Custom V710,CAMPER CABIN,1.00,yes
 253136,4615,Rotterdam,5329,Weyhe,Rotterdam,51.8601602,4.3951066,Weyhe,53.0138949,8.852995,2026-09-25T22:00:00Z,2026-10-03T21:59:59Z,48,403.6,1000,CAMPER CABIN,Ford Nugget - Ford Transit Custom V710,CAMPER CABIN,1.00,yes
