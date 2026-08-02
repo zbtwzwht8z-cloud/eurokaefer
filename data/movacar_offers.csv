@@ -38,4 +38,3 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253546,6105,Hamburg,6116,Milan,Hamburg,53.5455055,10.0407124,Milan,45.6197196,8.7600985,2026-08-11T04:00:00Z,2026-08-14T19:00:00Z,72,1102.9,1309,Fiat,Ducato,Comfort Standard,99.00,no
 253351,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-08-12T04:00:00Z,2026-08-14T19:00:00Z,48,788.1,991,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 253501,6090,Brüssel,6096,Châteauneuf-les-Martigues,Brüssel,50.9691843,4.493581,Châteauneuf-les-Martigues,43.3779066,5.1441734,2026-08-14T04:00:00Z,2026-08-17T19:00:00Z,72,1044.3,1221,Fiat,Sport 346 or similar,Comfort Family,99.00,no
-253130,2280,Amstelveen,5329,Weyhe,Amstelveen,52.283,4.835,Weyhe,53.0138949,8.852995,2026-09-21T22:00:00Z,2026-09-29T21:59:59Z,24,358.1,600,CAMPER CABIN,Ford Nugget - Ford Transit Custom V710,CAMPER CABIN,1.00,yes
