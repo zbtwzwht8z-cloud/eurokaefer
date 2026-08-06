@@ -1,5 +1,4 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
-253151,1640,Hamburg,1589,Essen,Hamburg,53.5552,10.0102,Essen,51.4635,7.0168,2026-08-03T07:00:00Z,2026-08-07T08:00:00Z,24,359.8,450,Mystery,Auto,Mystery Auto,1.00,yes
 253800,2740,Flensburg,2495,Berlin,Flensburg,54.771291,9.426981,Berlin,52.36358,13.509458,2026-08-04T11:00:00Z,2026-08-11T21:00:00Z,24,455.5,550,Opel,Corsa,Mystery Auto,1.00,yes
 253800,2740,Flensburg,2522,Rostock,Flensburg,54.771291,9.426981,Rostock,54.13623,12.06046,2026-08-04T11:00:00Z,2026-08-11T21:00:00Z,24,284.7,350,Opel,Corsa,Mystery Auto,1.00,yes
 253800,2740,Flensburg,2524,Schwerin,Flensburg,54.771291,9.426981,Schwerin,53.58881,11.4028,2026-08-04T11:00:00Z,2026-08-11T21:00:00Z,24,248.5,300,Opel,Corsa,Mystery Auto,1.00,yes
@@ -11,7 +10,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253863,2505,Hamburg,2725,Bergen auf Rügen,Hamburg,53.62951,10.00496,Bergen auf Rügen,54.420437,13.419008,2026-08-05T07:12:55Z,2026-08-10T12:00:00Z,24,306.0,400,VW,T-ROC OFF BE AUT,Mystery Auto,1.00,yes
 253871,4494,Hamburg,5091,Vizzola Ticino,Hamburg,53.4632292,9.9797761,Vizzola Ticino,45.6274,8.7124,2026-08-05T08:12:05Z,2026-08-07T21:59:00Z,24,1102.7,1350,BMW,420 GRAN COUPE SAL DI AUT,Mystery Auto,1.00,yes
 253917,2754,Bornheim,2543,Leverkusen,Bornheim,50.75639,7.0164,Leverkusen,51.018394,6.991083,2026-08-05T10:45:41Z,2026-08-07T16:00:00Z,24,39.1,50,NISSA,PRIMASTAR MPV 9S DI MAN,Mystery Van,1.00,yes
-253915,2775,Aurich,2715,Bremen,Aurich,53.471946,7.463813,Bremen,53.181413,8.625882,2026-08-05T11:19:46Z,2026-08-07T12:00:00Z,24,146.0,200,NISSA,PRIMASTAR MPV 9S DI MAN,Mystery Van,1.00,yes
 253920,2505,Hamburg,5349,Seebad Bansin,Hamburg,53.62951,10.00496,Seebad Bansin,53.96325,14.136572,2026-08-05T12:19:57Z,2026-08-10T10:00:00Z,24,338.8,450,CITRO,C3 AIRCROSS OFF HBB AUT,Mystery Auto,1.00,yes
 253926,2607,Lörrach,2665,Mannheim,Lörrach,47.62366,7.669869,Mannheim,49.4492,8.505276,2026-08-05T12:47:13Z,2026-08-07T16:00:00Z,24,251.9,350,VW,"CRAFTER 35L 3,5 TO KAS DI MAN",Mystery Van,1.00,yes
 253933,2579,Lübeck,5091,Vizzola Ticino,Lübeck,53.8766,10.66561,Vizzola Ticino,45.6274,8.7124,2026-08-05T13:19:21Z,2026-08-07T21:59:00Z,24,1166.4,1400,BMW,520 EST DI AUT,Mystery Auto,1.00,yes
@@ -35,8 +33,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253954,6085,Berlin,6119,Roma,Berlin,52.4281113,13.5568964,Roma,41.817718,12.313638,2026-08-07T04:00:00Z,2026-08-12T19:00:00Z,120,1539.2,1703,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 253955,6089,Wiener Neudorf,6116,Milan,Wiener Neudorf,48.14047,16.44293,Milan,45.6197196,8.7600985,2026-08-07T04:00:00Z,2026-08-10T19:00:00Z,72,872.5,1059,Fiat,Ducato,Active Standard Select,99.00,no
 253956,6122,Bergen,6119,Roma,Bergen,60.4351796,5.4621229,Roma,41.817718,12.313638,2026-08-07T04:00:00Z,2026-08-21T19:00:00Z,336,2796.9,3018,Fiat,Ducato,Active Standard Select,99.00,no
-253957,6116,Milan,6130,Madrid,Milan,45.6197196,8.7600985,Madrid,40.4446704,-3.5019514,2026-08-07T04:00:00Z,2026-08-20T19:00:00Z,192,1573.6,1785,Volkswagen,California,California Standard,99.00,no
-253962,6156,Maura,6104,Frankfurt am Main,Maura,60.226302,11.0837547,Frankfurt am Main,50.1420333,8.8076945,2026-08-07T04:00:00Z,2026-08-20T19:00:00Z,168,1370.1,1509,Fiat,Ducato,Active Standard,99.00,no
 253282,6105,Hamburg,6107,Reutlingen,Hamburg,53.5455055,10.0407124,Reutlingen,48.4921753,9.2005581,2026-08-08T04:00:00Z,2026-08-16T19:00:00Z,48,697.8,858,Fiat,Ducato,Active Poptop,99.00,no
 253742,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-08-08T04:00:00Z,2026-08-14T19:00:00Z,96,788.1,991,Volkswagen,California,California Standard,99.00,no
 253743,6105,Hamburg,6107,Reutlingen,Hamburg,53.5455055,10.0407124,Reutlingen,48.4921753,9.2005581,2026-08-09T04:00:00Z,2026-08-16T19:00:00Z,72,697.8,858,Fiat,Ducato,Active Poptop,99.00,no
