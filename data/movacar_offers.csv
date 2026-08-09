@@ -1,5 +1,4 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
-253920,2505,Hamburg,5349,Seebad Bansin,Hamburg,53.62951,10.00496,Seebad Bansin,53.96325,14.136572,2026-08-05T12:19:57Z,2026-08-10T10:00:00Z,24,338.8,450,CITRO,C3 AIRCROSS OFF HBB AUT,Mystery Auto,1.00,yes
 254105,2775,Aurich,2543,Leverkusen,Aurich,53.471946,7.463813,Leverkusen,51.018394,6.991083,2026-08-06T22:00:00Z,2026-08-11T16:00:00Z,24,313.8,400,VW,CRAFTER 35M KAS DI MAN,Mystery Van,1.00,yes
 254106,2775,Aurich,2511,Duisburg,Aurich,53.471946,7.463813,Duisburg,51.412018,6.762658,2026-08-06T22:00:00Z,2026-08-11T12:00:00Z,24,267.2,350,VW,"CRAFTER 35L 3,5 TO KAS DI MAN",Mystery Van,1.00,yes
 254107,2775,Aurich,2546,Krefeld,Aurich,53.471946,7.463813,Krefeld,51.333946,6.585856,2026-08-06T22:00:00Z,2026-08-11T12:00:00Z,24,292.7,400,VW,CRAFTER 35M KAS DI MAN,Mystery Van,1.00,yes
@@ -14,7 +13,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 254122,2649,Regensburg,5091,Vizzola Ticino,Regensburg,49.02858,12.10838,Vizzola Ticino,45.6274,8.7124,2026-08-07T13:19:47Z,2026-08-11T21:59:00Z,24,612.7,750,BMW,218 MPV 5S DI AUT,Mystery Auto,1.00,yes
 254124,2747,Eisenach,5091,Vizzola Ticino,Eisenach,50.981018,10.314159,Vizzola Ticino,45.6274,8.7124,2026-08-07T13:30:48Z,2026-08-11T21:59:00Z,24,781.5,950,MB,GLC200 UTL HBD AUT,Mystery Auto,1.00,yes
 254125,2703,Göttingen,5091,Vizzola Ticino,Göttingen,51.534954,9.921055,Vizzola Ticino,45.6274,8.7124,2026-08-07T13:30:48Z,2026-08-11T21:59:00Z,24,848.7,1050,JEEP,AVENGER UTL HBP AUT,Mystery Auto,1.00,yes
-254126,2779,Künzelsau,5091,Vizzola Ticino,Künzelsau,49.25561,9.685794,Vizzola Ticino,45.6274,8.7124,2026-08-07T13:30:48Z,2026-08-11T21:59:00Z,24,576.2,700,BMW,520 EST DI AUT,Mystery Auto,1.00,yes
 254127,2653,Berlin,5091,Vizzola Ticino,Berlin,52.51865,13.410336,Vizzola Ticino,45.6274,8.7124,2026-08-07T13:30:48Z,2026-08-11T21:59:00Z,24,1036.2,1250,AUDI,A5 EST HBD AUT,Mystery Auto,1.00,yes
 254129,2552,Dortmund,5091,Vizzola Ticino,Dortmund,51.521683,7.488403,Vizzola Ticino,45.6274,8.7124,2026-08-07T13:30:48Z,2026-08-11T21:59:00Z,24,883.8,1100,AUDI,A5 EST HBD AUT,Mystery Auto,1.00,yes
 254138,2775,Aurich,2599,Aachen,Aurich,53.471946,7.463813,Aachen,50.78013,6.104207,2026-08-07T17:25:04Z,2026-08-10T16:00:00Z,24,373.4,450,MAN,"TGE 3.180 K 3,5 TO KAS DI AUT",Mystery Van,1.00,yes
@@ -30,9 +28,9 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 253912,4290,Göttingen,1540,München,Göttingen,51.5345,9.9224,München,48.1435,11.5573,2026-08-10T04:00:00Z,2026-08-14T21:00:00Z,24,515.6,650,Mystery,Auto,Mystery Auto,1.00,yes
 253914,5484,Braunschweig,1540,München,Braunschweig,52.297,10.5148,München,48.1435,11.5573,2026-08-10T04:00:00Z,2026-08-14T21:00:00Z,24,601.6,750,Mystery,Auto,Mystery Auto,1.00,yes
 253280,6105,Hamburg,6107,Reutlingen,Hamburg,53.5455055,10.0407124,Reutlingen,48.4921753,9.2005581,2026-08-11T04:00:00Z,2026-08-16T19:00:00Z,72,697.8,858,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
-253311,6085,Berlin,6106,Berglern,Berlin,52.4281113,13.5568964,Berglern,48.3697906,11.9297161,2026-08-11T04:00:00Z,2026-08-16T19:00:00Z,48,598.2,786,Fiat,Ducato,Active Standard Select,1.00,yes
 253342,6085,Berlin,6107,Reutlingen,Berlin,52.4281113,13.5568964,Reutlingen,48.4921753,9.2005581,2026-08-11T04:00:00Z,2026-08-21T19:00:00Z,72,685.5,836,Fiat,Ducato,Active Standard Select,99.00,no
 253546,6105,Hamburg,6116,Milan,Hamburg,53.5455055,10.0407124,Milan,45.6197196,8.7600985,2026-08-11T04:00:00Z,2026-08-15T19:00:00Z,72,1102.9,1309,Fiat,Ducato,Comfort Standard,99.00,no
+253729,6085,Berlin,6106,Berglern,Berlin,52.4281113,13.5568964,Berglern,48.3697906,11.9297161,2026-08-11T04:00:00Z,2026-08-13T19:00:00Z,48,598.2,786,Fiat,Ducato,Active Poptop Select,1.00,yes
 253732,6089,Wiener Neudorf,6111,Bergamo,Wiener Neudorf,48.14047,16.44293,Bergamo,45.672881,9.686563,2026-08-11T04:00:00Z,2026-08-13T19:00:00Z,72,793.2,1020,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,99.00,no
 253742,6105,Hamburg,6106,Berglern,Hamburg,53.5455055,10.0407124,Berglern,48.3697906,11.9297161,2026-08-11T04:00:00Z,2026-08-14T19:00:00Z,96,788.1,991,Volkswagen,California,California Standard,99.00,no
 253841,6089,Wiener Neudorf,6120,Venezia,Wiener Neudorf,48.14047,16.44293,Venezia,45.542029,12.289827,2026-08-11T04:00:00Z,2026-08-21T19:00:00Z,72,568.5,807,Ford,Transit/Jumper or similar,Comfort Compact Select,1.00,yes
