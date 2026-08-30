@@ -1,4 +1,5 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
+256181,2316,Stockholm,5420,Neu-Ulm,Stockholm,59.5302673,18.1084991,Neu-Ulm,48.3889095,10.022094,2026-08-30T22:00:00Z,2026-09-07T21:59:59Z,120,1689.7,2200,COUPLE COTTAGE,Weinsberg Signeo C590 - Ford Transit V363,COUPLE COTTAGE,129.00,no
 255007,6112,Bologna,6113,Cagliari,Bologna,44.554605,11.3202569,Cagliari,39.278007,9.057308,2026-09-01T04:00:00Z,2026-09-09T19:00:00Z,96,751.0,972,Volkswagen,California,California Standard,99.00,no
 255008,6115,Florence,6163,Olbia,Florence,43.786851,11.085733,Olbia,40.9030631,9.5328432,2026-09-01T04:00:00Z,2026-09-09T19:00:00Z,72,396.0,605,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,1.00,yes
 255893,6112,Bologna,6163,Olbia,Bologna,44.554605,11.3202569,Olbia,40.9030631,9.5328432,2026-09-01T04:00:00Z,2026-09-09T19:00:00Z,72,502.8,700,Fiat,Ducato,Comfort Standard,1.00,yes
@@ -13,7 +14,6 @@ offer_id,origin_location_id,origin_name,destination_location_id,destination_name
 256030,6098,Nice,6095,Lyon,Nice,43.6159547,7.1111765,Lyon,45.667261,5.092593,2026-09-03T04:00:00Z,2026-09-10T19:00:00Z,72,469.2,678,Fiat,S 75SL / T 7400 SB or similar,Comfort Long Select,1.00,yes
 255912,6119,Roma,6163,Olbia,Roma,41.817718,12.313638,Olbia,40.9030631,9.5328432,2026-09-04T04:00:00Z,2026-09-10T19:00:00Z,72,309.1,512,Fiat,Ducato,Active Poptop Select,1.00,yes
 256028,6100,Grigny,6090,Brüssel,Grigny,48.74792,2.39253,Brüssel,50.9691843,4.493581,2026-09-05T04:00:00Z,2026-09-10T19:00:00Z,72,341.1,522,Fiat,Ducato,Active Standard,1.00,yes
-256181,2316,Stockholm,5420,Neu-Ulm,Stockholm,59.5302673,18.1084991,Neu-Ulm,48.3889095,10.022094,2026-09-05T22:00:00Z,2026-09-07T21:59:59Z,120,1689.7,2200,COUPLE COTTAGE,Weinsberg Signeo C590 - Ford Transit V363,COUPLE COTTAGE,129.00,no
 256220,6111,Bergamo,6163,Olbia,Bergamo,45.672881,9.686563,Olbia,40.9030631,9.5328432,2026-09-06T04:00:00Z,2026-09-16T19:00:00Z,72,654.4,850,Volkswagen,California,California Standard,99.00,no
 256143,6116,Milan,6120,Venezia,Milan,45.6197196,8.7600985,Venezia,45.542029,12.289827,2026-09-07T04:00:00Z,2026-09-09T19:00:00Z,72,305.3,469,Fiat,Ducato,Active Poptop,1.00,yes
 256222,6111,Bergamo,6163,Olbia,Bergamo,45.672881,9.686563,Olbia,40.9030631,9.5328432,2026-09-07T04:00:00Z,2026-09-09T19:00:00Z,48,654.4,850,Volkswagen,California,California Standard,99.00,no
