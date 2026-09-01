@@ -1,7 +1,6 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
 255901,6119,Roma,6163,Olbia,Roma,41.817718,12.313638,Olbia,40.9030631,9.5328432,2026-08-07T04:00:00Z,2026-09-09T19:00:00Z,72,309.1,512,Volkswagen,California,California Standard,1.00,yes
 255920,6115,Florence,6163,Olbia,Florence,43.786851,11.085733,Olbia,40.9030631,9.5328432,2026-08-20T04:00:00Z,2026-09-09T19:00:00Z,72,396.0,605,Fiat,Ducato,Comfort Standard,1.00,yes
-256161,6116,Milan,6120,Venezia,Milan,45.6197196,8.7600985,Venezia,45.542029,12.289827,2026-08-20T04:00:00Z,2026-09-20T19:00:00Z,72,305.3,469,Fiat,Ducato,Active Poptop,1.00,yes
 255898,6117,Napoli,6110,Bari,Napoli,40.9104355,14.2277438,Bari,41.0769419,16.7584513,2026-08-22T04:00:00Z,2026-09-09T19:00:00Z,72,257.9,459,Ford,Transit/Jumper or similar,Comfort Compact Select,1.00,yes
 255919,6115,Florence,6163,Olbia,Florence,43.786851,11.085733,Olbia,40.9030631,9.5328432,2026-08-22T04:00:00Z,2026-09-09T19:00:00Z,72,396.0,605,Ford,Transit/Jumper or similar,Comfort Compact Select,1.00,yes
 256156,6116,Milan,6120,Venezia,Milan,45.6197196,8.7600985,Venezia,45.542029,12.289827,2026-08-22T04:00:00Z,2026-09-19T19:00:00Z,72,305.3,469,Ford,Transit/Jumper or similar,Comfort Compact Select,1.00,yes
