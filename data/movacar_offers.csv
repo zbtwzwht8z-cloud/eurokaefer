@@ -1,4 +1,5 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
+256569,2659,Würzburg,5342,Bayreuth,Würzburg,49.795887,9.969987,Bayreuth,49.9552512,11.6001312,2026-09-03T22:00:00Z,2026-09-06T16:00:00Z,24,158.3,200,PEUGE,3008 OFF HBB AUT,Mystery Auto,1.00,yes
 256581,2650,Ingolstadt,5342,Bayreuth,Ingolstadt,48.743191,11.437733,Bayreuth,49.9552512,11.6001312,2026-09-03T22:00:00Z,2026-09-06T16:00:00Z,24,161.0,200,VW,TAIGO OFF BE AUT,Mystery Auto,1.00,yes
 256599,2591,Waiblingen,5091,Ferno,Waiblingen,48.830204,9.315902,Ferno,45.6274,8.7124,2026-09-04T14:05:23Z,2026-09-08T21:59:00Z,24,537.6,650,BMW,X3 20 UTL DI AUT,Mystery Auto,1.00,yes
 256602,4338,Tübingen,5091,Ferno,Tübingen,48.5130476,9.0679859,Ferno,45.6274,8.7124,2026-09-04T14:17:20Z,2026-09-08T21:59:00Z,24,481.0,600,VOLVO,XC40 UTL HBP AUT,Mystery Auto,1.00,yes
