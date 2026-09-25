@@ -1,5 +1,4 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
-257763,3004,Zamudio,2304,Madrid,Zamudio,43.2860962,-2.8741381,Madrid,40.395,-3.581,2026-09-20T22:00:00Z,2026-09-26T21:59:59Z,48,408.5,1000,COUPLE COTTAGE,Weinsberg Signeo C590 - Ford Transit V363,COUPLE COTTAGE,1.00,yes
 258167,6114,Catania,6120,Venezia,Catania,37.473982,15.048693,Venezia,45.542029,12.289827,2026-09-22T04:00:00Z,2026-10-07T19:00:00Z,144,1314.5,1494,Volkswagen,California,California Standard,99.00,no
 257821,3004,Zamudio,4743,València,Zamudio,43.2860962,-2.8741381,València,39.3560142,-0.458987,2026-09-22T22:00:00Z,2026-09-30T21:59:59Z,48,648.2,1000,SURFER SUITE,VW California Ocean,SURFER SUITE,1.00,yes
 258351,2512,Greven,5091,Ferno,Greven,52.130963,7.695569,Ferno,45.6274,8.7124,2026-09-24T12:40:47Z,2026-09-28T21:59:00Z,24,962.1,1200,BMW,320 EST DI AUT,Mystery Auto,1.00,yes
