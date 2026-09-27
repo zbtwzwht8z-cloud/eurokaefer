@@ -1,7 +1,6 @@
 offer_id,origin_location_id,origin_name,destination_location_id,destination_name,origin_city,origin_lat,origin_lng,dest_city,dest_lat,dest_lng,start_date_utc,end_date_utc,period_hours,distance_km,free_km,make,model,vehicle_category,price_eur,is_eur_1
 258404,5403,Hof,2707,München,Hof,50.3230576,11.8894196,München,48.140032,11.566841,2026-09-24T22:00:00Z,2026-09-27T18:00:00Z,24,284.7,350,OPEL,MOKKA X OFF BE MAN,Mystery Auto,1.00,yes
 258412,2661,Bamberg,2513,München,Bamberg,49.907634,10.882284,München,48.141922,11.558182,2026-09-24T22:00:00Z,2026-09-27T19:00:00Z,24,238.1,300,MB,C220 LIM DI AUT,Mystery Auto,1.00,yes
-258436,2580,München,4372,Zürich,München,48.13633,11.60895,Zürich,47.45092,8.56196,2026-09-24T22:00:00Z,2026-09-29T21:30:00Z,24,318.1,400,VOLVO,XC60 UTL HBPP AUT,Mystery Auto,1.00,yes
 256975,2316,Stockholm,2292,Frankfurt am Main,Stockholm,59.5302673,18.1084991,Frankfurt am Main,50.1223914,8.754262,2026-09-27T22:00:00Z,2026-10-05T21:59:59Z,96,1481.1,1800,CAMPER CASTLE,Fiat Tracer 680DL - Fiat Ducato Serie 2,CAMPER CASTLE,129.00,no
 257102,2316,Stockholm,4569,Kassel,Stockholm,59.5302673,18.1084991,Kassel,51.2849661146,9.5799271458,2026-09-27T22:00:00Z,2026-10-05T21:59:59Z,96,1305.6,1800,CAMPER CASTLE,Fiat Tracer 680DL - Fiat Ducato Serie 2,CAMPER CASTLE,129.00,no
 258033,3005,Göteborgs Stad,2298,Bonn,Göteborgs Stad,57.6581514,11.9402265,Bonn,50.8209179,6.8110128,2026-09-27T22:00:00Z,2026-10-05T21:59:59Z,72,1069.1,1400,FAMILY FINCA,VW Grand California 600 - VW Crafter 2,FAMILY FINCA,129.00,no
