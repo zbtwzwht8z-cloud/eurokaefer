@@ -1,29 +1,39 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
+import 'leaflet/dist/leaflet.css';
 import './globals.css';
 
+const sans = IBM_Plex_Sans({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '500', '600'],
+  variable: '--font-sans',
+});
+const mono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+});
+
 export const metadata: Metadata = {
-  title: 'Eurokäfer · €1 Road trips',
-  description: 'Shared road-trip planner for Bochum · Hannover · München',
+  title: 'Eurokäfer — €1 camper road trips across Europe',
+  description:
+    'Every live Movacar relocation, chained into multi-leg road trips and loops. Pick a start city, see where €1 can take you.',
+  openGraph: {
+    title: 'Eurokäfer — €1 camper road trips across Europe',
+    description: 'Every live Movacar relocation, chained into multi-leg road trips and loops.',
+    type: 'website',
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#ffffff',
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        {/* Fonts: Fraunces (editorial display serif) + Inter (UI/body) */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
-        />
-        {/* Leaflet CSS for maps */}
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          crossOrigin=""
-        />
-      </head>
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body>{children}</body>
     </html>
   );
