@@ -34,8 +34,8 @@ yarn-error.log*
 .env*
 !.env.example
 
-# generated data
-/data/raw_json/
+# generated data (npm run snapshot)
+/data/
 
 # vercel
 .vercel

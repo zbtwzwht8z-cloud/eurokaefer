@@ -1,28 +1,12 @@
-import { TRIP_DATA } from '@/data/trip-data';
-import { getCurrentUser } from '@/lib/auth';
-import { getAllHighlights, getAllUsers } from '@/lib/turso';
-import EurokaeferApp from '@/components/EurokaeferApp';
-import AccessKeyGate from '@/components/AccessKeyGate';
+import { getOfferFeed } from '@/lib/movacar';
+import App from '@/components/App';
+
+// ISR: served as a static page, re-fetched from Movacar in the background
+// at most every 10 minutes. (Must be a literal for Next's static analysis;
+// keep in sync with REVALIDATE_SECONDS in lib/movacar.ts.)
+export const revalidate = 600;
 
 export default async function Page() {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    return <AccessKeyGate />;
-  }
-
-  // Fetch shared state in parallel for the authenticated view
-  const [highlights, users] = await Promise.all([
-    getAllHighlights().catch(() => []),
-    getAllUsers().catch(() => []),
-  ]);
-
-  return (
-    <EurokaeferApp
-      data={TRIP_DATA}
-      user={user}
-      users={users}
-      initialHighlights={highlights}
-    />
-  );
+  const feed = await getOfferFeed();
+  return <App feed={feed} />;
 }
