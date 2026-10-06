@@ -11,6 +11,7 @@ import {
 import { fmtAgo, fmtDay } from '@/lib/format';
 import { countryName } from '@/lib/places';
 import { loadJSON, saveJSON, useSaved } from '@/lib/storage';
+import BrandMark from './BrandMark';
 import SearchBar from './SearchBar';
 import TripList from './TripList';
 import TripDetail from './TripDetail';
@@ -21,7 +22,6 @@ const RouteMap = dynamic(() => import('./RouteMap'), {
 });
 
 const PAGE = 80;          // list rows per "show more"
-const MAP_ROUTES = 220;   // background routes drawn on the map
 
 export default function App({ feed }: { feed: OfferFeed }) {
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
@@ -136,7 +136,6 @@ export default function App({ feed }: { feed: OfferFeed }) {
 
   const pickPlace = useCallback((name: string) => update({ from: name }), [update]);
 
-  const mapChains = useMemo(() => list.slice(0, MAP_ROUTES), [list]);
   const mapSelected = useMemo(
     () => (selected && selectedLegs ? { chain: selected, legs: selectedLegs } : null),
     [selected, selectedLegs],
@@ -146,12 +145,7 @@ export default function App({ feed }: { feed: OfferFeed }) {
     <div className="app">
       <header className={'bar' + (searchOpen ? ' is-open' : '')}>
         <Link className="brand" href="/" aria-label="Eurokäfer home">
-          <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden>
-            <rect width="32" height="32" rx="7" fill="currentColor" />
-            <path d="M8 22 C 11 9, 21 9, 24 16" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" />
-            <circle cx="8" cy="22" r="2.8" fill="#fff" />
-            <circle cx="24" cy="16" r="3.2" fill="var(--accent)" />
-          </svg>
+          <BrandMark size={28} />
           <span>Eurokäfer</span>
         </Link>
         <button className="search-summary" onClick={() => setSearchOpen(o => !o)} aria-expanded={searchOpen}>
@@ -221,7 +215,7 @@ export default function App({ feed }: { feed: OfferFeed }) {
 
         <div className="mapwrap">
           <RouteMap
-            chains={mapChains}
+            chains={list}
             selected={mapSelected}
             hoverKey={hoverKey}
             places={places}
