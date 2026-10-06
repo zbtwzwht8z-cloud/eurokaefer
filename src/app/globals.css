@@ -70,6 +70,8 @@ body {
   font-weight: 600; font-size: 16px; letter-spacing: -0.01em;
   flex: none;
 }
+.logo { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
+.logo svg { display: block; flex: none; }
 .bar-status { margin-left: auto; color: var(--muted); font-size: 12.5px; white-space: nowrap; flex: none; }
 .bar-status b { color: var(--ink); font-weight: 500; font-family: var(--mono); }
 
@@ -368,7 +370,7 @@ body {
 @media (max-width: 860px) {
   .app { display: block; height: auto; overflow: visible; }
   .bar { padding: 10px 14px; position: sticky; top: 0; }
-  .brand span { display: none; }
+  .brand .logo-word { display: none; }
   .bar-status { order: 1; margin-left: 0; font-size: 12px; }
   .search-summary {
     order: 0; flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start;
