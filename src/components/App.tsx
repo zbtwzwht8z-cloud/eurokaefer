@@ -146,7 +146,7 @@ export default function App({ feed }: { feed: OfferFeed }) {
       <header className={'bar' + (searchOpen ? ' is-open' : '')}>
         <Link className="brand" href="/" aria-label="Eurokäfer home">
           <BrandMark size={28} />
-          <span>Eurokäfer</span>
+          <span className="wordmark" aria-hidden>Eurok<span className="uml">a</span>fer</span>
         </Link>
         <button className="search-summary" onClick={() => setSearchOpen(o => !o)} aria-expanded={searchOpen}>
           <span className="search-summary-route">

@@ -67,9 +67,17 @@ body {
 .brand {
   display: flex; align-items: center; gap: 9px;
   text-decoration: none; color: var(--ink);
-  font-weight: 600; font-size: 16px; letter-spacing: -0.01em;
+  font-weight: 600; font-size: 17px; letter-spacing: -0.01em;
   flex: none;
 }
+/* Wordmark: a plain "a" with the umlaut drawn as two orange dots, echoing the mark. */
+.wordmark .uml { position: relative; display: inline-block; }
+.wordmark .uml::before, .wordmark .uml::after {
+  content: ''; position: absolute; top: 0.12em;
+  width: 0.17em; height: 0.17em; border-radius: 50%; background: var(--accent);
+}
+.wordmark .uml::before { left: 0.04em; }
+.wordmark .uml::after { right: 0.02em; }
 .bar-status { margin-left: auto; color: var(--muted); font-size: 12.5px; white-space: nowrap; flex: none; }
 .bar-status b { color: var(--ink); font-weight: 500; font-family: var(--mono); }
 
@@ -368,7 +376,7 @@ body {
 @media (max-width: 860px) {
   .app { display: block; height: auto; overflow: visible; }
   .bar { padding: 10px 14px; position: sticky; top: 0; }
-  .brand span { display: none; }
+  .brand .wordmark { display: none; }
   .bar-status { order: 1; margin-left: 0; font-size: 12px; }
   .search-summary {
     order: 0; flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start;
