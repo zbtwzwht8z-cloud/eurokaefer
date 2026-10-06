@@ -372,11 +372,15 @@ function syncSelected(map: MLMap, p: Props) {
 /** Calm the basemap down so routes are the loudest thing on it. */
 function soften(map: MLMap) {
   type PaintProp = Parameters<MLMap['setPaintProperty']>[1];
-  const paint = (id: string, prop: PaintProp, value: string) => {
+  const paint = (id: string, prop: PaintProp, value: Parameters<MLMap['setPaintProperty']>[2]) => {
     if (map.getLayer(id)) map.setPaintProperty(id, prop, value);
   };
   const hide = (id: string) => { if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none'); };
   paint('water', 'fill-color', '#c4dcf2');
+  // Low-zoom shaded relief carries its own saturated ocean blue on top of the
+  // water fill: keep the terrain, lose the loud blue.
+  paint('natural_earth', 'raster-saturation', -0.4);
+  paint('natural_earth', 'raster-opacity', ['interpolate', ['exponential', 1.5], ['zoom'], 0, 0.38, 6, 0.06]);
   for (const id of ['waterway_river', 'waterway_other', 'waterway_tunnel']) paint(id, 'line-color', '#b4d1ec');
   for (const id of ['label_city', 'label_city_capital', 'label_town']) paint(id, 'text-color', '#3a4350');
   for (const id of ['label_country_1', 'label_country_2', 'label_country_3']) paint(id, 'text-color', '#6b7480');

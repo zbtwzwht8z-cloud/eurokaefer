@@ -11,7 +11,7 @@ import {
 import { fmtAgo, fmtDay } from '@/lib/format';
 import { countryName } from '@/lib/places';
 import { loadJSON, saveJSON, useSaved } from '@/lib/storage';
-import BrandMark from './BrandMark';
+import Logo from './Logo';
 import SearchBar from './SearchBar';
 import TripList from './TripList';
 import TripDetail from './TripDetail';
@@ -145,8 +145,7 @@ export default function App({ feed }: { feed: OfferFeed }) {
     <div className="app">
       <header className={'bar' + (searchOpen ? ' is-open' : '')}>
         <Link className="brand" href="/" aria-label="Eurokäfer home">
-          <BrandMark size={28} />
-          <span>Eurokäfer</span>
+          <Logo size={30} />
         </Link>
         <button className="search-summary" onClick={() => setSearchOpen(o => !o)} aria-expanded={searchOpen}>
           <span className="search-summary-route">
