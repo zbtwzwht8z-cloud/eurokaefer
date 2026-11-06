@@ -82,7 +82,7 @@ export default function PlaceInput({ label, value, placeholder, options, onChang
             onMouseDown={e => e.preventDefault()}
             onClick={() => { onChange(''); setQuery(''); }}
           >
-            <X size={14} strokeWidth={2} />
+            <X size={16} strokeWidth={1.5} />
           </button>
         )}
       </div>

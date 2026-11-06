@@ -57,11 +57,11 @@ export default function SearchBar({ filters: f, places, onChange, today }: Props
             {RADII.map(r => <option key={r} value={r}>{r === 0 ? 'Exact' : `+${r} km`}</option>)}
           </select>
         </div>
-        <ArrowRight className="search-arrow" size={16} aria-hidden />
+        <ArrowRight className="search-arrow" size={16} strokeWidth={1.5} aria-hidden />
         <PlaceInput label="To" value={f.to} placeholder="Anywhere" options={toOptions} onChange={v => onChange({ to: v })} />
         <label className={'check' + (f.to ? '' : ' is-disabled')} title="Match the destination anywhere on the route, not only as the final stop">
           <input type="checkbox" checked={f.via} disabled={!f.to} onChange={e => onChange({ via: e.target.checked })} />
-          <span>via</span>
+          <span>or via</span>
         </label>
       </div>
 
