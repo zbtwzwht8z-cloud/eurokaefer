@@ -158,7 +158,7 @@ const Row = memo(function Row({ chain: c, hover, saved, onOpen, onHover, onToggl
           ))}
         </span>
         <span className="row-meta">
-          {c.isLoop && <span className="tag"><Repeat2 size={12} strokeWidth={2.2} aria-hidden />Loop</span>}
+          {c.isLoop && <span className="tag"><Repeat2 size={16} strokeWidth={1.5} aria-hidden />Loop</span>}
           <span>{c.legs.length} {c.legs.length === 1 ? 'leg' : 'legs'}</span>
           <span>{fmtKm(c.routeKm)}</span>
           <span>{fmtDays(c.minDays, c.maxDays)}</span>
@@ -166,7 +166,7 @@ const Row = memo(function Row({ chain: c, hover, saved, onOpen, onHover, onToggl
         <span className="row-when">Departs {fmtWindow(c.departFrom, c.departTo)}</span>
       </button>
       <div className="row-side">
-        <span className={'price' + (c.allEur1 ? ' is-deal' : '')}>{fmtEur(c.priceEur)}</span>
+        <span className="price">{fmtEur(c.priceEur)}</span>
         <span className="price-sub">{c.allEur1 ? (c.legs.length > 1 ? `€1 × ${c.legs.length}` : '€1 deal') : `${paid} paid ${paid === 1 ? 'leg' : 'legs'}`}</span>
         <button
           className={'star' + (saved ? ' is-on' : '')}
@@ -174,7 +174,7 @@ const Row = memo(function Row({ chain: c, hover, saved, onOpen, onHover, onToggl
           aria-pressed={saved}
           onClick={() => onToggleSave(c.key)}
         >
-          <Star size={15} strokeWidth={1.8} fill={saved ? 'currentColor' : 'none'} />
+          <Star size={16} strokeWidth={1.5} fill={saved ? 'currentColor' : 'none'} />
         </button>
       </div>
     </li>

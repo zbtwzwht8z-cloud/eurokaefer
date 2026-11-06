@@ -41,14 +41,14 @@ export default function TripDetail({ chain: c, legs, variant, onVariant, onBack,
   return (
     <article className="detail">
       <div className="detail-top">
-        <button className="back" onClick={onBack}><ArrowLeft size={16} aria-hidden /> All trips</button>
+        <button className="back" onClick={onBack}><ArrowLeft size={16} strokeWidth={1.5} aria-hidden /> All trips</button>
         <div className="detail-actions">
           <button className={'icon-btn' + (isSaved ? ' is-on' : '')} onClick={onToggleSave} aria-pressed={isSaved}>
-            <Star size={15} strokeWidth={1.8} fill={isSaved ? 'currentColor' : 'none'} aria-hidden />
+            <Star size={16} strokeWidth={1.5} fill={isSaved ? 'currentColor' : 'none'} aria-hidden />
             {isSaved ? 'Saved' : 'Save'}
           </button>
           <button className="icon-btn" onClick={share}>
-            {copied ? <Check size={15} aria-hidden /> : <Link2 size={15} aria-hidden />}
+            {copied ? <Check size={16} strokeWidth={1.5} aria-hidden /> : <Link2 size={16} strokeWidth={1.5} aria-hidden />}
             {copied ? 'Copied' : 'Share'}
           </button>
         </div>
@@ -60,13 +60,13 @@ export default function TripDetail({ chain: c, legs, variant, onVariant, onBack,
         ))}
       </h1>
       <p className="detail-sub">
-        {c.isLoop && <span className="tag"><Repeat2 size={12} strokeWidth={2.2} aria-hidden />Loop</span>}
+        {c.isLoop && <span className="tag"><Repeat2 size={16} strokeWidth={1.5} aria-hidden />Loop</span>}
         {c.loopTier === 'near' && c.loopGapKm != null && <span>ends {Math.round(c.loopGapKm)} km from the start ·</span>}
         <span>{legs.length} {legs.length === 1 ? 'leg' : 'legs'} · departs {fmtWindow(v?.departFrom ?? c.departFrom, v?.departTo ?? c.departTo)}</span>
       </p>
 
       <dl className="facts">
-        <div><dt>Rental</dt><dd className={allEur1 ? 'is-deal' : undefined}>{fmtEur(price)}</dd></div>
+        <div><dt>{allEur1 ? 'Rental, all €1' : 'Rental'}</dt><dd>{fmtEur(price)}</dd></div>
         <div><dt>Distance</dt><dd>{fmtKm(km)}</dd></div>
         <div><dt>Trip length</dt><dd>{fmtDays(v?.minDays ?? c.minDays, v?.maxDays ?? c.maxDays)}</dd></div>
         <div><dt>Fuel, est.</dt><dd>~{fmtEur(Math.round(fuelEur(km) / 10) * 10)}</dd></div>
@@ -120,7 +120,7 @@ export default function TripDetail({ chain: c, legs, variant, onVariant, onBack,
                       {o.extraKmCents ? ` · then €${(o.extraKmCents / 100).toFixed(2)}/km` : ''}
                     </div>
                   </div>
-                  <div className={'car-price' + (o.priceEur <= 1 ? ' is-deal' : '')}>{fmtEur(o.priceEur)}</div>
+                  <div className="car-price">{fmtEur(o.priceEur)}</div>
                 </div>
                 <p className="leg-ref">Movacar ref <code>{o.refkey}</code></p>
               </div>
@@ -145,10 +145,10 @@ export default function TripDetail({ chain: c, legs, variant, onVariant, onBack,
 
       <div className="detail-cta">
         <a className="btn btn-primary" href="https://movacar.com/de-DE/home" target="_blank" rel="noreferrer">
-          Book on Movacar <ExternalLink size={14} aria-hidden />
+          Book on Movacar <ExternalLink size={16} strokeWidth={1.5} aria-hidden />
         </a>
         <a className="btn" href={mapsUrl} target="_blank" rel="noreferrer">
-          <MapIcon size={14} aria-hidden /> Route in Google Maps
+          <MapIcon size={16} strokeWidth={1.5} aria-hidden /> Route in Google Maps
         </a>
       </div>
       <p className="fine">
