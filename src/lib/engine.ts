@@ -56,9 +56,13 @@ export type EngineStats = {
 
 export type EngineResult = { chains: Chain[]; stats: EngineStats };
 
-// Guards so a pathological dense feed can't freeze the tab.
-const MAX_RAW_PATHS = 60_000;
-const MAX_EXPANSIONS = 600_000;
+// Guards so a dense feed can't freeze the tab. The expansion budget is split
+// evenly across starting offers: a single global cap let the first few
+// start cities eat it all, and every later city (e.g. Cologne) got zero
+// trips — not even its direct rides.
+const MAX_RAW_PATHS = 80_000;
+const MAX_EXPANSIONS = 250_000;
+const MIN_ROOT_BUDGET = 200;
 const DAY_MS = 86_400_000;
 const HOUR_MS = 3_600_000;
 const EDGE_SLOTS = 9;      // anchor ids -1..7 → 0..8
@@ -124,12 +128,23 @@ export function runEngine(offers: Offer[], p: EngineParams): EngineResult {
 
   const nodes: Node[] = [];
   let eur1Offers = 0;
+  // Identical offers (same places, window, deadline and price — e.g. ten
+  // vans on the same Cologne → Geilenkirchen run) are one option for
+  // planning; keeping all of them multiplies every path through them.
+  const seen = new Map<string, number>();
   for (const o of offers) {
     if (o.priceEur <= 1) eur1Offers++;
     if (p.eur1Only && o.priceEur > 1) continue;
     const wStart = Date.parse(o.startUtc);
     const wEnd = Date.parse(o.endUtc);
     if (!Number.isFinite(wStart) || !Number.isFinite(wEnd) || wEnd < fromMs) continue;
+    const twin = `${o.originName}|${o.destName}|${wStart}|${wEnd}|${o.periodHours}|${o.priceEur}`;
+    const prev = seen.get(twin);
+    if (prev !== undefined) {
+      if (o.freeKm > nodes[prev].offer.freeKm) nodes[prev].offer = o;
+      continue;
+    }
+    seen.set(twin, nodes.length);
     nodes.push({
       offer: o,
       o: station(o.originName, o.origin),
@@ -162,7 +177,10 @@ export function runEngine(offers: Offer[], p: EngineParams): EngineResult {
 
   // ── DFS over offer paths (mutate + undo, no per-step copies) ─────────────
   const raw: Raw[] = [];
-  let expansions = 0;
+  let expansions = 0;      // within the current starting offer
+  let rootBudget = 0;
+  let rootRawBudget = 0;
+  let rootRawStart = 0;
   let truncated = false;
   const idxs: number[] = [];
   const used = new Uint8Array(N);
@@ -198,7 +216,7 @@ export function runEngine(offers: Offer[], p: EngineParams): EngineResult {
   }
 
   function walk(): void {
-    if (raw.length >= MAX_RAW_PATHS || expansions >= MAX_EXPANSIONS) { truncated = true; return; }
+    if (raw.length - rootRawStart >= rootRawBudget || expansions >= rootBudget) { truncated = true; return; }
     expansions++;
     const r = schedule();
     // Infeasibility and minDays only get worse with more legs → prune.
@@ -224,7 +242,11 @@ export function runEngine(offers: Offer[], p: EngineParams): EngineResult {
     }
   }
 
-  for (let i = 0; i < N && !truncated; i++) {
+  rootBudget = Math.max(MIN_ROOT_BUDGET, Math.floor(MAX_EXPANSIONS / Math.max(1, N)));
+  rootRawBudget = Math.max(MIN_ROOT_BUDGET / 4, Math.floor(MAX_RAW_PATHS / Math.max(1, N)));
+  for (let i = 0; i < N; i++) {
+    expansions = 0;
+    rootRawStart = raw.length;
     const nd = nodes[i];
     anchors.push(nd.o); counts.push(1);
     const di = anchorOf(nd.d);

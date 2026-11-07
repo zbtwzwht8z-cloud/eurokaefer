@@ -53,5 +53,15 @@ for (const c of chains) {
     for (let i = 1; i < v.e.length; i++) if (v.e[i] < v.e[i - 1] + DEFAULT_ENGINE.gapHours * 3_600_000) fail(`variant gap violated in ${c.key}`);
   }
 }
+// Every place with a live departure must start at least one trip — a
+// global search cap once starved later cities (Cologne showed 0 trips).
+for (const eur1Only of [false, true]) {
+  const { chains: cs } = runEngine(snap.offers, { ...DEFAULT_ENGINE, nowMs, eur1Only });
+  const covered = new Set(cs.map(c => c.route[0]));
+  for (const o of snap.offers) {
+    if (Date.parse(o.endUtc) < nowMs || (eur1Only && o.priceEur > 1)) continue;
+    if (!covered.has(o.originName)) { fail(`${o.originName} has departures but no trips (${eur1Only ? '€1 only' : 'all'})`); covered.add(o.originName); }
+  }
+}
 console.log(bad === 0 ? '\n✓ all invariants hold' : `\n✗ ${bad} invariant violations`);
 process.exit(bad === 0 ? 0 : 1);
